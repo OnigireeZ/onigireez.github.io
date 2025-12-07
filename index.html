@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,145 +7,200 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['"Plus Jakarta Sans"', '"Noto Sans JP"', 'sans-serif'] },
+                    colors: { primary: '#FB923C', secondary: '#3B82F6', darkbg: '#020617', cardbg: '#0f172a' },
+                    animation: { 'pulse-slow': 'pulse 6s cubic-bezier(0.4, 0, 0.6, 1) infinite' }
+                }
+            }
+        }
+    </script>
+
     <style>
-        body { font-family: 'Noto Sans JP', 'Inter', sans-serif; }
-        .hero-gradient { background: linear-gradient(135deg, #f8a5c2, #4facfe); }
-        .section-title { font-weight: 900; font-size: 2.25rem; text-align: center; margin-bottom: 2rem; color: #1f2937; }
-        .section-subtitle { text-align: center; font-size: 1.25rem; color: #4b5563; max-width: 800px; margin: 0 auto 4rem auto; }
-        .card { background: white; border-radius: 1rem; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); transition: transform 0.3s ease, box-shadow 0.3s ease; }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
+        body { font-family: 'Noto Sans JP', 'Plus Jakarta Sans', sans-serif; background-color: #020617; color: #f1f5f9; }
+        .hero-bg { background: radial-gradient(circle at top left, rgba(251, 146, 60, 0.1), transparent 50%), radial-gradient(circle at bottom right, rgba(59, 130, 246, 0.1), transparent 50%), linear-gradient(to bottom, #020617 0%, #0f172a 100%); }
+        .glass-card { background: rgba(30, 41, 59, 0.4); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3); transition: all 0.3s ease; }
+        .glass-card:hover { transform: translateY(-5px); background: rgba(30, 41, 59, 0.6); border-color: rgba(255, 255, 255, 0.2); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5); }
+        details > summary { list-style: none; } details > summary::-webkit-details-marker { display: none; } details[open] summary ~ * { animation: sweep .3s ease-in-out; }
+        @keyframes sweep { 0% {opacity: 0; transform: translateY(-10px)} 100% {opacity: 1; transform: translateY(0)} }
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; } .reveal.active { opacity: 1; transform: translateY(0); }
+        .section-title { font-weight: 800; font-size: 2.5rem; text-align: center; margin-bottom: 1.5rem; color: #ffffff; letter-spacing: -0.025em; text-shadow: 0 0 20px rgba(255,255,255,0.1); }
+        .section-subtitle { text-align: center; font-size: 1.125rem; color: #94a3b8; max-width: 700px; margin: 0 auto 4rem auto; line-height: 1.8; }
+        select { appearance: none; background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e"); background-position: right 0.5rem center; background-repeat: no-repeat; background-size: 1.25em 1.25em; }
         
-        .btn-primary { 
-            display: inline-block; 
-            background-color: #fb923c; 
-            color: white; 
-            font-weight: 700; 
-            padding: 0.75rem 2rem; 
-            border-radius: 9999px; 
-            text-decoration: none; 
-            transition: all 0.3s ease; 
-            box-shadow: 0 4px 6px -1px rgba(251, 146, 60, 0.4);
-        }
-        .btn-primary:hover { 
-            background-color: #f97316; 
-            transform: scale(1.05); 
-            box-shadow: 0 10px 15px -3px rgba(251, 146, 60, 0.5);
-        }
+        /* 隠すためのクラス */
+        .hidden-item { display: none !important; }
     </style>
 </head>
-<body class="bg-gray-50">
+<body class="antialiased selection:bg-primary selection:text-white">
 
-    <header class="bg-white shadow-md sticky top-0 z-50">
-        <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
-            <a href="#" class="font-bold text-xl text-gray-800">
-                <span data-i18n="logo_prefix">学生団体</span> <span class="text-orange-500">OnigireeZ</span>
+    <header class="fixed w-full top-0 z-50 transition-all duration-300 bg-[#020617]/80 backdrop-blur-md border-b border-white/10" id="navbar">
+        <nav class="container mx-auto px-6 h-20 flex justify-between items-center">
+            <a href="#" class="flex items-center gap-3 group">
+                <img src="images/icon.JPG" alt="OnigireeZ Icon" class="w-10 h-10 rounded-full shadow-lg shadow-orange-500/20 transition-transform group-hover:scale-110 object-cover">
+                <div class="flex flex-col">
+                    <span class="text-xs font-bold text-gray-400 tracking-wider group-hover:text-primary transition" data-i18n="logo_prefix">学生団体</span>
+                    <span class="text-xl font-black text-white leading-none tracking-tight">OnigireeZ</span>
+                </div>
             </a>
-            
-            <div class="hidden md:flex space-x-6 items-center">
-                <select id="lang-switcher-pc" class="border border-gray-300 rounded px-2 py-1 text-sm text-gray-700 focus:outline-none focus:border-orange-500 bg-white cursor-pointer">
-                    <option value="ja">🇯🇵 日本語</option>
-                    <option value="en">🇺🇸 English</option>
-                </select>
-
-                <a href="#about" class="text-gray-600 hover:text-orange-500 transition" data-i18n="nav_about">OnigireeZとは</a>
-                <a href="#event" class="text-gray-600 hover:text-orange-500 transition" data-i18n="nav_event">イベント情報</a>
-                <a href="#team" class="text-gray-600 hover:text-orange-500 transition" data-i18n="nav_team">メンバー</a>
-                <a href="#sponsors" class="text-gray-600 hover:text-orange-500 transition" data-i18n="nav_sponsors">協賛</a>
-                <a href="#" target="_blank" class="apply-link bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded-full transition" data-i18n="nav_apply">申し込む</a>
+            <div class="hidden lg:flex items-center space-x-6 xl:space-x-8">
+                <div class="flex space-x-5 text-sm font-bold text-gray-300">
+                    <a href="#news" class="hover:text-primary transition hover:drop-shadow-[0_0_8px_rgba(251,146,60,0.5)]">NEWS</a>
+                    <a href="#about" class="hover:text-primary transition hover:drop-shadow-[0_0_8px_rgba(251,146,60,0.5)]" data-i18n="nav_about">OnigireeZとは</a>
+                    <a href="#scenes" class="hover:text-primary transition hover:drop-shadow-[0_0_8px_rgba(251,146,60,0.5)]" data-i18n="nav_scenes">活動の様子</a>
+                    <a href="#activities" class="hover:text-primary transition hover:drop-shadow-[0_0_8px_rgba(251,146,60,0.5)]" data-i18n="nav_activities">資料</a>
+                    <a href="#event" class="hover:text-primary transition hover:drop-shadow-[0_0_8px_rgba(251,146,60,0.5)]" data-i18n="nav_event">イベント</a>
+                    <a href="#team" class="hover:text-primary transition hover:drop-shadow-[0_0_8px_rgba(251,146,60,0.5)]" data-i18n="nav_team">メンバー</a>
+                    <a href="#sponsors" class="hover:text-primary transition hover:drop-shadow-[0_0_8px_rgba(251,146,60,0.5)]" data-i18n="nav_sponsors">協賛</a>
+                </div>
+                <div class="flex items-center gap-3">
+                    <select id="lang-switcher-pc" class="bg-white/10 border border-white/20 text-sm font-bold text-white rounded-lg pl-3 pr-8 py-2 cursor-pointer hover:bg-white/20 transition focus:ring-2 focus:ring-primary focus:outline-none">
+                        <option value="ja" class="bg-slate-900 text-white">🇯🇵 JP</option>
+                        <option value="en" class="bg-slate-900 text-white">🇺🇸 EN</option>
+                    </select>
+                    <a href="#" target="_blank" class="apply-link bg-primary hover:bg-orange-600 text-white font-bold py-2.5 px-6 rounded-full transition shadow-[0_0_15px_rgba(251,146,60,0.4)] hover:shadow-[0_0_25px_rgba(251,146,60,0.6)] transform hover:-translate-y-0.5" data-i18n="nav_apply">申し込む</a>
+                </div>
             </div>
-            
-            <div class="md:hidden flex items-center space-x-4">
-                 <select id="lang-switcher-mobile" class="border border-gray-300 rounded px-2 py-1 text-sm text-gray-700 focus:outline-none focus:border-orange-500 bg-white cursor-pointer">
-                    <option value="ja">🇯🇵 JP</option>
-                    <option value="en">🇺🇸 EN</option>
+            <div class="lg:hidden flex items-center space-x-4">
+                 <select id="lang-switcher-mobile" class="bg-white/10 border border-white/20 text-white text-xs font-bold rounded pl-2 pr-7 py-1 focus:outline-none">
+                    <option value="ja" class="bg-slate-900">🇯🇵 JP</option>
+                    <option value="en" class="bg-slate-900">🇺🇸 EN</option>
                 </select>
-                <button id="mobile-menu-button" class="text-gray-600"> <i data-lucide="menu"></i> </button>
+                <button id="mobile-menu-button" class="text-white p-2 hover:bg-white/10 rounded-lg transition"> <i data-lucide="menu" class="w-6 h-6"></i> </button>
             </div>
         </nav>
-        
-        <div id="mobile-menu" class="hidden md:hidden px-6 pt-2 pb-4 shadow-inner bg-gray-50">
-            <a href="#about" class="block py-3 text-gray-600 hover:text-orange-500 border-b border-gray-200" data-i18n="nav_about">OnigireeZとは</a>
-            <a href="#event" class="block py-3 text-gray-600 hover:text-orange-500 border-b border-gray-200" data-i18n="nav_event">イベント情報</a>
-            <a href="#team" class="block py-3 text-gray-600 hover:text-orange-500 border-b border-gray-200" data-i18n="nav_team">メンバー</a>
-            <a href="#sponsors" class="block py-3 text-gray-600 hover:text-orange-500 border-b border-gray-200" data-i18n="nav_sponsors">協賛</a>
-            <a href="#" target="_blank" class="apply-link block mt-4 text-center bg-orange-500 text-white font-bold py-3 px-4 rounded-full" data-i18n="nav_apply">申し込む</a>
+        <div id="mobile-menu" class="hidden lg:hidden bg-[#0f172a] border-t border-white/10 absolute w-full left-0 px-6 py-4 shadow-2xl">
+            <div class="flex flex-col space-y-4 font-bold text-gray-300">
+                <a href="#news" class="py-2 border-b border-white/5">NEWS</a>
+                <a href="#about" class="py-2 border-b border-white/5" data-i18n="nav_about">OnigireeZとは</a>
+                <a href="#scenes" class="py-2 border-b border-white/5" data-i18n="nav_scenes">活動の様子</a>
+                <a href="#activities" class="py-2 border-b border-white/5" data-i18n="nav_activities">資料</a>
+                <a href="#event" class="py-2 border-b border-white/5" data-i18n="nav_event">イベント情報</a>
+                <a href="#team" class="py-2 border-b border-white/5" data-i18n="nav_team">メンバー</a>
+                <a href="#sponsors" class="py-2 border-b border-white/5" data-i18n="nav_sponsors">協賛</a>
+                <a href="#" target="_blank" class="apply-link text-center bg-primary text-white py-3 rounded-lg shadow-lg" data-i18n="nav_apply">申し込む</a>
+            </div>
         </div>
     </header>
 
-    <main>
-        <section class="relative text-white text-center py-24 md:py-36 hero-gradient">
-            <div class="container mx-auto px-6">
-                <h1 class="text-4xl md:text-6xl font-black tracking-tight leading-tight mb-6">VIRTUAL EXCHANGE PROGRAM</h1>
-                <p class="text-lg md:text-2xl font-bold mb-10 opacity-90" data-i18n="hero_subtitle">日本と世界の学生が友情で"つながる"きっかけを。</p>
-                <a href="#" target="_blank" class="apply-link btn-primary text-xl py-4 px-10">
-                    <span data-i18n="hero_btn">今すぐ申し込む</span> <i data-lucide="arrow-right" class="inline w-5 h-5 ml-2"></i>
-                </a>
-            </div>
-        </section>
-
-        <section id="about" class="py-20 bg-white">
-            <div class="container mx-auto px-6">
-                <h2 class="section-title">
-                    <span data-i18n="about_title_prefix">学生団体</span> <span class="text-orange-500">OnigireeZ</span> <span data-i18n="about_title_suffix">とは？</span>
-                </h2>
-                <p class="section-subtitle" data-i18n="about_desc">私たちは、愛媛県の高校生で結成された学生団体です。「学生が国境を越えて、視野を大きく広げられる世界」を目指して活動しています。</p>
-                <div class="flex flex-col md:flex-row items-center justify-center gap-12">
-                    <div class="text-center max-w-sm">
-                        <div class="bg-blue-100 text-blue-600 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4"><i data-lucide="globe-2" class="w-10 h-10"></i></div>
-                        <h3 class="text-2xl font-bold mb-2">Vision</h3>
-                        <p class="text-gray-600" data-i18n="vision_text">世界の学生との出会いが、<br>未来の可能性を広げる社会</p>
-                    </div>
-                    <div class="text-center max-w-sm">
-                        <div class="bg-orange-100 text-orange-600 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4"><i data-lucide="handshake" class="w-10 h-10"></i></div>
-                        <h3 class="text-2xl font-bold mb-2">Mission</h3>
-                        <p class="text-gray-600" data-i18n="mission_text">日本と世界の学生が友情で<br>"つながる"きっかけをつくる</p>
-                    </div>
+    <main class="pt-20">
+        <section class="relative min-h-[90vh] flex items-center justify-center hero-bg overflow-hidden">
+            <div class="absolute top-0 left-0 w-[40rem] h-[40rem] bg-primary/10 rounded-full blur-[120px] animate-pulse-slow mix-blend-screen pointer-events-none"></div>
+            <div class="absolute bottom-0 right-0 w-[40rem] h-[40rem] bg-secondary/10 rounded-full blur-[120px] animate-pulse-slow mix-blend-screen pointer-events-none" style="animation-delay: -3s"></div>
+            <div class="container mx-auto px-6 text-center relative z-10 reveal active">
+                <span class="inline-block py-1 px-4 rounded-full bg-white/5 border border-white/10 text-primary text-xs font-bold tracking-[0.2em] mb-8 backdrop-blur-sm">VIRTUAL EXCHANGE PROGRAM</span>
+                <h1 class="text-5xl md:text-7xl font-black text-white mb-6 leading-tight tracking-tight drop-shadow-2xl">
+                    <span data-i18n="hero_title_1">世界と</span><span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-red-500 animate-pulse" data-i18n="hero_title_2">つながる</span><br>
+                    <span data-i18n="hero_title_3">新しい体験を。</span>
+                </h1>
+                <p class="text-lg md:text-2xl font-medium text-gray-400 mb-12 max-w-2xl mx-auto leading-relaxed" data-i18n="hero_subtitle">
+                    日本と世界の学生が友情で"つながる"きっかけを。<br>場所を超えて、心を通わせるバーチャル留学。
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="#" target="_blank" class="apply-link bg-white text-slate-900 text-lg font-bold py-4 px-10 rounded-full transition hover:bg-gray-200 shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)] hover:-translate-y-1 flex items-center justify-center group">
+                        <span data-i18n="hero_btn">今すぐ申し込む</span> <i data-lucide="arrow-right" class="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1"></i>
+                    </a>
                 </div>
             </div>
         </section>
 
-        <section class="py-20 bg-gray-50">
-            <div class="container mx-auto px-6">
-                 <h2 class="section-title" data-i18n="problem_title">こんな「もったいない」を解決したい</h2>
-                <p class="section-subtitle" data-i18n="problem_desc">「海外の友達が欲しい」「異文化に触れたい」と思っても、特に地方ではその機会が少ないのが現状。私たちはその課題を、オンラインの力で解決します。</p>
-                <div class="grid md:grid-cols-2 gap-8 text-center max-w-4xl mx-auto">
-                    <div class="card p-8">
-                        <i data-lucide="users" class="w-12 h-12 mx-auto text-blue-500 mb-4"></i>
-                        <h3 class="text-xl font-bold mb-2" data-i18n="problem_card1_title">異文化交流</h3>
-                        <p class="text-gray-600" data-i18n="problem_card1_desc">ゲームやトークを通して、お互いの国の文化や学校生活のリアルを知ることができます。</p>
-                    </div>
-                    <div class="card p-8">
-                        <i data-lucide="map" class="w-12 h-12 mx-auto text-green-500 mb-4"></i>
-                        <h3 class="text-xl font-bold mb-2" data-i18n="problem_card2_title">地域の格差解消</h3>
-                        <p class="text-gray-600" data-i18n="problem_card2_desc">住んでいる場所に関わらず、誰でも気軽に世界とつながれる場をつくります。</p>
-                    </div>
+        <section id="news" class="py-20 bg-[#0f172a] border-b border-white/5">
+            <div class="container mx-auto px-6 max-w-4xl">
+                <div class="flex items-end justify-between mb-10 reveal">
+                    <h2 class="text-3xl font-black text-white tracking-tight">NEWS</h2>
+                    <button id="view-all-news" class="text-sm text-gray-400 hover:text-primary transition flex items-center bg-transparent border-none cursor-pointer">
+                        <span class="btn-text" data-i18n="news_viewall">View All</span> <i data-lucide="chevron-down" class="w-4 h-4 ml-1"></i>
+                    </button>
                 </div>
-            </div>
-        </section>
-
-        <section id="event" class="py-20 bg-white">
-            <div class="container mx-auto px-6">
-                <h2 class="section-title">UPCOMING EVENT</h2>
-                <div class="max-w-4xl mx-auto">
-                    <div class="card md:flex items-stretch overflow-hidden">
-                        <div class="md:w-1/3 relative h-64 md:h-auto">
-                            <img src="images/event_1.jpeg" 
-                                 alt="Onigiri X change ~Indonesia~" 
-                                 class="w-full h-full object-cover absolute inset-0">
+                
+                <div id="news-list" class="space-y-4 reveal">
+                    
+                    <a href="https://onigireez.github.io" class="news-item group block glass-card p-6 rounded-xl hover:bg-white/5 transition border-l-4 border-transparent hover:border-secondary">
+                        <div class="flex flex-col md:flex-row md:items-center gap-4">
+                            <span class="text-sm text-gray-400 font-mono">2025.12.07</span>
+                            <span class="inline-block px-2 py-1 bg-secondary/20 text-secondary text-xs font-bold rounded" data-i18n="tag_info">お知らせ</span>
+                            <h3 class="text-lg font-bold text-white group-hover:text-secondary transition" data-i18n="news_1">Webサイトをリニューアルオープンしました。</h3>
                         </div>
-                        <div class="md:w-2/3 p-8 md:p-12 flex flex-col">
-                            <div>
-                                <p class="text-orange-500 font-bold tracking-wide text-sm uppercase mb-1" data-i18n="event_tag">バーチャル交換留学</p>
-                                <h3 class="text-3xl font-bold text-gray-800 mb-4">WorldBuddy ~Indonesia~</h3>
-                                <p class="text-gray-600 mb-6 leading-relaxed" data-i18n="event_desc">第二弾はインドネシアの高校生とつながるイベント！ゲームなどを通して、お互いの "リアル" を知り、友情を育みませんか？</p>
-                                <div class="space-y-3 mb-8 text-gray-700">
-                                    <div class="flex items-center"><i data-lucide="calendar" class="w-5 h-5 mr-3 text-orange-500"></i><span class="font-bold mr-2" data-i18n="label_date">日程:</span> <span data-i18n="event_date">2026年1月</span></div>
-                                    <div class="flex items-center"><i data-lucide="clock" class="w-5 h-5 mr-3 text-orange-500"></i><span class="font-bold mr-2" data-i18n="label_time">時間:</span> <span data-i18n="event_time">未定</span></div>
-                                    <div class="flex items-center"><i data-lucide="users" class="w-5 h-5 mr-3 text-orange-500"></i><span class="font-bold mr-2" data-i18n="label_target">対象:</span> <span data-i18n="event_target">日本とインドネシアの中高生</span></div>
-                                    <div class="flex items-center"><i data-lucide="video" class="w-5 h-5 mr-3 text-orange-500"></i><span class="font-bold mr-2" data-i18n="label_place">場所:</span> <span data-i18n="event_place">オンライン (Zoom等)</span></div>
+                    </a>
+
+                    <a href="https://www.instagram.com/p/DO0WnVMEZDr/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" class="news-item group block glass-card p-6 rounded-xl hover:bg-white/5 transition border-l-4 border-transparent hover:border-primary">
+                        <div class="flex flex-col md:flex-row md:items-center gap-4">
+                            <span class="text-sm text-gray-400 font-mono">2025.09.07</span>
+                            <span class="inline-block px-2 py-1 bg-primary/20 text-primary text-xs font-bold rounded" data-i18n="tag_event">イベント</span>
+                            <h3 class="text-lg font-bold text-white group-hover:text-primary transition" data-i18n="news_2">第1回イベント「Onigiri X change ~Philippines~」を開催しました！</h3>
+                        </div>
+                    </a>
+
+                    <a href="https://www.instagram.com/p/DNYY4Z4v4mJ/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" class="news-item hidden-item group block glass-card p-6 rounded-xl hover:bg-white/5 transition border-l-4 border-transparent hover:border-primary">
+                        <div class="flex flex-col md:flex-row md:items-center gap-4">
+                            <span class="text-sm text-gray-400 font-mono">2025.08.10</span>
+                            <span class="inline-block px-2 py-1 bg-primary/20 text-primary text-xs font-bold rounded" data-i18n="tag_event">イベント</span>
+                            <h3 class="text-lg font-bold text-white group-hover:text-primary transition" data-i18n="news_3">第1回イベント「Onigiri X change ~Philippines~」の募集を開始しました！</h3>
+                        </div>
+                    </a>
+                    <a href="#" class="news-item hidden-item group block glass-card p-6 rounded-xl hover:bg-white/5 transition border-l-4 border-transparent hover:border-secondary">
+                        <div class="flex flex-col md:flex-row md:items-center gap-4">
+                            <span class="text-sm text-gray-400 font-mono">2025.06.10</span>
+                            <span class="inline-block px-2 py-1 bg-secondary/20 text-secondary text-xs font-bold rounded" data-i18n="tag_info">お知らせ</span>
+                            <h3 class="text-lg font-bold text-white group-hover:text-secondary transition" data-i18n="news_4">学生団体OnigireeZを立ち上げました</h3>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="py-24 relative bg-[#020617]">
+            <div class="container mx-auto px-6">
+                <div class="reveal">
+                    <h2 class="section-title">
+                        <span data-i18n="about_title_prefix">学生団体</span> <span class="text-primary">OnigireeZ</span> <span data-i18n="about_title_suffix">とは？</span>
+                    </h2>
+                    <p class="section-subtitle" data-i18n="about_desc">私たちは、愛媛県の高校生で結成された学生団体です。「学生が国境を越えて、視野を大きく広げられる世界」を目指して活動しています。</p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-20">
+                    <div class="glass-card p-10 rounded-2xl text-center reveal border-t-4 border-secondary/80">
+                        <div class="w-20 h-20 bg-secondary/10 rounded-2xl flex items-center justify-center mx-auto mb-6 text-secondary transform rotate-3 hover:rotate-6 transition border border-secondary/20">
+                            <i data-lucide="globe-2" class="w-10 h-10"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4 text-white">Vision</h3>
+                        <p class="text-gray-300 font-medium leading-relaxed" data-i18n="vision_text">世界の学生との出会いが、<br>未来の可能性を広げる社会</p>
+                    </div>
+                    <div class="glass-card p-10 rounded-2xl text-center reveal border-t-4 border-primary/80" style="transition-delay: 0.1s;">
+                        <div class="w-20 h-20 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6 text-primary transform -rotate-3 hover:-rotate-6 transition border border-primary/20">
+                            <i data-lucide="handshake" class="w-10 h-10"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4 text-white">Mission</h3>
+                        <p class="text-gray-300 font-medium leading-relaxed" data-i18n="mission_text">日本と世界の学生が友情で<br>"つながる"きっかけをつくる</p>
+                    </div>
+                </div>
+                <div class="max-w-5xl mx-auto reveal mt-24">
+                    <div class="glass-card p-8 md:p-12 rounded-3xl relative overflow-hidden border border-white/10">
+                        <div class="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-[80px] pointer-events-none"></div>
+                        <div class="flex flex-col md:flex-row items-center gap-10 relative z-10">
+                            <div class="w-full md:w-1/3 text-center">
+                                <div class="relative inline-block">
+                                    <img src="REPRESENTATIVE.jpg" alt="Representative" class="w-48 h-64 md:w-full md:h-auto rounded-2xl object-cover shadow-2xl border-4 border-white/10 rotate-2">
+                                </div>
+                                <div class="mt-4">
+                                    <p class="text-xs text-primary font-bold tracking-widest uppercase mb-1" data-i18n="rep_role_label">REPRESENTATIVE</p>
+                                    <h3 class="text-xl font-black text-white" data-i18n="member1_name">土山 みり</h3>
+                                </div>
+                            </div>
+                            <div class="w-full md:w-2/3">
+                                <h3 class="text-2xl md:text-3xl font-bold text-white mb-6 font-serif italic" data-i18n="rep_message_title">"世界への扉は、<br>すぐそこにあります。"</h3>
+                                <div class="space-y-4 text-gray-300 leading-loose">
+                                    <p data-i18n="rep_message_1">こんにちは、OnigireeZ代表の土山みりです。私は高校生の時にフィリピンやエジプトでのボランティアを経験し、「言葉が違っても、心は通じ合える」という感動を味わいました。</p>
+                                    <p data-i18n="rep_message_2">しかし、地方に住んでいると、海外の人と出会うチャンスはまだまだ少ないのが現状です。「もっと気軽に、世界中の同世代と話せたらいいのに」そんな想いから、この団体を立ち上げました。</p>
+                                    <p data-i18n="rep_message_3">オンラインなら、距離は関係ありません。私たちと一緒に、新しい世界への一歩を踏み出してみませんか？</p>
+                                </div>
+                                <div class="mt-8 text-right">
+                                    <img src="https://placehold.co/150x50/transparent/white?text=Signature" alt="Signature" class="inline-block opacity-70 h-12 invert">
                                 </div>
                             </div>
                         </div>
@@ -154,334 +209,627 @@
             </div>
         </section>
 
-        <section id="team" class="py-20 bg-gray-50">
+        <section class="py-24 bg-[#0f172a]">
             <div class="container mx-auto px-6">
-                <h2 class="section-title" data-i18n="team_title">運営メンバー</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <div class="card text-center p-6">
-                        <img src="https://placehold.co/400x400/f8a5c2/ffffff?text=Miri" alt="土山みり" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-white shadow-lg object-cover">
-                        <h3 class="text-xl font-bold" data-i18n="member1_name">土山 みり</h3>
-                        <p class="text-orange-500 font-semibold mb-2" data-i18n="member1_role">代表</p>
-                        <p class="text-gray-600 text-sm" data-i18n="member1_desc">フィリピンやエジプトでのボランティア経験を活かし、世界と繋がる楽しさを伝えます！</p>
+                <div class="reveal">
+                    <h2 class="section-title" data-i18n="problem_title">こんな「もったいない」を解決したい</h2>
+                    <p class="section-subtitle" data-i18n="problem_desc">「海外の友達が欲しい」「異文化に触れたい」と思っても、特に地方ではその機会が少ないのが現状。私たちはその課題を、オンラインの力で解決します。</p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-10 max-w-4xl mx-auto">
+                    <div class="glass-card p-8 rounded-2xl transition reveal flex items-start gap-6 hover:bg-white/5">
+                        <div class="bg-secondary/20 p-3 rounded-lg text-secondary shrink-0 border border-secondary/30"><i data-lucide="users" class="w-8 h-8"></i></div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-3 text-white" data-i18n="problem_card1_title">異文化交流</h3>
+                            <p class="text-gray-400 leading-relaxed" data-i18n="problem_card1_desc">ゲームやトークを通して、お互いの国の文化や学校生活のリアルを知ることができます。</p>
+                        </div>
                     </div>
-                    <div class="card text-center p-6">
-                        <img src="https://placehold.co/400x400/4facfe/ffffff?text=Keinosuke" alt="井笹慶之介" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-white shadow-lg object-cover">
-                        <h3 class="text-xl font-bold" data-i18n="member2_name">井笹 慶之介</h3>
-                        <p class="text-blue-500 font-semibold mb-2" data-i18n="member2_role">発信担当</p>
-                        <p class="text-gray-600 text-sm" data-i18n="member2_desc">持ち前の明るさで、この活動の魅力をSNSなどを通してどんどん発信していきます！</p>
-                    </div>
-                    <div class="card text-center p-6">
-                        <img src="https://placehold.co/400x400/a9c9ff/ffffff?text=Anju" alt="宮本杏朱" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-white shadow-lg object-cover">
-                        <h3 class="text-xl font-bold" data-i18n="member3_name">宮本 杏朱</h3>
-                        <p class="text-indigo-500 font-semibold mb-2" data-i18n="member3_role">デザイン担当</p>
-                        <p class="text-gray-600 text-sm" data-i18n="member3_desc">美術やデジタル分野が得意。みんながワクワクするようなデザインを目指します！</p>
-                    </div>
-                    <div class="card text-center p-6">
-                        <img src="https://placehold.co/400x400/77dd77/ffffff?text=Masaomi" alt="忽那将臣" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-white shadow-lg object-cover">
-                        <h3 class="text-xl font-bold" data-i18n="member4_name">忽那 将臣</h3>
-                        <p class="text-green-500 font-semibold mb-2" data-i18n="member4_role">IT担当</p>
-                        <p class="text-gray-600 text-sm" data-i18n="member4_desc">スムーズな交流をサポートします！</p>
+                    <div class="glass-card p-8 rounded-2xl transition reveal flex items-start gap-6 hover:bg-white/5" style="transition-delay: 0.1s;">
+                        <div class="bg-green-500/20 p-3 rounded-lg text-green-400 shrink-0 border border-green-500/30"><i data-lucide="map" class="w-8 h-8"></i></div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-3 text-white" data-i18n="problem_card2_title">地域の格差解消</h3>
+                            <p class="text-gray-400 leading-relaxed" data-i18n="problem_card2_desc">住んでいる場所に関わらず、誰でも気軽に世界とつながれる場をつくります。</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="sponsors" class="py-20 bg-white border-t border-gray-100">
+        <section id="event" class="py-24 bg-[#020617]">
             <div class="container mx-auto px-6">
-                <h2 class="section-title" data-i18n="sponsor_title">協賛・スポンサー</h2>
-                <p class="section-subtitle" data-i18n="sponsor_desc">私たちの活動を支援してくださる企業様・団体様を募集しております。</p>
+                <h2 class="section-title reveal">UPCOMING EVENT</h2>
+                <div class="max-w-5xl mx-auto reveal">
+                    <div class="group bg-[#0f172a] rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row h-auto border border-white/10">
+                        <div class="md:w-1/2 relative min-h-[300px]">
+                            <div class="absolute inset-0 bg-gradient-to-t from-[#0f172a] to-transparent z-10 md:hidden"></div>
+                            <img src="event_1.jpeg" alt="Philippines Exchange" class="absolute inset-0 w-full h-full object-cover transition duration-700 group-hover:scale-110 opacity-90">
+                            <div class="absolute bottom-4 left-4 z-20 md:hidden text-white">
+                                <span class="bg-primary text-xs font-bold px-2 py-1 rounded mb-2 inline-block">Next Event</span>
+                            </div>
+                        </div>
+                        <div class="md:w-1/2 p-10 md:p-12 flex flex-col justify-center relative">
+                            <div class="mb-4">
+                                <span class="inline-block bg-primary/20 text-primary border border-primary/30 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider" data-i18n="event_tag">バーチャル交換留学</span>
+                            </div>
+                            <h3 class="text-3xl md:text-4xl font-black text-white mb-6">Onigiri X change<br><span class="text-primary drop-shadow-[0_0_10px_rgba(251,146,60,0.5)]">~Philippines~</span></h3>
+                            <p class="text-gray-300 mb-8 leading-relaxed" data-i18n="event_desc">第一弾はフィリピンの高校生とつながるイベント！ゲームなどを通して、お互いの "リアル" を知り、友情を育みませんか？</p>
+                            <div class="space-y-4 mb-10">
+                                <div class="flex items-center p-3 bg-white/5 rounded-lg border border-white/5">
+                                    <i data-lucide="calendar" class="w-5 h-5 text-primary mr-4 shrink-0"></i>
+                                    <div><span class="text-xs text-gray-500 block font-bold uppercase" data-i18n="label_date">日程</span><span class="font-bold text-white" data-i18n="event_date">2025年9月14日(日)</span></div>
+                                </div>
+                                <div class="flex items-center p-3 bg-white/5 rounded-lg border border-white/5">
+                                    <i data-lucide="clock" class="w-5 h-5 text-primary mr-4 shrink-0"></i>
+                                    <div><span class="text-xs text-gray-500 block font-bold uppercase" data-i18n="label_time">時間</span><span class="font-bold text-white" data-i18n="event_time">9:00 - 12:30 (日本時間)</span></div>
+                                </div>
+                                <div class="flex items-center p-3 bg-white/5 rounded-lg border border-white/5">
+                                    <i data-lucide="video" class="w-5 h-5 text-primary mr-4 shrink-0"></i>
+                                    <div><span class="text-xs text-gray-500 block font-bold uppercase" data-i18n="label_place">場所</span><span class="font-bold text-white" data-i18n="event_place">オンライン (Zoom等)</span></div>
+                                </div>
+                            </div>
+                            <a href="#" target="_blank" class="apply-link w-full block text-center bg-white text-slate-900 font-bold py-4 rounded-xl hover:bg-gray-200 transition shadow-lg" data-i18n="nav_apply">参加を申し込む</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-                <div class="grid md:grid-cols-3 gap-8 mb-20 max-w-6xl mx-auto">
-                    <div class="card p-8 border-t-4 border-yellow-400 text-center relative overflow-hidden">
-                        <div class="bg-yellow-400 text-white text-xs font-bold px-3 py-1 absolute top-0 right-0 rounded-bl-lg">RECOMMENDED</div>
-                        <h3 class="text-2xl font-black text-gray-800 mb-2">GOLD</h3>
-                        <p class="text-3xl font-bold text-yellow-500 mb-4">¥10,000<span class="text-sm text-gray-400 font-normal"> / 口</span></p>
-                        <ul class="text-left text-gray-600 text-sm space-y-2 mb-6">
-                            <li class="flex items-center"><i data-lucide="check-circle-2" class="w-4 h-4 text-green-500 mr-2"></i> <span data-i18n="plan_gold_1">ロゴ大サイズ掲載</span></li>
-                            <li class="flex items-center"><i data-lucide="check-circle-2" class="w-4 h-4 text-green-500 mr-2"></i> <span data-i18n="plan_gold_2">イベントでの司会言及</span></li>
-                            <li class="flex items-center"><i data-lucide="check-circle-2" class="w-4 h-4 text-green-500 mr-2"></i> <span data-i18n="plan_gold_3">SNSでの単独紹介</span></li>
-                        </ul>
+        <section id="scenes" class="py-24 bg-[#0f172a] border-t border-white/5">
+            <div class="container mx-auto px-6">
+                <div class="reveal flex items-end justify-between mb-10">
+                    <div>
+                        <h2 class="section-title text-left mb-2" data-i18n="scenes_title">ACTIVITY SCENES</h2>
+                        <p class="text-gray-400" data-i18n="scenes_desc">活動の様子</p>
+                    </div>
+                    <button id="view-all-scenes" class="text-sm text-gray-400 hover:text-primary transition flex items-center bg-transparent border-none cursor-pointer">
+                        <span class="btn-text" data-i18n="news_viewall">View All</span> <i data-lucide="chevron-down" class="w-4 h-4 ml-1"></i>
+                    </button>
+                </div>
+
+                <div class="grid md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-7xl mx-auto reveal" id="scenes-list">
+                    <div class="scene-item glass-card rounded-2xl overflow-hidden group">
+                        <div class="h-48 overflow-hidden relative">
+                            <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
+                        </div>
+                        <div class="p-5">
+                            <p class="text-xs text-primary font-bold mb-2">2025.11.16</p>
+                            <h3 class="text-sm font-bold text-white mb-2">企画ミーティング</h3>
+                            <p class="text-xs text-gray-400 leading-relaxed">次回イベントに向けて運営メンバーと第6回ミーティングを行いました。</p>
+                        </div>
+                    </div>
+                    <div class="scene-item glass-card rounded-2xl overflow-hidden group">
+                        <div class="h-48 overflow-hidden relative">
+                            <img src="https://images.unsplash.com/photo-1577962917302-cd874c4e3169?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
+                        </div>
+                        <div class="p-5">
+                            <p class="text-xs text-primary font-bold mb-2">2024.10.05</p>
+                            <h3 class="text-sm font-bold text-white mb-2">企画ミーティング</h3>
+                            <p class="text-xs text-gray-400 leading-relaxed">次回イベントに向けて運営メンバーとミーティングを行いました。</p>
+                        </div>
+                    </div>
+                    <div class="scene-item glass-card rounded-2xl overflow-hidden group">
+                        <div class="h-48 overflow-hidden relative">
+                            <img src="images/event_Activity.jpg" class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
+                        </div>
+                        <div class="p-5">
+                            <p class="text-xs text-primary font-bold mb-2">2025.09.07</p>
+                            <h3 class="text-sm font-bold text-white mb-2">第1回イベント開催</h3>
+                            <p class="text-xs text-gray-400 leading-relaxed">第1回イベント「Onigiri X change~Philippines~」を開催しました。フィリピンの人たちとオンラインで繋ぎ、交流をしました。</p>
+                        </div>
+                    </div>
+                    <div class="scene-item glass-card rounded-2xl overflow-hidden group">
+                        <div class="h-48 overflow-hidden relative">
+                            <img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
+                        </div>
+                        <div class="p-5">
+                            <p class="text-xs text-primary font-bold mb-2">2024.05.15</p>
+                            <h3 class="text-sm font-bold text-white mb-2">全体会議</h3>
+                            <p class="text-xs text-gray-400 leading-relaxed">来期の活動方針について話し合いました。</p>
+                        </div>
+                    </div>
+                    <div class="scene-item hidden-item glass-card rounded-2xl overflow-hidden group">
+                        <div class="h-48 overflow-hidden relative">
+                            <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
+                        </div>
+                        <div class="p-5">
+                            <p class="text-xs text-primary font-bold mb-2">2024.04.01</p>
+                            <h3 class="text-sm font-bold text-white mb-2">OnigireeZ設立！</h3>
+                            <p class="text-xs text-gray-400 leading-relaxed">記念すべき第一歩。これから頑張ります！</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="activities" class="py-24 bg-[#0f172a] border-t border-white/5">
+            <div class="container mx-auto px-6">
+                <div class="reveal">
+                    <h2 class="section-title" data-i18n="activity_title">ACTIVITY REPORT</h2>
+                    <p class="section-subtitle" data-i18n="activity_desc">活動報告書・資料アーカイブ</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8 mb-16 mt-12 reveal">
+                    <div class="glass-card p-6 rounded-2xl flex flex-col h-full">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-xl font-bold text-white flex items-center gap-2"><i data-lucide="file-text" class="text-primary"></i> <span data-i18n="latest_event_pdf">最新イベント報告書</span></h3>
+                            <span class="text-xs bg-primary/20 text-primary px-2 py-1 rounded">Latest</span>
+                        </div>
+                        <div class="flex-grow bg-white/5 rounded-lg overflow-hidden mb-4 border border-white/10 relative h-[400px]">
+                            <iframe src="files/event_philipin_1_.pdf" class="w-full h-full" style="border:none;"></iframe>
+                        </div>
+                        <a href="files/event_philipin_1_.pdf" download class="w-full text-center bg-white/10 hover:bg-white/20 text-white font-bold py-3 rounded-lg transition border border-white/10 flex items-center justify-center gap-2">
+                            <i data-lucide="download" class="w-4 h-4"></i> <span data-i18n="btn_download">ダウンロード</span>
+                        </a>
                     </div>
 
-                    <div class="card p-8 border-t-4 border-gray-400 text-center">
-                        <h3 class="text-2xl font-black text-gray-800 mb-2">SILVER</h3>
-                        <p class="text-3xl font-bold text-gray-500 mb-4">¥5,000<span class="text-sm text-gray-400 font-normal"> / 口</span></p>
-                        <ul class="text-left text-gray-600 text-sm space-y-2 mb-6">
-                            <li class="flex items-center"><i data-lucide="check-circle-2" class="w-4 h-4 text-green-500 mr-2"></i> <span data-i18n="plan_silver_1">ロゴ中サイズ掲載</span></li>
-                            <li class="flex items-center"><i data-lucide="check-circle-2" class="w-4 h-4 text-green-500 mr-2"></i> <span data-i18n="plan_silver_2">HPへのリンク設置</span></li>
-                            <li class="flex items-center"><i data-lucide="check-circle-2" class="w-4 h-4 text-green-500 mr-2"></i> <span data-i18n="plan_silver_3">SNSでの一括紹介</span></li>
-                        </ul>
-                    </div>
-
-                    <div class="card p-8 border-t-4 border-orange-700 text-center">
-                        <h3 class="text-2xl font-black text-gray-800 mb-2">BRONZE</h3>
-                        <p class="text-3xl font-bold text-orange-700 mb-4">¥1,000<span class="text-sm text-gray-400 font-normal"> / 口</span></p>
-                        <ul class="text-left text-gray-600 text-sm space-y-2 mb-6">
-                            <li class="flex items-center"><i data-lucide="check-circle-2" class="w-4 h-4 text-green-500 mr-2"></i> <span data-i18n="plan_bronze_1">社名(テキスト)掲載</span></li>
-                            <li class="flex items-center"><i data-lucide="check-circle-2" class="w-4 h-4 text-green-500 mr-2"></i> <span data-i18n="plan_bronze_2">活動報告書の送付</span></li>
-                        </ul>
+                    <div class="glass-card p-6 rounded-2xl flex flex-col h-full">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-xl font-bold text-white flex items-center gap-2"><i data-lucide="file-bar-chart-2" class="text-secondary"></i> <span data-i18n="latest_activity_pdf">最新活動報告書</span></h3>
+                            <span class="text-xs bg-secondary/20 text-secondary px-2 py-1 rounded">Latest</span>
+                        </div>
+                        <div class="flex-grow bg-white/5 rounded-lg overflow-hidden mb-4 border border-white/10 relative h-[400px]">
+                            <iframe src="files/report_2025.pdf" class="w-full h-full" style="border:none;"></iframe>
+                        </div>
+                        <a href="files/report_2025.pdf" download class="w-full text-center bg-white/10 hover:bg-white/20 text-white font-bold py-3 rounded-lg transition border border-white/10 flex items-center justify-center gap-2">
+                            <i data-lucide="download" class="w-4 h-4"></i> <span data-i18n="btn_download">ダウンロード</span>
+                        </a>
                     </div>
                 </div>
 
-                <div class="text-center max-w-5xl mx-auto">
-                    <h3 class="text-xl font-bold mb-8 text-gray-400 uppercase tracking-widest" data-i18n="sponsor_list_title">SPECIAL THANKS</h3>
+                <div class="max-w-4xl mx-auto reveal">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-xl font-bold text-white flex items-center"><i data-lucide="archive" class="mr-2 text-gray-400"></i> <span data-i18n="act_archive_title">過去の資料アーカイブ</span></h3>
+                        <button id="view-all-pdfs" class="text-sm text-gray-400 hover:text-white transition flex items-center bg-transparent border-none cursor-pointer">
+                            <span class="btn-text" data-i18n="news_viewall">View All</span> <i data-lucide="chevron-down" class="w-4 h-4 ml-1"></i>
+                        </button>
+                    </div>
                     
-                    <div class="mb-12">
-                        <p class="text-sm text-yellow-500 font-bold mb-4">GOLD SPONSORS</p>
-                        <div class="flex flex-wrap justify-center gap-8 items-center">
-                            <a href="#" class="w-48 h-24 bg-gray-100 flex items-center justify-center rounded-lg hover:bg-gray-200 transition grayscale hover:grayscale-0">
-                                <img src="https://placehold.co/200x100/e2e8f0/94a3b8?text=LOGO+HERE" alt="Sponsor Logo" class="max-h-16">
+                    <div id="pdf-list" class="space-y-3">
+                        <div class="pdf-item glass-card p-4 rounded-xl flex items-center justify-between group hover:bg-white/5 transition">
+                            <div class="flex items-center gap-4">
+                                <div class="bg-gray-700/50 p-2 rounded text-gray-300"><i data-lucide="file" class="w-5 h-5"></i></div>
+                                <div>
+                                    <p class="text-white font-bold text-sm group-hover:text-primary transition">団体説明資料.pdf</p>
+                                    <p class="text-xs text-gray-500">2025.07.10</p>
+                                </div>
+                            </div>
+                            <a href="files/First_contact.pdf" download class="p-2 bg-white/5 rounded-full hover:bg-white/20 transition text-white"><i data-lucide="download" class="w-4 h-4"></i></a>
+                        </div>
+                        <div class="pdf-item glass-card p-4 rounded-xl flex items-center justify-between group hover:bg-white/5 transition">
+                            <div class="flex items-center gap-4">
+                                <div class="bg-gray-700/50 p-2 rounded text-gray-300"><i data-lucide="file" class="w-5 h-5"></i></div>
+                                <div>
+                                    <p class="text-white font-bold text-sm group-hover:text-primary transition">nodata</p>
+                                    <p class="text-xs text-gray-500">nodata</p>
+                                </div>
+                            </div>
+                            <a href="#" download class="p-2 bg-white/5 rounded-full hover:bg-white/20 transition text-white"><i data-lucide="download" class="w-4 h-4"></i></a>
+                        </div>
+                        <div class="pdf-item hidden-item glass-card p-4 rounded-xl flex items-center justify-between group hover:bg-white/5 transition">
+                            <div class="flex items-center gap-4">
+                                <div class="bg-gray-700/50 p-2 rounded text-gray-300"><i data-lucide="file" class="w-5 h-5"></i></div>
+                                <div>
+                                    <p class="text-white font-bold text-sm group-hover:text-primary transition">nodata</p>
+                                    <p class="text-xs text-gray-500">nodata</p>
+                                </div>
+                            </div>
+                            <a href="files/First_contact.pdf" download class="p-2 bg-white/5 rounded-full hover:bg-white/20 transition text-white"><i data-lucide="download" class="w-4 h-4"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="team" class="py-24 bg-[#020617] relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-[40rem] h-[40rem] bg-primary/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+            <div class="container mx-auto px-6 relative z-10">
+                <h2 class="section-title reveal" data-i18n="team_title">運営メンバー</h2>
+                <div class="flex flex-col gap-6 max-w-4xl mx-auto">
+                    <div class="glass-card p-6 md:p-8 rounded-2xl flex flex-col md:flex-row items-center gap-8 reveal hover:border-primary/50">
+                        <img src="images/miri.jpg" alt="土山みり" class="w-32 h-32 md:w-40 md:h-40 rounded-full shadow-xl object-cover shrink-0 border-4 border-white/20">
+                        <div class="text-center md:text-left flex-1">
+                            <div class="flex flex-col md:flex-row md:items-baseline gap-2 mb-2 justify-center md:justify-start">
+                                <h3 class="text-2xl font-black text-white" data-i18n="member1_name">土山 みり</h3>
+                                <span class="bg-primary/20 border border-primary/30 text-primary text-xs font-bold px-3 py-1 rounded-full" data-i18n="member1_role">代表</span>
+                            </div>
+                            <p class="text-gray-300 leading-relaxed" data-i18n="member1_desc">フィリピンやエジプトでのボランティア経験を活かし、世界と繋がる楽しさを伝えます！</p>
+                        </div>
+                    </div>
+                    <div class="glass-card p-6 md:p-8 rounded-2xl flex flex-col md:flex-row items-center gap-8 reveal hover:border-blue-400/50">
+                        <img src="images/keinosuke.JPG" alt="井笹慶之介" class="w-32 h-32 md:w-40 md:h-40 rounded-full shadow-xl object-cover shrink-0 border-4 border-white/20">
+                        <div class="text-center md:text-left flex-1">
+                            <div class="flex flex-col md:flex-row md:items-baseline gap-2 mb-2 justify-center md:justify-start">
+                                <h3 class="text-2xl font-black text-white" data-i18n="member2_name">井笹 慶之介</h3>
+                                <span class="bg-blue-500/20 border border-blue-500/30 text-blue-400 text-xs font-bold px-3 py-1 rounded-full" data-i18n="member2_role">発信・会計担当</span>
+                            </div>
+                            <p class="text-gray-300 leading-relaxed" data-i18n="member2_desc">持ち前の明るさで、この活動の魅力をSNSなどを通してどんどん発信していきます！</p>
+                        </div>
+                    </div>
+                    <div class="glass-card p-6 md:p-8 rounded-2xl flex flex-col md:flex-row items-center gap-8 reveal hover:border-indigo-400/50">
+                        <img src="images/anika.JPG" alt="宮本杏朱" class="w-32 h-32 md:w-40 md:h-40 rounded-full shadow-xl object-cover shrink-0 border-4 border-white/20">
+                        <div class="text-center md:text-left flex-1">
+                            <div class="flex flex-col md:flex-row md:items-baseline gap-2 mb-2 justify-center md:justify-start">
+                                <h3 class="text-2xl font-black text-white" data-i18n="member3_name">宮本 杏朱</h3>
+                                <span class="bg-indigo-500/20 border border-indigo-500/30 text-indigo-400 text-xs font-bold px-3 py-1 rounded-full" data-i18n="member3_role">デザイン担当</span>
+                            </div>
+                            <p class="text-gray-300 leading-relaxed" data-i18n="member3_desc">美術やデジタル分野が得意。みんながワクワクするようなデザインを目指します！</p>
+                        </div>
+                    </div>
+                    <div class="glass-card p-6 md:p-8 rounded-2xl flex flex-col md:flex-row items-center gap-8 reveal hover:border-green-400/50">
+                        <img src="images/masaomi.jpg" alt="忽那将臣" class="w-32 h-32 md:w-40 md:h-40 rounded-full shadow-xl object-cover shrink-0 border-4 border-white/20">
+                        <div class="text-center md:text-left flex-1">
+                            <div class="flex flex-col md:flex-row md:items-baseline gap-2 mb-2 justify-center md:justify-start">
+                                <h3 class="text-2xl font-black text-white" data-i18n="member4_name">忽那 将臣</h3>
+                                <span class="bg-green-500/20 border border-green-500/30 text-green-400 text-xs font-bold px-3 py-1 rounded-full" data-i18n="member4_role">IT担当</span>
+                            </div>
+                            <p class="text-gray-300 leading-relaxed" data-i18n="member4_desc">テクノロジーの力でスムーズな交流をサポートします！</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="faq" class="py-24 bg-[#0f172a] border-t border-white/5">
+            <div class="container mx-auto px-6 max-w-3xl">
+                <div class="reveal">
+                    <h2 class="section-title">FAQ</h2>
+                    <p class="section-subtitle" data-i18n="faq_subtitle">よくあるご質問</p>
+                </div>
+                <div class="space-y-4 reveal">
+                    <details class="group glass-card rounded-xl p-1 cursor-pointer">
+                        <summary class="flex items-center justify-between p-4 font-bold text-white">
+                            <span data-i18n="faq_q1">英語が苦手でも参加できますか？</span>
+                            <span class="bg-white/10 p-1 rounded-full group-open:rotate-180 transition"><i data-lucide="chevron-down" class="w-5 h-5"></i></span>
+                        </summary>
+                        <div class="px-4 pb-4 text-gray-300 leading-relaxed text-sm border-t border-white/5 pt-4 mt-2" data-i18n="faq_a1">
+                            はい、大歓迎です！イベントでは、日本語が話せるメンバーとの相談や翻訳ツールの活用を推奨しています。言語力よりも「伝えようとする気持ち」が大切です。
+                        </div>
+                    </details>
+                    <details class="group glass-card rounded-xl p-1 cursor-pointer">
+                        <summary class="flex items-center justify-between p-4 font-bold text-white">
+                            <span data-i18n="faq_q2">参加費はかかりますか？</span>
+                            <span class="bg-white/10 p-1 rounded-full group-open:rotate-180 transition"><i data-lucide="chevron-down" class="w-5 h-5"></i></span>
+                        </summary>
+                        <div class="px-4 pb-4 text-gray-300 leading-relaxed text-sm border-t border-white/5 pt-4 mt-2" data-i18n="faq_a2">
+                            基本的には500円です。オンラインイベントの場合、Zoom等の通信費もご負担をお願いしております。Wi-Fi完備施設での実施がほとんどです。
+                        </div>
+                    </details>
+                    <details class="group glass-card rounded-xl p-1 cursor-pointer">
+                        <summary class="flex items-center justify-between p-4 font-bold text-white">
+                            <span data-i18n="faq_q3">スマホからでも参加できますか？</span>
+                            <span class="bg-white/10 p-1 rounded-full group-open:rotate-180 transition"><i data-lucide="chevron-down" class="w-5 h-5"></i></span>
+                        </summary>
+                        <div class="px-4 pb-4 text-gray-300 leading-relaxed text-sm border-t border-white/5 pt-4 mt-2" data-i18n="faq_a3">
+                            はい、スマートフォンやタブレットからでもご参加いただけます。ただし、画面共有などを行う場合があるため、パソコンやタブレットでの参加を推奨しています。
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+        <section id="sponsors" class="py-12 bg-[#020617] border-t border-white/5">
+            <div class="container mx-auto px-6">
+                <div class="reveal">
+                    <h2 class="section-title" data-i18n="sponsor_title">協賛・スポンサー</h2>
+                    <p class="section-subtitle" data-i18n="sponsor_desc">私たちの活動を支援してくださる企業様・団体様を募集しております。</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8 mb-12 max-w-6xl mx-auto reveal">
+                    <div class="glass-card p-8 border-t-4 border-yellow-500 relative rounded-2xl">
+                        <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-yellow-500 text-black text-xs font-bold px-4 py-1 rounded-full shadow-lg shadow-yellow-500/40">RECOMMENDED</div>
+                        <h3 class="text-3xl font-black text-white mb-2 text-center drop-shadow-md">GOLD</h3>
+                        <p class="text-4xl font-bold text-yellow-400 mb-6 text-center drop-shadow-sm">¥50,000<span class="text-sm text-gray-400 font-normal"> / 口</span></p>
+                        <ul class="space-y-3 text-sm text-gray-300">
+                            <li class="flex items-center"><div class="w-6 h-6 bg-green-500/20 rounded-full flex items-center justify-center mr-3 text-green-400 border border-green-500/30"><i data-lucide="check" class="w-3 h-3"></i></div><span data-i18n="plan_gold_1">ロゴ大サイズ掲載</span></li>
+                            <li class="flex items-center"><div class="w-6 h-6 bg-green-500/20 rounded-full flex items-center justify-center mr-3 text-green-400 border border-green-500/30"><i data-lucide="check" class="w-3 h-3"></i></div><span data-i18n="plan_gold_2">活動報告書の送付</span></li>
+                            <li class="flex items-center"><div class="w-6 h-6 bg-green-500/20 rounded-full flex items-center justify-center mr-3 text-green-400 border border-green-500/30"><i data-lucide="check" class="w-3 h-3"></i></div><span data-i18n="plan_gold_3">SNSでの単独紹介</span></li>
+                        </ul>
+                    </div>
+                    <div class="glass-card p-8 border-t-4 border-gray-400 rounded-2xl">
+                        <h3 class="text-3xl font-black text-white mb-2 text-center">SILVER</h3>
+                        <p class="text-4xl font-bold text-gray-400 mb-6 text-center">¥10,000<span class="text-sm text-gray-500 font-normal"> / 口</span></p>
+                        <ul class="space-y-3 text-sm text-gray-300">
+                            <li class="flex items-center"><div class="w-6 h-6 bg-green-500/20 rounded-full flex items-center justify-center mr-3 text-green-400 border border-green-500/30"><i data-lucide="check" class="w-3 h-3"></i></div><span data-i18n="plan_silver_1">ロゴ中サイズ掲載</span></li>
+                            <li class="flex items-center"><div class="w-6 h-6 bg-green-500/20 rounded-full flex items-center justify-center mr-3 text-green-400 border border-green-500/30"><i data-lucide="check" class="w-3 h-3"></i></div><span data-i18n="plan_silver_2">活動報告書の送付</span></li>
+                            <li class="flex items-center"><div class="w-6 h-6 bg-green-500/20 rounded-full flex items-center justify-center mr-3 text-green-400 border border-green-500/30"><i data-lucide="check" class="w-3 h-3"></i></div><span data-i18n="plan_silver_3">SNSでの一括紹介</span></li>
+                        </ul>
+                    </div>
+                    <div class="glass-card p-8 border-t-4 border-orange-700 rounded-2xl">
+                        <h3 class="text-3xl font-black text-white mb-2 text-center">BRONZE</h3>
+                        <p class="text-4xl font-bold text-orange-600 mb-6 text-center">¥5,000<span class="text-sm text-gray-500 font-normal"> / 口</span></p>
+                        <ul class="space-y-3 text-sm text-gray-300">
+                            <li class="flex items-center"><div class="w-6 h-6 bg-green-500/20 rounded-full flex items-center justify-center mr-3 text-green-400 border border-green-500/30"><i data-lucide="check" class="w-3 h-3"></i></div><span data-i18n="plan_bronze_1">社名(テキスト)掲載</span></li>
+                            <li class="flex items-center"><div class="w-6 h-6 bg-green-500/20 rounded-full flex items-center justify-center mr-3 text-green-400 border border-green-500/30"><i data-lucide="check" class="w-3 h-3"></i></div><span data-i18n="plan_bronze_2">活動報告書の送付</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="max-w-6xl mx-auto mb-12 reveal">
+                    <p class="text-xs text-gray-400 text-right">
+                        ※こちらは全て企業様向けのご案内です。個人様向けの案内は資料をダウンロードしてご確認をお願いします。
+                    </p>
+                </div>
+
+                <div class="mt-16 flex flex-col md:flex-row justify-center items-center gap-6">
+                    <div class="text-center">
+                        <p class="text-gray-400 mb-2 text-sm" data-i18n="sponsor_contact_text">協賛に関するお問い合わせはこちらから</p>
+                        <a href="mailto:onigireez.25@gmail.com" class="inline-flex items-center text-primary font-bold hover:text-orange-400 transition hover:drop-shadow-[0_0_8px_rgba(251,146,60,0.8)]">
+                            <i data-lucide="mail" class="w-4 h-4 mr-2"></i> onigireez.25@gmail.com
+                        </a>
+                    </div>
+                    <a href="files/sponsorship.pdf" download class="inline-flex items-center bg-white text-slate-900 text-sm font-bold px-6 py-3 rounded-full hover:bg-gray-200 transition shadow-lg group">
+                        <i data-lucide="download" class="w-4 h-4 mr-2 group-hover:scale-110 transition"></i> <span data-i18n="sponsor_download">協賛資料をダウンロード</span>
+                    </a>
+                </div>
+
+                <section id="about" class="pt-8 pb-8 relative bg-[#020617]"></section>
+            </div>
+        </sections>
+
+        <section class="py-24 bg-gradient-to-br from-slate-900 to-black text-white relative overflow-hidden">
+            <div class="absolute inset-0 bg-secondary/10 opacity-30 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+            <div class="container mx-auto px-6 text-center relative z-10 reveal">
+                <h2 class="text-3xl md:text-5xl font-black mb-6 text-white drop-shadow-xl" data-i18n="cta_title">世界とつながる準備はできましたか？</h2>
+                <p class="text-lg text-gray-400 mb-10 max-w-2xl mx-auto" data-i18n="cta_desc">申し込みは簡単です。以下のボタンからGoogleフォームへ進み、必要事項を入力してください。</p>
+                <a href="#" target="_blank" class="apply-link inline-block bg-primary text-white text-xl font-bold py-5 px-12 rounded-full shadow-[0_0_20px_rgba(251,146,60,0.4)] hover:shadow-[0_0_40px_rgba(251,146,60,0.6)] hover:-translate-y-1 transition duration-300 transform" data-i18n="cta_btn">Googleフォームで申し込む</a>
+            </div>
+        </section>
+
+        <section id="sponsors" class="pt-24 pb-5 bg-[#020617] border-t border-white/5">
+            <div class="text-center max-w-7xl mx-auto bg-[#0f172a] p-10 rounded-3xl reveal border border-white/5">
+                <h3 class="text-sm font-black mb-12 text-gray-500 uppercase tracking-[0.2em]" data-i18n="sponsor_list_title">Special Thanks</h3>
+                    
+                <div class="mb-16">
+                        <p class="text-xs text-yellow-500 font-black mb-6 tracking-widest shadow-yellow-500/50">GOLD SPONSORS</p>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 items-center">
+                            <a href="#" class="aspect-[3/2] bg-white rounded-xl flex items-center justify-center p-4 transition hover:-translate-y-1 hover:shadow-[0_0_15px_rgba(255,255,255,0.3)]">
+                                <img src="https://placehold.co/200x100/e2e8f0/94a3b8?text=LOGO" class="max-w-full max-h-full">
                             </a>
-                             <a href="#" class="w-48 h-24 bg-gray-100 flex items-center justify-center rounded-lg hover:bg-gray-200 transition grayscale hover:grayscale-0">
-                                <img src="https://placehold.co/200x100/e2e8f0/94a3b8?text=LOGO+HERE" alt="Sponsor Logo" class="max-h-16">
+                            <a href="#" class="aspect-[3/2] bg-white rounded-xl flex items-center justify-center p-4 transition hover:-translate-y-1 hover:shadow-[0_0_15px_rgba(255,255,255,0.3)]">
+                                <img src="https://placehold.co/200x100/e2e8f0/94a3b8?text=LOGO" class="max-w-full max-h-full">
+                            </a>
+                             <a href="#" class="aspect-[3/2] bg-white rounded-xl flex items-center justify-center p-4 transition hover:-translate-y-1 hover:shadow-[0_0_15px_rgba(255,255,255,0.3)]">
+                                <img src="https://placehold.co/200x100/e2e8f0/94a3b8?text=LOGO" class="max-w-full max-h-full">
+                            </a>
+                             <a href="#" class="aspect-[3/2] bg-white rounded-xl flex items-center justify-center p-4 transition hover:-translate-y-1 hover:shadow-[0_0_15px_rgba(255,255,255,0.3)]">
+                                <img src="https://placehold.co/200x100/e2e8f0/94a3b8?text=LOGO" class="max-w-full max-h-full">
                             </a>
                         </div>
                     </div>
 
-                    <div class="mb-12">
-                        <p class="text-sm text-gray-500 font-bold mb-4">SILVER SPONSORS</p>
-                        <div class="flex flex-wrap justify-center gap-6 items-center">
-                            <a href="#" class="w-32 h-16 bg-gray-100 flex items-center justify-center rounded-lg hover:bg-gray-200 transition grayscale hover:grayscale-0">
-                                <img src="https://placehold.co/150x80/e2e8f0/94a3b8?text=LOGO" alt="Sponsor Logo" class="max-h-10">
-                            </a>
-                            <a href="#" class="w-32 h-16 bg-gray-100 flex items-center justify-center rounded-lg hover:bg-gray-200 transition grayscale hover:grayscale-0">
-                                <img src="https://placehold.co/150x80/e2e8f0/94a3b8?text=LOGO" alt="Sponsor Logo" class="max-h-10">
-                            </a>
+                    <div class="mb-16">
+                        <p class="text-xs text-gray-400 font-black mb-6 tracking-widest">SILVER SPONSORS</p>
+                        <div class="grid grid-cols-4 md:grid-cols-8 gap-4 items-center">
+                            <a href="#" class="aspect-square bg-white rounded-lg flex items-center justify-center p-2 transition hover:-translate-y-1 hover:shadow-lg"><img src="https://placehold.co/100x50/e2e8f0/94a3b8?text=L" class="max-w-full max-h-full"></a>
+                            <a href="#" class="aspect-square bg-white rounded-lg flex items-center justify-center p-2 transition hover:-translate-y-1 hover:shadow-lg"><img src="https://placehold.co/100x50/e2e8f0/94a3b8?text=O" class="max-w-full max-h-full"></a>
+                            <a href="#" class="aspect-square bg-white rounded-lg flex items-center justify-center p-2 transition hover:-translate-y-1 hover:shadow-lg"><img src="https://placehold.co/100x50/e2e8f0/94a3b8?text=G" class="max-w-full max-h-full"></a>
+                            <a href="#" class="aspect-square bg-white rounded-lg flex items-center justify-center p-2 transition hover:-translate-y-1 hover:shadow-lg"><img src="https://placehold.co/100x50/e2e8f0/94a3b8?text=O" class="max-w-full max-h-full"></a>
+                            <a href="#" class="aspect-square bg-white rounded-lg flex items-center justify-center p-2 transition hover:-translate-y-1 hover:shadow-lg"><img src="https://placehold.co/100x50/e2e8f0/94a3b8?text=H" class="max-w-full max-h-full"></a>
+                            <a href="#" class="aspect-square bg-white rounded-lg flex items-center justify-center p-2 transition hover:-translate-y-1 hover:shadow-lg"><img src="https://placehold.co/100x50/e2e8f0/94a3b8?text=E" class="max-w-full max-h-full"></a>
+                            <a href="#" class="aspect-square bg-white rounded-lg flex items-center justify-center p-2 transition hover:-translate-y-1 hover:shadow-lg"><img src="https://placehold.co/100x50/e2e8f0/94a3b8?text=R" class="max-w-full max-h-full"></a>
+                            <a href="#" class="aspect-square bg-white rounded-lg flex items-center justify-center p-2 transition hover:-translate-y-1 hover:shadow-lg"><img src="https://placehold.co/100x50/e2e8f0/94a3b8?text=E" class="max-w-full max-h-full"></a>
                         </div>
                     </div>
 
                     <div>
-                        <p class="text-sm text-orange-700 font-bold mb-4">BRONZE SPONSORS</p>
-                        <div class="flex flex-wrap justify-center gap-4 text-gray-600 text-sm font-medium">
-                            <span>株式会社サンプル</span>
-                            <span>•</span>
-                            <span>◯◯</span>
-                            <span>•</span>
-                            <span>〇〇商店</span>
+                        <p class="text-xs text-orange-700 font-black mb-6 tracking-widest">BRONZE SPONSORS</p>
+                        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4 text-center text-xs font-bold text-gray-800">
+                            <span class="bg-white py-2 rounded shadow-sm">株式会社サンプル</span>
+                            <span class="bg-white py-2 rounded shadow-sm">OnigireeZ応援団</span>
+                            <span class="bg-white py-2 rounded shadow-sm">〇〇商店</span>
+                            <span class="bg-white py-2 rounded shadow-sm">Sample Inc.</span>
+                            <span class="bg-white py-2 rounded shadow-sm">Company A</span>
+                            <span class="bg-white py-2 rounded shadow-sm">Company B</span>
+                            <span class="bg-white py-2 rounded shadow-sm">Company C</span>
+                            <span class="bg-white py-2 rounded shadow-sm">Company D</span>
                         </div>
                     </div>
-                </div>
-                
-                <div class="mt-16 text-center">
-                    <p class="text-gray-600 mb-4" data-i18n="sponsor_contact_text">協賛に関するお問い合わせはこちらから</p>
-                    <a href="mailto:onigireez.25@gmail.com" class="inline-flex items-center text-orange-500 font-bold hover:underline">
-                        <i data-lucide="mail" class="w-4 h-4 mr-2"></i> onigireez.25@gmail.com
-                    </a>
-                </div>
+                </div>  
             </div>
         </section>
 
-        <section id="apply" class="bg-blue-50 py-24">
-            <div class="container mx-auto px-6 text-center">
-                <h2 class="text-3xl md:text-4xl font-black text-gray-800 mb-6" data-i18n="cta_title">世界とつながる準備はできましたか？</h2>
-                <p class="text-xl text-gray-600 mb-10 max-w-2xl mx-auto" data-i18n="cta_desc">
-                    申し込みは簡単です。以下のボタンからGoogleフォームへ進み、必要事項を入力してください。
-                </p>
-                <a href="#" target="_blank" class="apply-link btn-primary text-xl py-5 px-12 shadow-xl hover:shadow-2xl" data-i18n="cta_btn">
-                    Googleフォームで申し込む
-                </a>
-            </div>
-        </section>
+       
     </main>
     
-    <footer class="bg-gray-800 text-white">
-        <div class="container mx-auto px-6 py-12 text-center">
-            <h3 class="text-2xl font-bold mb-4">学生団体 OnigireeZ</h3>
-            <p class="mb-6 text-gray-400">Follow us for updates!</p>
-            <a href="https://www.instagram.com/onigireez_25/" target="_blank" class="inline-flex items-center justify-center bg-white text-gray-800 w-12 h-12 rounded-full hover:bg-orange-500 hover:text-white transition duration-300">
-                <i data-lucide="instagram" class="w-6 h-6"></i>
-            </a>
-            <div class="mt-8 pt-8 border-t border-gray-700 text-sm text-gray-500">
-                &copy; 2025 学生団体 OnigireeZ. All Rights Reserved.
+    <footer class="bg-black text-white pt-10 pb-10 border-t border-white/10">
+        <div class="container mx-auto px-6 text-center">
+            <h3 class="text-3xl font-black mb-6 tracking-tight">OnigireeZ</h3>
+            <div class="flex justify-center space-x-6 mb-10">
+                <a href="https://www.instagram.com/onigireez_25/" target="_blank" class="w-12 h-12 rounded-full bg-slate-900 border border-white/10 flex items-center justify-center hover:bg-gradient-to-tr hover:from-yellow-400 hover:via-red-500 hover:to-purple-500 transition duration-300 hover:border-transparent">
+                    <i data-lucide="instagram" class="w-6 h-6"></i>
+                </a>
+                
+                <a href="https://lin.ee/29qz3b5" target="_blank" class="w-12 h-12 rounded-full bg-slate-900 border border-white/10 flex items-center justify-center hover:bg-[#06C755] hover:border-[#06C755] transition duration-300 group">
+                    <svg viewBox="0 0 24 24" class="w-6 h-6 fill-white" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2C6.48 2 2 5.57 2 10.01c0 2.5 1.41 4.74 3.73 6.18.33.21.36.72.2.98l-1.07 1.77c-.12.2.03.46.26.43.91-.12 2.76-.58 3.76-1.12.3-.16.63-.23.97-.23.7.07 1.41.11 2.15.11 5.52 0 10-3.57 10-8.01C22 5.57 17.52 2 12 2zm4.18 11.23h-6.36c-.41 0-.75-.34-.75-.75V7.52c0-.41.34-.75.75-.75s.75.34.75.75v3.46h4.86c.41 0 .75.34.75.75s-.34.75-.75.75z"/>
+                    </svg>
+                </a>
+
+                <a href="mailto:onigireez.25@gmail.com" class="w-12 h-12 rounded-full bg-slate-900 border border-white/10 flex items-center justify-center hover:bg-primary transition duration-300 hover:border-transparent">
+                    <i data-lucide="mail" class="w-6 h-6"></i>
+                </a>
             </div>
+            <p class="text-gray-600 text-sm">&copy; 2025 学生団体 OnigireeZ. All Rights Reserved.</p>
         </div>
     </footer>
     
     <script>
-        // ----------------------------------------------------
-        // ★★★ 設定エリア：ここを書き換えてください ★★★
-        // ----------------------------------------------------
-        
-        const FORM_URLS = {
-            ja: "https://forms.gle/kUDBp1TNjeRTV1617",
-            en: "https://forms.gle/wmbFz1FyRV5oGp2WA"
-        };
+        const FORM_URLS = { ja: "https://forms.gle/fXoRouDuiLp1R3uN8", en: "https://forms.gle/LQ3CncSbL6iCktJR7" };
 
-        // 6. 翻訳データの表記修正
         const translations = {
             ja: {
                 logo_prefix: "学生団体",
-                nav_about: "OnigireeZとは", // 修正
-                nav_event: "イベント情報",
-                nav_team: "メンバー",
-                nav_sponsors: "協賛",
-                nav_apply: "申し込む",
-                
-                hero_subtitle: "日本と世界の学生が友情で\"つながる\"きっかけを。",
+                nav_about: "OnigireeZとは", nav_scenes: "活動の様子", nav_activities: "資料", nav_event: "イベント情報", nav_team: "メンバー", nav_sponsors: "協賛", nav_apply: "申し込む",
+                hero_title_1: "世界と", hero_title_2: "つながる", hero_title_3: "新しい体験を。",
+                hero_subtitle: "日本と世界の学生が友情で\"つながる\"きっかけを。<br>場所を超えて、心を通わせるバーチャル留学。",
                 hero_btn: "今すぐ申し込む",
-                
-                about_title_prefix: "学生団体",
-                about_title_suffix: "とは？",
+                news_viewall: "View All", tag_event: "イベント", tag_info: "お知らせ", tag_report: "活動報告",
+                news_2: "第1回イベント「Onigiri X change ~Philippines~」を開催しました！",
+                news_1: "公式HPWebサイトをオープンしました。",
+                news_3: "第1回イベント「Onigiri X change ~Philippines~」の募集を開始しました！",
+                news_4: "学生団体OnigireeZを立ち上げました。",
+                about_title_prefix: "学生団体", about_title_suffix: "とは？",
                 about_desc: "私たちは、愛媛県の高校生で結成された学生団体です。「学生が国境を越えて、視野を大きく広げられる世界」を目指して活動しています。",
-                vision_text: "世界の学生との出会いが、<br>未来の可能性を広げる社会",
-                mission_text: "日本と世界の学生が友情で<br>\"つながる\"きっかけをつくる",
-                
-                problem_title: "こんな「もったいない」を解決したい",
-                problem_desc: "「海外の友達が欲しい」「異文化に触れたい」と思っても、特に地方ではその機会が少ないのが現状。私たちはその課題を、オンラインの力で解決します。",
-                problem_card1_title: "異文化交流",
-                problem_card1_desc: "ゲームやトークを通して、お互いの国の文化や学校生活のリアルを知ることができます。",
-                problem_card2_title: "地域の格差解消",
-                problem_card2_desc: "住んでいる場所に関わらず、誰でも気軽に世界とつながれる場をつくります。",
-                
-                event_tag: "バーチャル交換留学",
-                event_desc: "第一弾はフィリピンの高校生とつながるイベント！ゲームなどを通して、お互いの \"リアル\" を知り、友情を育みませんか？",
-                label_date: "日程:",
-                event_date: "2025年9月14日(日)",
-                label_time: "時間:",
-                event_time: "9:00 - 12:30 (日本時間)",
-                label_target: "対象:",
-                event_target: "日本とフィリピンの中高生",
-                label_place: "場所:",
-                event_place: "オンライン (Zoom等)",
-                
+                vision_text: "世界の学生との出会いが、<br>未来の可能性を広げる社会", mission_text: "日本と世界の学生が友情で<br>\"つながる\"きっかけをつくる",
+                rep_role_label: "REPRESENTATIVE",
+                rep_message_title: "\"世界への扉は、<br>すぐそこにあります。\"",
+                rep_message_1: "こんにちは、OnigireeZ代表の土山みりです。私は高校生の時にフィリピンやエジプトでのボランティアを経験し、「言葉が違っても、心は通じ合える」という感動を味わいました。",
+                rep_message_2: "しかし、地方に住んでいると、海外の人と出会うチャンスはまだまだ少ないのが現状です。「もっと気軽に、世界中の同世代と話せたらいいのに」そんな想いから、この団体を立ち上げました。",
+                rep_message_3: "オンラインなら、距離は関係ありません。私たちと一緒に、新しい世界への一歩を踏み出してみませんか？",
+                problem_title: "こんな「もったいない」を解決したい", problem_desc: "「海外の友達が欲しい」「異文化に触れたい」と思っても、特に地方ではその機会が少ないのが現状。私たちはその課題を、オンラインの力で解決します。",
+                problem_card1_title: "異文化交流", problem_card1_desc: "ゲームやトークを通して、お互いの国の文化や学校生活のリアルを知ることができます。",
+                problem_card2_title: "地域の格差解消", problem_card2_desc: "住んでいる場所に関わらず、誰でも気軽に世界とつながれる場をつくります。",
+                event_tag: "バーチャル交換留学", event_desc: "第一弾はフィリピンの高校生とつながるイベント！ゲームなどを通して、お互いの \"リアル\" を知り、友情を育みませんか？",
+                label_date: "日程", event_date: "2025年9月14日(日)", label_time: "時間", event_time: "9:00 - 12:30 (日本時間)", label_target: "対象", event_target: "日本とフィリピンの中高生", label_place: "場所", event_place: "オンライン (Zoom等)",
+                scenes_title: "ACTIVITY SCENES", scenes_desc: "活動の様子",
+                activity_title: "ACTIVITY REPORT", activity_desc: "活動報告書・資料アーカイブ",
+                latest_event_pdf: "最新イベント報告書", latest_activity_pdf: "最新活動報告書", btn_download: "ダウンロード",
+                act_archive_title: "過去の資料アーカイブ",
+                pdf_1_name: "2024年度 活動報告書.pdf", pdf_2_name: "WorldBuddy Vol.1 イベントレポート.pdf",
                 team_title: "運営メンバー",
-                member1_name: "土山 みり", member1_role: "代表", member1_desc: "フィリピンやエジプトでのボランティア経験を活かし、世界と繋がる楽しさを伝えます！",
-                member2_name: "井笹 慶之介", member2_role: "発信担当", member2_desc: "持ち前の明るさで、この活動の魅力をSNSなどを通してどんどん発信していきます！",
-                member3_name: "宮本 杏朱", member3_role: "デザイン担当", member3_desc: "美術やデジタル分野が得意。みんながワクワクするようなデザインを目指します！",
-                member4_name: "忽那 将臣", member4_role: "IT担当", member4_desc: "テクノロジーの力でスムーズな交流をサポートします！",
-
-                sponsor_title: "協賛・スポンサー",
-                sponsor_desc: "私たちの活動を支援してくださる企業様・団体様を募集しております。",
-                plan_gold_1: "ロゴ大サイズ掲載",
-                plan_gold_2: "イベントでの司会言及",
-                plan_gold_3: "SNSでの単独紹介",
-                plan_silver_1: "ロゴ中サイズ掲載",
-                plan_silver_2: "HPへのリンク設置",
-                plan_silver_3: "SNSでの一括紹介",
-                plan_bronze_1: "社名(テキスト)掲載",
-                plan_bronze_2: "活動報告書の送付",
-                sponsor_list_title: "ご協賛企業・団体様",
-                sponsor_contact_text: "協賛に関するお問い合わせはこちらから",
-                
-                cta_title: "世界とつながる準備はできましたか？",
-                cta_desc: "申し込みは簡単です。以下のボタンからGoogleフォームへ進み、必要事項を入力してください。",
-                cta_btn: "Googleフォームで申し込む"
+                member1_name: "土山 みり", member1_role: "代表", member1_desc: "経歴：学生団体トンガリーズ代表・第7期GTE生徒会長・BEAU LABO 19期生・ZERO2MAKERに参加・フィリピンへのボランティア留学・エジプトでボランティア　　自己紹介：愛媛県在住高校2年生の土山みりです。学生団体OnigireeZの代表を務めています。国際系やスタートアップに興味があります！趣味はKPOP、韓ドラ、ミュージカル鑑賞です！",
+                member2_name: "井笹 慶之介", member2_role: "発信担当", member2_desc: "おはようございます。こんにちは。こんばんは。私の名前は井笹慶之介です。現在、onegireezで会計係を担当しています。海外留学に興味があり、また「愛媛県内で海外の友達をつくる」というユニークな発想に感銘を受け、この団体に所属しました。簡単に経歴をご紹介します。二神塾幼稚舎を卒業後、湯築小学校に進学し、卒業。その後、済美平成中等教育学校へ進学し、現在に至ります。趣味はサーフィンとスケートボードで、自然の中で過ごす時間が大好きです。",
+                member3_name: "宮本 杏朱", member3_role: "デザイン担当", member3_desc: "学生団体ではメディアデザインを担当しています！趣味は音楽と映画鑑賞で、特に好きなドラマは『Stranger Things』です。これまでに学チャレプログラムに参加し、その学びをこの活動にも活かしていきたいと思っています。これからは仲間と協力しながら、OnigireeZという団体をさらに成長させていきたいです。まだ未熟な部分もありますが、一生懸命取り組むのでよろしくお願いします！",
+                member4_name: "忽那 将臣", member4_role: "IT担当", member4_desc: "こんにちは、忽那将臣です。これまで課題探究の活動やロボットづくりなど、興味を持ったことに楽しく全力で取り組んできました。地域課題を解決したいというこの団体に関心を持って参加しました。これまで、済美平成で自然科学部として探究活動をさまざまな観点から行いました。交流のサポートをしっかり行い、スムーズな交流が行えるようサポートしていきます！よろしくお願いします。",
+                faq_subtitle: "よくあるご質問",
+                faq_q1: "英語が苦手でも参加できますか？", faq_a1: "はい、大歓迎です！イベントでは、日本語が話せるメンバーや翻訳ツールも活用しながらサポートします。言語力よりも「伝えようとする気持ち」が大切です。",
+                faq_q2: "参加費はかかりますか？", faq_a2: "基本的には無料です。オンラインイベントの場合、Zoom等の通信費のみご負担をお願いしております。",
+                faq_q3: "スマホからでも参加できますか？", faq_a3: "はい、スマートフォンやタブレットからでもご参加いただけます。ただし、画面共有などを行う場合があるため、パソコンでの参加を推奨しています。",
+                sponsor_title: "協賛・スポンサー", sponsor_desc: "私たちの活動を支援してくださる企業様・団体様を募集しております。",
+                plan_gold_1: "ロゴ大サイズ掲載", plan_gold_2: "活動報告書の送付", plan_gold_3: "SNSでの単独紹介",
+                plan_silver_1: "ロゴ中サイズ掲載", plan_silver_2: "活動報告書の送付", plan_silver_3: "SNSでの一括紹介",
+                plan_bronze_1: "社名(テキスト)掲載", plan_bronze_2: "活動報告書の送付",
+                sponsor_list_title: "Special Thanks", sponsor_contact_text: "協賛に関するお問い合わせはこちらから", sponsor_download: "協賛資料をダウンロード",
+                cta_title: "世界とつながる準備はできましたか？", cta_desc: "申し込みは簡単です。以下のボタンからGoogleフォームへ進み、必要事項を入力してください。", cta_btn: "Googleフォームで申し込む"
             },
             en: {
                 logo_prefix: "Student Org",
-                nav_about: "About Us",
-                nav_event: "Events",
-                nav_team: "Team",
-                nav_sponsors: "Sponsorship",
-                nav_apply: "Apply",
-                
-                hero_subtitle: "Connecting Japanese and Global Students through Friendship.",
+                nav_about: "About Us", nav_scenes: "Scenes", nav_activities: "Archives", nav_event: "Events", nav_team: "Team", nav_sponsors: "Sponsorship", nav_apply: "Apply",
+                hero_title_1: "Connect with", hero_title_2: "the World", hero_title_3: "New Experience.",
+                hero_subtitle: "Connecting Japanese and Global Students through Friendship.<br>Virtual exchange beyond borders.",
                 hero_btn: "Apply Now",
-                
-                about_title_prefix: "What is",
-                about_title_suffix: "?",
+                news_viewall: "View All", tag_event: "Event", tag_info: "Info", tag_report: "Report",
+                news_1: "Applications for \"WorldBuddy ~Philippines~\" are now open!",
+                news_2: "We have renewed our official website.",
+                news_3: "We held our regular meeting in June.",
+                news_4: "Inaugural meeting of Student Organization OnigireeZ was held.",
+                about_title_prefix: "What is", about_title_suffix: "?",
                 about_desc: "We are a student organization based in Ehime, Japan. We aim to create a world where students can cross borders and broaden their horizons.",
-                vision_text: "A society where meeting global students<br>expands future possibilities.",
-                mission_text: "Creating opportunities for students<br>to connect through friendship.",
-                
-                problem_title: "Solving the \"Missed Opportunities\"",
-                problem_desc: "Even if you want to make international friends, opportunities are limited, especially in rural areas. We solve this problem through online power.",
-                problem_card1_title: "Cultural Exchange",
-                problem_card1_desc: "Through games and talks, you can learn about the real culture and school life of each other's countries.",
-                problem_card2_title: "Bridging Regional Gaps",
-                problem_card2_desc: "We create a place where anyone can easily connect with the world, regardless of where they live.",
-                
-                event_tag: "Virtual Exchange Program",
-                event_desc: "Our Second event connects with high school students in the Indonesia! Let's get to know each other's \"real\" lives and build friendships through games.",
-                label_date: "Date:",
-                event_date: "Jan , 2026 ",
-                label_time: "Time:",
-                event_time: "TBD",
-                label_target: "Target:",
-                event_target: "Students in Japan & Indonesia",
-                label_place: "Place:",
-                event_place: "Online (Zoom, etc.)",
-                
+                vision_text: "A society where meeting global students<br>expands future possibilities.", mission_text: "Creating opportunities for students<br>to connect through friendship.",
+                rep_role_label: "REPRESENTATIVE",
+                rep_message_title: "\"The door to the world<br>is right there.\"",
+                rep_message_1: "Hello, I'm Miri Tsuchiyama, representative of OnigireeZ. When I was in high school, I volunteered in the Philippines and Egypt, and was moved by the fact that \"even if languages are different, hearts can connect.\"",
+                rep_message_2: "However, living in rural areas, opportunities to meet people from overseas are still limited. \"I wish I could talk to my generation around the world more easily.\" That's why I started this organization.",
+                rep_message_3: "With online, distance doesn't matter. Why don't you take a step into a new world with us?",
+                problem_title: "Solving the \"Missed Opportunities\"", problem_desc: "Even if you want to make international friends, opportunities are limited, especially in rural areas. We solve this problem through online power.",
+                problem_card1_title: "Cultural Exchange", problem_card1_desc: "Through games and talks, you can learn about the real culture and school life of each other's countries.",
+                problem_card2_title: "Bridging Regional Gaps", problem_card2_desc: "We create a place where anyone can easily connect with the world, regardless of where they live.",
+                event_tag: "Virtual Exchange Program", event_desc: "Our first event connects with high school students in the Philippines! Let's get to know each other's \"real\" lives and build friendships through games.",
+                label_date: "Date", event_date: "Sep 14, 2025 (Sun)", label_time: "Time", event_time: "9:00 - 12:30 (JST)", label_target: "Target", event_target: "Students in Japan & Philippines", label_place: "Place", event_place: "Online (Zoom, etc.)",
+                scenes_title: "ACTIVITY SCENES", scenes_desc: "Snapshots of our activities",
+                activity_title: "ACTIVITY REPORT", activity_desc: "Activity reports and document archives.",
+                latest_event_pdf: "Latest Event Report", latest_activity_pdf: "Latest Activity Report", btn_download: "Download",
+                act_archive_title: "Activity Archives",
+                pdf_1_name: "FY2024 Activity Report.pdf", pdf_2_name: "WorldBuddy Vol.1 Event Report.pdf",
                 team_title: "Our Team",
                 member1_name: "Miri Tsuchiyama", member1_role: "Representative", member1_desc: "Using my volunteer experience in Philippines and Egypt to share the joy of connecting with the world!",
                 member2_name: "Keinosuke Isasa", member2_role: "PR Manager", member2_desc: "I will actively spread the charm of this activity through SNS with my brightness!",
                 member3_name: "Anika Miyamoto", member3_role: "Designer", member3_desc: "Good at art and digital fields. I aim to create designs that make everyone excited!",
-                member4_name: "Masaomi Kutsuna", member4_role: "IT Manager", member4_desc: "Supporting smooth communication",
-
-                sponsor_title: "Sponsorship",
-                sponsor_desc: "We are looking for companies and organizations to support our activities.",
-                plan_gold_1: "Large Logo Display",
-                plan_gold_2: "Mention by MC at Events",
-                plan_gold_3: "Dedicated SNS Post",
-                plan_silver_1: "Medium Logo Display",
-                plan_silver_2: "Link to your Website",
-                plan_silver_3: "Group SNS Post",
-                plan_bronze_1: "Company Name Listing",
-                plan_bronze_2: "Activity Report Sent",
-                sponsor_list_title: "Special Thanks",
-                sponsor_contact_text: "Contact us for sponsorship details",
-                
-                cta_title: "Ready to connect with the world?",
-                cta_desc: "Applying is easy. Click the button below to proceed to the Google Form and fill in the details.",
-                cta_btn: "Apply via Google Form"
+                member4_name: "Masaomi Kutsuna", member4_role: "IT Manager", member4_desc: "Supporting smooth communication with the power of technology!",
+                faq_subtitle: "Frequently Asked Questions",
+                faq_q1: "Can I join even if I'm not good at English?", faq_a1: "Yes, you are very welcome! Members who speak Japanese and translation tools will support you. The \"desire to communicate\" is more important than language skills.",
+                faq_q2: "Is there a participation fee?", faq_a2: "Basically free. For online events, please bear only the communication costs for Zoom, etc.",
+                faq_q3: "Can I join from a smartphone?", faq_a3: "Yes, you can join from a smartphone or tablet. However, since we may share screens, we recommend joining from a computer.",
+                sponsor_title: "Sponsorship", sponsor_desc: "We are looking for companies and organizations to support our activities.",
+                plan_gold_1: "Large Logo Display", plan_gold_2: "Mention by MC at Events", plan_gold_3: "Dedicated SNS Post",
+                plan_silver_1: "Medium Logo Display", plan_silver_2: "Link to your Website", plan_silver_3: "Group SNS Post",
+                plan_bronze_1: "Company Name Listing", plan_bronze_2: "Activity Report Sent",
+                sponsor_list_title: "Special Thanks", sponsor_contact_text: "Contact us for sponsorship details", sponsor_download: "Download Sponsorship Guide",
+                cta_title: "Ready to connect with the world?", cta_desc: "Applying is easy. Click the button below to proceed to the Google Form and fill in the details.", cta_btn: "Apply via Google Form"
             }
         };
 
-        // ----------------------------------------------------
-        // プログラム本体
-        // ----------------------------------------------------
-
         lucide.createIcons();
+        const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
+        const observer = new IntersectionObserver((entries, observer) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('active'); } }); }, observerOptions);
+        document.querySelectorAll('.reveal').forEach(el => { observer.observe(el); });
+
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
-        
-        mobileMenuButton.addEventListener('click', () => { 
-            mobileMenu.classList.toggle('hidden'); 
-        });
+        mobileMenuButton.addEventListener('click', () => { mobileMenu.classList.toggle('hidden'); });
 
         const langSwitchers = [document.getElementById('lang-switcher-pc'), document.getElementById('lang-switcher-mobile')];
-        
         function setLanguage(lang) {
             document.querySelectorAll('[data-i18n]').forEach(element => {
                 const key = element.getAttribute('data-i18n');
-                if (translations[lang] && translations[lang][key]) {
-                    element.innerHTML = translations[lang][key]; 
-                }
+                if (translations[lang] && translations[lang][key]) { element.innerHTML = translations[lang][key]; }
             });
-
             const applyLinks = document.querySelectorAll('.apply-link');
-            applyLinks.forEach(link => {
-                link.href = FORM_URLS[lang];
-            });
-
-            langSwitchers.forEach(switcher => {
-                if(switcher) switcher.value = lang;
-            });
+            applyLinks.forEach(link => { link.href = FORM_URLS[lang]; });
+            langSwitchers.forEach(switcher => { if(switcher) switcher.value = lang; });
         }
-
-        langSwitchers.forEach(switcher => {
-            if(switcher) {
-                switcher.addEventListener('change', (e) => {
-                    setLanguage(e.target.value);
-                });
-            }
-        });
-
+        langSwitchers.forEach(switcher => { if(switcher) { switcher.addEventListener('change', (e) => { setLanguage(e.target.value); }); } });
         setLanguage('ja');
         
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 const targetId = this.getAttribute('href');
-                if (mobileMenu && !mobileMenu.classList.contains('hidden')) { 
-                    mobileMenu.classList.add('hidden'); 
-                }
+                if (mobileMenu && !mobileMenu.classList.contains('hidden')) { mobileMenu.classList.add('hidden'); }
                 const targetElement = document.querySelector(targetId);
-                if(targetElement) {
-                    targetElement.scrollIntoView({ behavior: 'smooth' });
-                }
+                if(targetElement) { targetElement.scrollIntoView({ behavior: 'smooth' }); }
             });
         });
+
+        // 共通トグル関数
+        function setupToggle(items, buttonId, threshold, hiddenClass = 'hidden-item') {
+            const btn = document.getElementById(buttonId);
+            if (!btn) return;
+
+            // 初期化: 閾値以降のアイテムを隠す
+            items.forEach((item, index) => {
+                if (index >= threshold) item.classList.add(hiddenClass);
+                else item.classList.remove(hiddenClass); // Reset if needed
+            });
+
+            // クリックイベント
+            btn.addEventListener('click', () => {
+                // 閾値の次のアイテム（インデックス=threshold）が隠れているかどうかで判定
+                if (items.length <= threshold) return; 
+                
+                const isHidden = items[threshold].classList.contains(hiddenClass);
+                
+                items.forEach((item, index) => {
+                    if (index >= threshold) {
+                        if (isHidden) item.classList.remove(hiddenClass); // Show
+                        else item.classList.add(hiddenClass); // Hide
+                    }
+                });
+
+                // ボタンのテキストとアイコン更新
+                const span = btn.querySelector('.btn-text');
+                const icon = btn.querySelector('i');
+                
+                // Note: Logic inverted because we just toggled the state
+                if (isHidden) { // Now visible
+                    if(span) span.textContent = "Close";
+                    if(icon) icon.style.transform = "rotate(180deg)";
+                } else { // Now hidden
+                    if(span) span.textContent = "View All";
+                    if(icon) icon.style.transform = "rotate(0deg)";
+                }
+            });
+        }
+
+        // NEWS: 2つ表示、3つ目以降隠す
+        const newsItems = document.querySelectorAll('.news-item');
+        setupToggle(newsItems, 'view-all-news', 2);
+
+        // SCENES: 4つ表示、5つ目以降隠す
+        const sceneItems = document.querySelectorAll('.scene-item');
+        setupToggle(sceneItems, 'view-all-scenes', 4);
+
+        // Archive PDFs: 2つ表示、3つ目以降隠す
+        const pdfItems = document.querySelectorAll('.pdf-item');
+        setupToggle(pdfItems, 'view-all-pdfs', 2);
+
     </script>
 </body>
 </html>
