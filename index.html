@@ -717,20 +717,35 @@
             }
 
             globalNewsData.forEach((item, index) => {
-                // 英語が空なら日本語を表示する
                 const tag = (lang === 'en' && item.tag_en) ? item.tag_en : item.tag_ja;
                 const title = (lang === 'en' && item.title_en) ? item.title_en : item.title_ja;
 
-                const colorClass = item.tagType === 'event' ? 'text-primary bg-primary/20' : 'text-secondary bg-secondary/20';
-                const borderClass = item.tagType === 'event' ? 'hover:border-primary' : 'hover:border-secondary';
+                // TagTypeに合わせて色を変えるロジック
+                let tagColors = {
+                    text: 'text-secondary', 
+                    bg: 'bg-secondary/20', 
+                    border: 'hover:border-secondary',
+                    hoverText: 'group-hover:text-secondary'
+                };
+
+                const type = (item.tagType || "").toLowerCase();
+
+                if (type === 'event') {
+                    tagColors = { text: 'text-primary', bg: 'bg-primary/20', border: 'hover:border-primary', hoverText: 'group-hover:text-primary' };
+                } else if (type === 'report' || type === 'activity') {
+                    tagColors = { text: 'text-green-400', bg: 'bg-green-500/20', border: 'hover:border-green-500', hoverText: 'group-hover:text-green-400' };
+                } else if (type === 'notice' || type === 'important') {
+                    tagColors = { text: 'text-red-400', bg: 'bg-red-500/20', border: 'hover:border-red-500', hoverText: 'group-hover:text-red-400' };
+                }
+
                 const hiddenClass = index >= 2 ? 'hidden-item' : ''; 
                 
                 const html = `
-                    <a href="${item.url}" class="news-item ${hiddenClass} group block glass-card p-6 rounded-xl hover:bg-white/5 transition border-l-4 border-transparent ${borderClass}">
+                    <a href="${item.url}" class="news-item ${hiddenClass} group block glass-card p-6 rounded-xl hover:bg-white/5 transition border-l-4 border-transparent ${tagColors.border}">
                         <div class="flex flex-col md:flex-row md:items-center gap-4">
                             <span class="text-sm text-gray-400 font-mono">${item.date}</span>
-                            <span class="inline-block px-2 py-1 ${colorClass} text-xs font-bold rounded">${tag}</span>
-                            <h3 class="text-lg font-bold text-white group-hover:text-${item.tagType === 'event' ? 'primary' : 'secondary'} transition">${title}</h3>
+                            <span class="inline-block px-2 py-1 ${tagColors.text} ${tagColors.bg} text-xs font-bold rounded">${tag}</span>
+                            <h3 class="text-lg font-bold text-white ${tagColors.hoverText} transition">${title}</h3>
                         </div>
                     </a>
                 `;
@@ -843,48 +858,6 @@
                 faq_q2: "参加費はかかりますか？", faq_a2: "基本的には500円です。オンラインイベントの場合、Zoom等の通信費もご負担をお願いしております。Wi-Fi完備施設での実施がほとんどです。",
                 faq_q3: "スマホからでも参加できますか？", faq_a3: "はい、スマートフォンやタブレットからでもご参加いただけます。ただし、画面共有などを行う場合があるため、パソコンでの参加を推奨しています。",
                 sponsor_title: "協賛・スポンサー", sponsor_desc: "私たちの活動を支援してくださる企業様・団体様を募集しております。",
-                plan_gold_1: "ロゴ大サイズ掲載", plan_gold_2: "活動報告書の送付", plan_gold_3: "SNSでの単独紹介",
-                plan_silver_1: "ロゴ中サイズ掲載", plan_silver_2: "活動報告書の送付", plan_silver_3: "SNSでの一括紹介",
-                plan_bronze_1: "社名(テキスト)掲載", plan_bronze_2: "活動報告書の送付",
-                sponsor_list_title: "Special Thanks", sponsor_contact_text: "協賛に関するお問い合わせはこちらから", sponsor_download: "協賛資料をダウンロード",
-                sponsor_note: "※こちらは全て企業様向けのご案内です。個人様向けの案内は資料をダウンロードしてご確認をお願いします。",
-                cta_title: "世界とつながる準備はできましたか？", cta_desc: "申し込みは簡単です。以下のボタンからGoogleフォームへ進み、必要事項を入力してください。", cta_btn: "Googleフォームで申し込む"
-            },
-            en: {
-                logo_prefix: "Student Org",
-                nav_about: "About Us", nav_scenes: "Scenes", nav_activities: "Archives", nav_event: "Events", nav_team: "Team", nav_sponsors: "Sponsorship", nav_apply: "Apply",
-                hero_title_1: "Connect with", hero_title_2: "the World", hero_title_3: "New Experience.",
-                hero_subtitle: "Connecting Japanese and Global Students through Friendship.<br>Virtual exchange beyond borders.",
-                hero_btn: "Apply Now",
-                news_viewall: "View All", 
-                about_title_prefix: "What is", about_title_suffix: "?",
-                about_desc: "We are a student organization based in Ehime, Japan. We aim to create a world where students can cross borders and broaden their horizons.",
-                vision_text: "A society where meeting global students<br>expands future possibilities.", mission_text: "Creating opportunities for students<br>to connect through friendship.",
-                rep_role_label: "REPRESENTATIVE",
-                rep_message_title: "\"The door to the world<br>is right there.\"",
-                rep_message_1: "Hello, I'm Miri Tsuchiyama, representative of OnigireeZ. Through my volunteer experience in the Philippines and Egypt, I experienced many moments where my world expanded significantly by interacting with people of the same generation from different environments.",
-                rep_message_2: "In that process, I strongly felt that 'there is international exchange that can only be created now as students', so I established this student organization.",
-                rep_message_3: "We will continue to work on planning and operation to create a place where high school students in Japan and overseas can learn from each other and broaden their horizons. We will continue to take on new challenges step by step, so we would appreciate your support.",
-                problem_title: "Solving the \"Missed Opportunities\"", problem_desc: "Even if you want to make international friends, opportunities are limited, especially in rural areas. We solve this problem through online power.",
-                problem_card1_title: "Cultural Exchange", problem_card1_desc: "Through games and talks, you can learn about the real culture and school life of each other's countries.",
-                problem_card2_title: "Bridging Regional Gaps", problem_card2_desc: "We create a place where anyone can easily connect with the world, regardless of where they live.",
-                event_tag: "Virtual Exchange Program", event_desc: "Our first event connects with high school students in the Philippines! Let's get to know each other's \"real\" lives and build friendships through games.",
-                label_date: "Date", event_date: "Sep 14, 2025 (Sun)", label_time: "Time", event_time: "9:00 - 12:30 (JST)", label_target: "Target", event_target: "Students in Japan & Philippines", label_place: "Place", event_place: "Online (Zoom, etc.)",
-                scenes_title: "ACTIVITY SCENES", scenes_desc: "Snapshots of our activities",
-                activity_title: "ACTIVITY REPORT", activity_desc: "Activity reports and document archives.",
-                latest_event_pdf: "Latest Event Report", latest_activity_pdf: "Latest Activity Report", btn_download: "Download",
-                act_archive_title: "Activity Archives",
-                pdf_intro_name: "Organization Guide.pdf",
-                team_title: "Our Team",
-                member1_name: "Miri Tsuchiyama", member1_role: "Representative", member1_desc: "Background: Representative of Student Org Tongari-z, 7th GTE Student Council President, BEAU LABO 19th batch, participated in ZERO2MAKER, volunteer study abroad in the Philippines, volunteer in Egypt. Bio: I'm Miri Tsuchiyama, a 2nd year high school student living in Ehime. I'm interested in international relations and startups! Hobbies: K-POP, K-Dramas, Musicals!",
-                member2_name: "Keinosuke Isasa", member2_role: "PR Manager", member2_desc: "Hello! I'm Keinosuke Isasa. I'm in charge of accounting at OnigireeZ. I'm interested in studying abroad, and I joined this organization because I was impressed by the unique idea of 'making international friends within Ehime'. I graduated from Futagamijuku Kindergarten, Yuzuki Elementary School, and now attend Saibi Heisei Secondary School. My hobbies are surfing and skateboarding, and I love spending time in nature.",
-                member3_name: "Anika Miyamoto", member3_role: "Designer", member3_desc: "I'm in charge of media design! My hobbies are listening to music and watching movies, especially 'Stranger Things'. I participated in the Gaku-Challe program and want to apply what I learned to this activity. I want to grow OnigireeZ further with my friends. I'm still learning, but I'll do my best!",
-                member4_name: "Masaomi Kutsuna", member4_role: "IT Manager", member4_desc: "Hello, I'm Masaomi Kutsuna. I have enjoyed working on inquiry-based activities and robot making. I joined this group because I was interested in solving regional issues. At Saibi Heisei, I conducted inquiry activities from various perspectives as a member of the Natural Science Club. I will support smooth communication with my IT skills! Thank you.",
-                faq_subtitle: "Frequently Asked Questions",
-                faq_q1: "Can I join even if I'm not good at English?", faq_a1: "Yes, you are very welcome! Members who speak Japanese and translation tools will support you. The \"desire to communicate\" is more important than language skills.",
-                faq_q2: "Is there a participation fee?", faq_a2: "Basically 500 yen. For online events, please bear the communication costs for Zoom, etc. Most events are held in facilities with Wi-Fi.",
-                faq_q3: "Can I join from a smartphone?", faq_a3: "Yes, you can join from a smartphone or tablet. However, since we may share screens, we recommend joining from a computer or tablet.",
-                sponsor_title: "Sponsorship", sponsor_desc: "We are looking for companies and organizations to support our activities.",
                 plan_gold_1: "Large Logo Display", plan_gold_2: "Activity Report Sent", plan_gold_3: "Dedicated SNS Post",
                 plan_silver_1: "Medium Logo Display", plan_silver_2: "Activity Report Sent", plan_silver_3: "Group SNS Post",
                 plan_bronze_1: "Company Name Listing", plan_bronze_2: "Activity Report Sent",
