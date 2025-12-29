@@ -505,7 +505,7 @@
 
                 <section id="about" class="pt-8 pb-8 relative bg-[#020617]"></section>
             </div>
-        </sections>
+        </section>
 
         <section class="py-24 bg-gradient-to-br from-slate-900 to-black text-white relative overflow-hidden">
             <div class="absolute inset-0 bg-secondary/10 opacity-30 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
@@ -596,19 +596,24 @@
     
     <script>
         // ==========================================
-        //  設定エリア：ここでIDを設定してください
+        //  設定エリア
         // ==========================================
         
         // シートID 
         const SHEET_ID = "1zmYgwi1uOFB9WJLyNDwf47aKUeWDIw3rcNYBop4kdzQ"; 
         
         // NewsシートのGID
-        const NEWS_GID = "0";     
+        const NEWS_GID = "0";      
 
-        // ScenesシートのGID (教えていただいたID)
+        // ScenesシートのGID
         const SCENES_GID = "1628876042"; 
 
         const FORM_URLS = { ja: "https://forms.gle/fXoRouDuiLp1R3uN8", en: "https://forms.gle/LQ3CncSbL6iCktJR7" };
+
+        // グローバル変数
+        let globalNewsData = [];
+        let globalScenesData = [];
+        let currentLang = 'ja';
 
         // CSVパーサー
         function parseCSV(text) {
@@ -639,7 +644,7 @@
             return rows;
         }
 
-        // Googleドライブの画像を直接リンクに変換する
+        // 画像リンク変換
         function convertDriveLink(url) {
             if (!url) return '';
             if (url.includes('drive.google.com') && url.includes('id=')) {
@@ -651,18 +656,27 @@
             return url;
         }
 
-        // スプレッドシートからデータを取得
+        // スプレッドシートからデータを取得（安全対策版）
         async function fetchData() {
             try {
                 // News取得
                 const newsRes = await fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${NEWS_GID}`);
                 if (!newsRes.ok) throw new Error("News sheet not found");
                 const newsText = await newsRes.text();
-                const newsRows = parseCSV(newsText).slice(1); // ヘッダー除去
-                // A=Date, B=Tag, C=TagType, D=Title, E=URL
-                const newsData = newsRows.map(r => ({ date: r[0], tag: r[1], tagType: r[2], title: r[3], url: r[4] })).filter(i => i.date);
+                const newsRows = parseCSV(newsText).slice(1);
                 
-                renderNews(newsData);
+                // 列が存在しなくてもエラー回避 (|| "")
+                globalNewsData = newsRows.map(r => ({ 
+                    date: r[0] || "", 
+                    tag_ja: r[1] || "", 
+                    tag_en: r[2] || "", 
+                    tagType: r[3] || "info", 
+                    title_ja: r[4] || "", 
+                    title_en: r[5] || "", 
+                    url: r[6] || "#"
+                })).filter(i => i.date); 
+                
+                renderNews(currentLang);
                 document.getElementById('news-loading').style.display = 'none';
 
                 // Scenes取得
@@ -670,38 +684,53 @@
                 if (!scenesRes.ok) throw new Error("Scenes sheet not found");
                 const scenesText = await scenesRes.text();
                 const scenesRows = parseCSV(scenesText).slice(1);
-                // A=Date, B=Title, C=Desc, D=Image
-                const scenesData = scenesRows.map(r => ({ date: r[0], title: r[1], desc: r[2], image: convertDriveLink(r[3]) })).filter(i => i.date);
                 
-                renderScenes(scenesData);
+                globalScenesData = scenesRows.map(r => ({ 
+                    date: r[0] || "", 
+                    title_ja: r[1] || "", 
+                    title_en: r[2] || "", 
+                    desc_ja: r[3] || "", 
+                    desc_en: r[4] || "", 
+                    image: convertDriveLink(r[5] || "") 
+                })).filter(i => i.date);
+                
+                renderScenes(currentLang);
                 document.getElementById('scenes-loading').style.display = 'none';
 
             } catch (e) {
-                console.error("データの読み込みに失敗しました:", e);
-                // エラー時はフォールバック表示（何もしないか、メッセージを出す）
-                if(document.getElementById('news-list').innerHTML === "") {
-                     document.getElementById('news-list').innerHTML = '<p class="text-gray-500">データを読み込めませんでした。スプレッドシートの公開設定を確認してください。</p>';
-                }
+                console.error("Error:", e);
+                // エラー時もローディングだけは消す
                 document.getElementById('news-loading').style.display = 'none';
                 document.getElementById('scenes-loading').style.display = 'none';
             }
         }
 
-        // ニュース描画
-        function renderNews(items) {
+        // News描画
+        function renderNews(lang) {
             const container = document.getElementById('news-list');
             if(!container) return;
             container.innerHTML = '';
-            items.forEach((item, index) => {
+            
+            if(globalNewsData.length === 0) {
+                container.innerHTML = '<p class="text-gray-500">No News Data</p>';
+                return;
+            }
+
+            globalNewsData.forEach((item, index) => {
+                // 英語が空なら日本語を表示する
+                const tag = (lang === 'en' && item.tag_en) ? item.tag_en : item.tag_ja;
+                const title = (lang === 'en' && item.title_en) ? item.title_en : item.title_ja;
+
                 const colorClass = item.tagType === 'event' ? 'text-primary bg-primary/20' : 'text-secondary bg-secondary/20';
                 const borderClass = item.tagType === 'event' ? 'hover:border-primary' : 'hover:border-secondary';
                 const hiddenClass = index >= 2 ? 'hidden-item' : ''; 
+                
                 const html = `
                     <a href="${item.url}" class="news-item ${hiddenClass} group block glass-card p-6 rounded-xl hover:bg-white/5 transition border-l-4 border-transparent ${borderClass}">
                         <div class="flex flex-col md:flex-row md:items-center gap-4">
                             <span class="text-sm text-gray-400 font-mono">${item.date}</span>
-                            <span class="inline-block px-2 py-1 ${colorClass} text-xs font-bold rounded">${item.tag}</span>
-                            <h3 class="text-lg font-bold text-white group-hover:text-${item.tagType === 'event' ? 'primary' : 'secondary'} transition">${item.title}</h3>
+                            <span class="inline-block px-2 py-1 ${colorClass} text-xs font-bold rounded">${tag}</span>
+                            <h3 class="text-lg font-bold text-white group-hover:text-${item.tagType === 'event' ? 'primary' : 'secondary'} transition">${title}</h3>
                         </div>
                     </a>
                 `;
@@ -711,11 +740,20 @@
         }
 
         // Scenes描画
-        function renderScenes(items) {
+        function renderScenes(lang) {
             const container = document.getElementById('scenes-list');
             if(!container) return;
             container.innerHTML = '';
-            items.forEach((item, index) => {
+
+            if(globalScenesData.length === 0) {
+                container.innerHTML = '<p class="text-gray-500">No Scenes Data</p>';
+                return;
+            }
+
+            globalScenesData.forEach((item, index) => {
+                const title = (lang === 'en' && item.title_en) ? item.title_en : item.title_ja;
+                const desc = (lang === 'en' && item.desc_en) ? item.desc_en : item.desc_ja;
+
                 const hiddenClass = index >= 4 ? 'hidden-item' : ''; 
                 const html = `
                     <div class="scene-item ${hiddenClass} glass-card rounded-2xl overflow-hidden group">
@@ -724,8 +762,8 @@
                         </div>
                         <div class="p-5">
                             <p class="text-xs text-primary font-bold mb-2">${item.date}</p>
-                            <h3 class="text-sm font-bold text-white mb-2">${item.title}</h3>
-                            <p class="text-xs text-gray-400 leading-relaxed">${item.desc}</p>
+                            <h3 class="text-sm font-bold text-white mb-2">${title}</h3>
+                            <p class="text-xs text-gray-400 leading-relaxed">${desc}</p>
                         </div>
                     </div>
                 `;
@@ -734,24 +772,30 @@
             setupToggle(document.querySelectorAll('.scene-item'), 'view-all-scenes', 4);
         }
 
-        // 共通トグル関数
+        // トグル
         function setupToggle(items, buttonId, threshold, hiddenClass = 'hidden-item') {
             const btn = document.getElementById(buttonId);
             if (!btn) return;
             const newBtn = btn.cloneNode(true);
             btn.parentNode.replaceChild(newBtn, btn);
 
+            const span = newBtn.querySelector('.btn-text');
+            const icon = newBtn.querySelector('i');
+            // 初期状態
+            if(span) span.textContent = "View All";
+            if(icon) icon.style.transform = "rotate(0deg)";
+
             newBtn.addEventListener('click', () => {
                 if (items.length <= threshold) return; 
                 const isHidden = items[threshold].classList.contains(hiddenClass);
+                
                 items.forEach((item, index) => {
                     if (index >= threshold) {
                         if (isHidden) item.classList.remove(hiddenClass); 
                         else item.classList.add(hiddenClass); 
                     }
                 });
-                const span = newBtn.querySelector('.btn-text');
-                const icon = newBtn.querySelector('i');
+
                 if (isHidden) { 
                     if(span) span.textContent = "Close";
                     if(icon) icon.style.transform = "rotate(180deg)";
@@ -762,7 +806,7 @@
             });
         }
         
-        // 翻訳データ (省略せず全て記載)
+        // 翻訳データ
         const translations = {
             ja: {
                 logo_prefix: "学生団体",
@@ -770,7 +814,7 @@
                 hero_title_1: "世界と", hero_title_2: "つながる", hero_title_3: "新しい体験を。",
                 hero_subtitle: "日本と世界の学生が友情で\"つながる\"きっかけを。<br>場所を超えて、心を通わせるバーチャル留学。",
                 hero_btn: "今すぐ申し込む",
-                news_viewall: "View All", tag_event: "イベント", tag_info: "お知らせ", tag_report: "活動報告",
+                news_viewall: "View All", 
                 about_title_prefix: "学生団体", about_title_suffix: "とは？",
                 about_desc: "私たちは、愛媛県の高校生で結成された学生団体です。「学生が国境を越えて、視野を大きく広げられる世界」を目指して活動しています。",
                 vision_text: "世界の学生との出会いが、<br>未来の可能性を広げる社会", mission_text: "日本と世界の学生が友情で<br>\"つながる\"きっかけをつくる",
@@ -812,7 +856,7 @@
                 hero_title_1: "Connect with", hero_title_2: "the World", hero_title_3: "New Experience.",
                 hero_subtitle: "Connecting Japanese and Global Students through Friendship.<br>Virtual exchange beyond borders.",
                 hero_btn: "Apply Now",
-                news_viewall: "View All", tag_event: "Event", tag_info: "Info", tag_report: "Report",
+                news_viewall: "View All", 
                 about_title_prefix: "What is", about_title_suffix: "?",
                 about_desc: "We are a student organization based in Ehime, Japan. We aim to create a world where students can cross borders and broaden their horizons.",
                 vision_text: "A society where meeting global students<br>expands future possibilities.", mission_text: "Creating opportunities for students<br>to connect through friendship.",
@@ -850,7 +894,7 @@
             }
         };
 
-        // 初期化実行
+        // 初期化
         lucide.createIcons();
         fetchData(); 
 
@@ -863,15 +907,23 @@
         mobileMenuButton.addEventListener('click', () => { mobileMenu.classList.toggle('hidden'); });
 
         const langSwitchers = [document.getElementById('lang-switcher-pc'), document.getElementById('lang-switcher-mobile')];
+        
         function setLanguage(lang) {
+            currentLang = lang; 
             document.querySelectorAll('[data-i18n]').forEach(element => {
                 const key = element.getAttribute('data-i18n');
                 if (translations[lang] && translations[lang][key]) { element.innerHTML = translations[lang][key]; }
             });
+
             const applyLinks = document.querySelectorAll('.apply-link');
             applyLinks.forEach(link => { link.href = FORM_URLS[lang]; });
+
             langSwitchers.forEach(switcher => { if(switcher) switcher.value = lang; });
+
+            renderNews(lang);
+            renderScenes(lang);
         }
+
         langSwitchers.forEach(switcher => { if(switcher) { switcher.addEventListener('change', (e) => { setLanguage(e.target.value); }); } });
         setLanguage('ja');
         
