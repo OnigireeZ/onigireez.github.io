@@ -62,6 +62,8 @@
         .section-subtitle { text-align: center; font-size: 1.125rem; color: #94a3b8; max-width: 700px; margin: 0 auto 4rem auto; line-height: 1.8; }
         select { appearance: none; background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e"); background-position: right 0.5rem center; background-repeat: no-repeat; background-size: 1.25em 1.25em; }
         .hidden-item { display: none !important; }
+        .loading-spinner { border: 4px solid rgba(255, 255, 255, 0.1); width: 36px; height: 36px; border-radius: 50%; border-left-color: #FB923C; animation: spin 1s linear infinite; margin: 0 auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body class="antialiased selection:bg-primary selection:text-white">
@@ -145,46 +147,8 @@
                     </button>
                 </div>
                 
-                <div id="news-list" class="space-y-4 reveal">
-                    <a href="https://note.com/dear_hyena7759/portal" class="news-item group block glass-card p-6 rounded-xl hover:bg-white/5 transition border-l-4 border-transparent hover:border-secondary">
-                        <div class="flex flex-col md:flex-row md:items-center gap-4">
-                            <span class="text-sm text-gray-400 font-mono">2025.12.07</span>
-                            <span class="inline-block px-2 py-1 bg-secondary/20 text-secondary text-xs font-bold rounded" data-i18n="tag_info">お知らせ</span>
-                            <h3 class="text-lg font-bold text-white group-hover:text-secondary transition" data-i18n="news_5">学生団体OnigireeZのno+eを開設しました！</h3>
-                        </div>
-                    </a>
-                    
-                    <a href="https://onigireez.github.io" class="news-item group block glass-card p-6 rounded-xl hover:bg-white/5 transition border-l-4 border-transparent hover:border-secondary">
-                        <div class="flex flex-col md:flex-row md:items-center gap-4">
-                            <span class="text-sm text-gray-400 font-mono">2025.12.07</span>
-                            <span class="inline-block px-2 py-1 bg-secondary/20 text-secondary text-xs font-bold rounded" data-i18n="tag_info">お知らせ</span>
-                            <h3 class="text-lg font-bold text-white group-hover:text-secondary transition" data-i18n="news_1">Webサイトをリニューアルオープンしました。</h3>
-                        </div>
-                    </a>
-
-                    <a href="https://www.instagram.com/p/DO0WnVMEZDr/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" class="news-item hidden-item group block glass-card p-6 rounded-xl hover:bg-white/5 transition border-l-4 border-transparent hover:border-primary">
-                        <div class="flex flex-col md:flex-row md:items-center gap-4">
-                            <span class="text-sm text-gray-400 font-mono">2025.09.07</span>
-                            <span class="inline-block px-2 py-1 bg-primary/20 text-primary text-xs font-bold rounded" data-i18n="tag_event">イベント</span>
-                            <h3 class="text-lg font-bold text-white group-hover:text-primary transition" data-i18n="news_2">第1回イベント「Onigiri X change ~Philippines~」を開催しました！</h3>
-                        </div>
-                    </a>
-
-                    <a href="https://www.instagram.com/p/DNYY4Z4v4mJ/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" class="news-item hidden-item group block glass-card p-6 rounded-xl hover:bg-white/5 transition border-l-4 border-transparent hover:border-primary">
-                        <div class="flex flex-col md:flex-row md:items-center gap-4">
-                            <span class="text-sm text-gray-400 font-mono">2025.08.10</span>
-                            <span class="inline-block px-2 py-1 bg-primary/20 text-primary text-xs font-bold rounded" data-i18n="tag_event">イベント</span>
-                            <h3 class="text-lg font-bold text-white group-hover:text-primary transition" data-i18n="news_3">第1回イベント「Onigiri X change ~Philippines~」の募集を開始しました！</h3>
-                        </div>
-                    </a>
-                    <a href="#" class="news-item hidden-item group block glass-card p-6 rounded-xl hover:bg-white/5 transition border-l-4 border-transparent hover:border-secondary">
-                        <div class="flex flex-col md:flex-row md:items-center gap-4">
-                            <span class="text-sm text-gray-400 font-mono">2025.06.10</span>
-                            <span class="inline-block px-2 py-1 bg-secondary/20 text-secondary text-xs font-bold rounded" data-i18n="tag_info">お知らせ</span>
-                            <h3 class="text-lg font-bold text-white group-hover:text-secondary transition" data-i18n="news_4">学生団体OnigireeZを立ち上げました</h3>
-                        </div>
-                    </a>
-                </div>
+                <div id="news-loading" class="loading-spinner"></div>
+                <div id="news-list" class="space-y-4 reveal min-h-[100px]"></div>
             </div>
         </section>
 
@@ -240,7 +204,7 @@
         </section>
 
         <section class="py-24 bg-[#0f172a]">
-            <div class="container mx-auto px-6">
+             <div class="container mx-auto px-6">
                 <div class="reveal">
                     <h2 class="section-title" data-i18n="problem_title">こんな「もったいない」を解決したい</h2>
                     <p class="section-subtitle" data-i18n="problem_desc">「海外の友達が欲しい」「異文化に触れたい」と思っても、特に地方ではその機会が少ないのが現状。私たちはその課題を、オンラインの力で解決します。</p>
@@ -265,7 +229,7 @@
         </section>
 
         <section id="event" class="py-24 bg-[#020617]">
-            <div class="container mx-auto px-6">
+             <div class="container mx-auto px-6">
                 <h2 class="section-title reveal">UPCOMING EVENT</h2>
                 <div class="max-w-5xl mx-auto reveal">
                     <div class="group bg-[#0f172a] rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row h-auto border border-white/10">
@@ -315,58 +279,8 @@
                     </button>
                 </div>
 
-                <div class="grid md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-7xl mx-auto reveal" id="scenes-list">
-                    <div class="scene-item glass-card rounded-2xl overflow-hidden group">
-                        <div class="h-48 overflow-hidden relative">
-                            <img src="images/Meeting_2.png" class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
-                        </div>
-                        <div class="p-5">
-                            <p class="text-xs text-primary font-bold mb-2">2025.12.14</p>
-                            <h3 class="text-sm font-bold text-white mb-2" data-i18n="scene_1_title">企画ミーティング Part2</h3>
-                            <p class="text-xs text-gray-400 leading-relaxed" data-i18n="scene_1_desc">次回イベントに向けて運営メンバーと第8回ミーティングを行いました。準備が進んでいます！次回イベントを楽しみにしていて下さい！</p>
-                        </div>
-                    </div>
-                    <div class="scene-item glass-card rounded-2xl overflow-hidden group">
-                        <div class="h-48 overflow-hidden relative">
-                            <img src="images/meeting.jpg" class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
-                        </div>
-                        <div class="p-5">
-                            <p class="text-xs text-primary font-bold mb-2">2024.10.05</p>
-                            <h3 class="text-sm font-bold text-white mb-2" data-i18n="scene_2_title">企画ミーティング</h3>
-                            <p class="text-xs text-gray-400 leading-relaxed" data-i18n="scene_2_desc">次回イベントに向けて運営メンバーとミーティングを行いました。</p>
-                        </div>
-                    </div>
-                    <div class="scene-item glass-card rounded-2xl overflow-hidden group">
-                        <div class="h-48 overflow-hidden relative">
-                            <img src="images/event_Activity.jpg" class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
-                        </div>
-                        <div class="p-5">
-                            <p class="text-xs text-primary font-bold mb-2">2025.09.07</p>
-                            <h3 class="text-sm font-bold text-white mb-2" data-i18n="scene_3_title">第1回イベント開催</h3>
-                            <p class="text-xs text-gray-400 leading-relaxed" data-i18n="scene_3_desc">第1回イベント「Onigiri X change~Philippines~」を開催しました。フィリピンの人たちとオンラインで繋ぎ、交流をしました。</p>
-                        </div>
-                    </div>
-                    <div class="scene-item glass-card rounded-2xl overflow-hidden group">
-                        <div class="h-48 overflow-hidden relative">
-                            <img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
-                        </div>
-                        <div class="p-5">
-                            <p class="text-xs text-primary font-bold mb-2">2025.07.15</p>
-                            <h3 class="text-sm font-bold text-white mb-2" data-i18n="scene_4_title">イベント全体会議</h3>
-                            <p class="text-xs text-gray-400 leading-relaxed" data-i18n="scene_4_desc">来期の活動方針について話し合いました。</p>
-                        </div>
-                    </div>
-                    <div class="scene-item hidden-item glass-card rounded-2xl overflow-hidden group">
-                        <div class="h-48 overflow-hidden relative">
-                            <img src="images/building.jpg" class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
-                        </div>
-                        <div class="p-5">
-                            <p class="text-xs text-primary font-bold mb-2">2025.06.10</p>
-                            <h3 class="text-sm font-bold text-white mb-2" data-i18n="scene_5_title">OnigireeZ設立</h3>
-                            <p class="text-xs text-gray-400 leading-relaxed" data-i18n="scene_5_desc">記念すべき第一歩。これから頑張ります！</p>
-                        </div>
-                    </div>
-                </div>
+                <div id="scenes-loading" class="loading-spinner"></div>
+                <div class="grid md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-7xl mx-auto reveal" id="scenes-list"></div>
             </div>
         </section>
 
@@ -660,27 +574,20 @@
         <div class="container mx-auto px-6 text-center">
             <h3 class="text-3xl font-black mb-6 tracking-tight">OnigireeZ</h3>
             <div class="flex justify-center space-x-6 mb-10">
-                <a href="https://www.instagram.com/onigireez_25/" target="_blank" class="w-12 h-12 rounded-full bg-slate-900 border border-white/10 flex items-center justify-center hover:bg-gradient-to-tr hover:from-yellow-400 hover:via-red-500 hover:to-purple-500 transition duration-300 hover:border-transparent">
-                    <i data-lucide="instagram" class="w-6 h-6"></i>
+                <a href="https://www.instagram.com/onigireez_25/" target="_blank" class="w-12 h-12 flex items-center justify-center transition duration-300 hover:scale-110">
+                   <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg" alt="Instagram" class="w-full h-full">
                 </a>
                 
-                <a href="https://lin.ee/jqHKCtB" target="_blank" class="w-12 h-12 rounded-full bg-slate-900 border border-white/10 flex items-center justify-center hover:bg-[#06C755] hover:border-[#06C755] transition duration-300 group">
-                    <svg viewBox="0 0 24 24" class="w-6 h-6 fill-white" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 2C6.48 2 2 5.57 2 10.01c0 2.5 1.41 4.74 3.73 6.18.33.21.36.72.2.98l-1.07 1.77c-.12.2.03.46.26.43.91-.12 2.76-.58 3.76-1.12.3-.16.63-.23.97-.23.7.07 1.41.11 2.15.11 5.52 0 10-3.57 10-8.01C22 5.57 17.52 2 12 2zm4.18 11.23h-6.36c-.41 0-.75-.34-.75-.75V7.52c0-.41.34-.75.75-.75s.75.34.75.75v3.46h4.86c.41 0 .75.34.75.75s-.34.75-.75.75z"/>
-                    </svg>
+                <a href="https://lin.ee/jqHKCtB" target="_blank" class="w-12 h-12 flex items-center justify-center transition duration-300 hover:scale-110">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/LINE_logo.svg" alt="LINE" class="w-full h-full">
                 </a>
 
-                <a href="https://note.com/dear_hyena7759/portal" target="_blank" class="w-12 h-12 rounded-full bg-slate-900 border border-white/10 flex items-center justify-center hover:bg-[#41C9B4] hover:border-[#41C9B4] transition duration-300 group">
-                    <svg viewBox="0 0 24 24" class="w-6 h-6 stroke-white fill-none stroke-2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 19l7-7 3 3-7 7-3-3z"/>
-                        <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/>
-                        <path d="M2 2l7.586 7.586"/>
-                        <circle cx="11" cy="11" r="2"/>
-                    </svg>
+                <a href="https://note.com/dear_hyena7759/portal" target="_blank" class="w-12 h-12 rounded-full flex items-center justify-center bg-white transition duration-300 hover:scale-110 p-2">
+                    <img src="images/note_logo.png" alt="Note" class="w-full h-full object-contain">
                 </a>
 
-                <a href="mailto:onigireez.25@gmail.com" class="w-12 h-12 rounded-full bg-slate-900 border border-white/10 flex items-center justify-center hover:bg-primary transition duration-300 hover:border-transparent">
-                    <i data-lucide="mail" class="w-6 h-6"></i>
+                <a href="mailto:onigireez.25@gmail.com" class="w-12 h-12 flex items-center justify-center transition duration-300 hover:scale-110 hover:text-primary">
+                    <i data-lucide="mail" class="w-8 h-8"></i>
                 </a>
             </div>
             <p class="text-gray-600 text-sm">&copy; 2025 学生団体 OnigireeZ. All Rights Reserved.</p>
@@ -688,8 +595,174 @@
     </footer>
     
     <script>
+        // ==========================================
+        //  設定エリア：ここでIDを設定してください
+        // ==========================================
+        
+        // シートID 
+        const SHEET_ID = "1zmYgwi1uOFB9WJLyNDwf47aKUeWDIw3rcNYBop4kdzQ"; 
+        
+        // NewsシートのGID
+        const NEWS_GID = "0";     
+
+        // ScenesシートのGID (教えていただいたID)
+        const SCENES_GID = "1628876042"; 
+
         const FORM_URLS = { ja: "https://forms.gle/fXoRouDuiLp1R3uN8", en: "https://forms.gle/LQ3CncSbL6iCktJR7" };
 
+        // CSVパーサー
+        function parseCSV(text) {
+            const rows = [];
+            let row = [];
+            let inQuote = false;
+            let currentToken = '';
+            for (let i = 0; i < text.length; i++) {
+                const char = text[i];
+                const nextChar = text[i+1];
+                if (char === '"') {
+                    if (inQuote && nextChar === '"') { currentToken += '"'; i++; } 
+                    else { inQuote = !inQuote; }
+                } else if (char === ',' && !inQuote) {
+                    row.push(currentToken.trim());
+                    currentToken = '';
+                } else if ((char === '\r' || char === '\n') && !inQuote) {
+                    if (currentToken || row.length > 0) row.push(currentToken.trim());
+                    if (row.length > 0) rows.push(row);
+                    row = [];
+                    currentToken = '';
+                    if (char === '\r' && nextChar === '\n') i++;
+                } else {
+                    currentToken += char;
+                }
+            }
+            if (currentToken || row.length > 0) { row.push(currentToken.trim()); rows.push(row); }
+            return rows;
+        }
+
+        // Googleドライブの画像を直接リンクに変換する
+        function convertDriveLink(url) {
+            if (!url) return '';
+            if (url.includes('drive.google.com') && url.includes('id=')) {
+                return url.replace('/file/d/', '/uc?id=').replace('/view?usp=sharing', '');
+            } else if (url.includes('drive.google.com') && url.includes('/file/d/')) {
+                const id = url.split('/file/d/')[1].split('/')[0];
+                return `https://drive.google.com/uc?export=view&id=${id}`;
+            }
+            return url;
+        }
+
+        // スプレッドシートからデータを取得
+        async function fetchData() {
+            try {
+                // News取得
+                const newsRes = await fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${NEWS_GID}`);
+                if (!newsRes.ok) throw new Error("News sheet not found");
+                const newsText = await newsRes.text();
+                const newsRows = parseCSV(newsText).slice(1); // ヘッダー除去
+                // A=Date, B=Tag, C=TagType, D=Title, E=URL
+                const newsData = newsRows.map(r => ({ date: r[0], tag: r[1], tagType: r[2], title: r[3], url: r[4] })).filter(i => i.date);
+                
+                renderNews(newsData);
+                document.getElementById('news-loading').style.display = 'none';
+
+                // Scenes取得
+                const scenesRes = await fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${SCENES_GID}`);
+                if (!scenesRes.ok) throw new Error("Scenes sheet not found");
+                const scenesText = await scenesRes.text();
+                const scenesRows = parseCSV(scenesText).slice(1);
+                // A=Date, B=Title, C=Desc, D=Image
+                const scenesData = scenesRows.map(r => ({ date: r[0], title: r[1], desc: r[2], image: convertDriveLink(r[3]) })).filter(i => i.date);
+                
+                renderScenes(scenesData);
+                document.getElementById('scenes-loading').style.display = 'none';
+
+            } catch (e) {
+                console.error("データの読み込みに失敗しました:", e);
+                // エラー時はフォールバック表示（何もしないか、メッセージを出す）
+                if(document.getElementById('news-list').innerHTML === "") {
+                     document.getElementById('news-list').innerHTML = '<p class="text-gray-500">データを読み込めませんでした。スプレッドシートの公開設定を確認してください。</p>';
+                }
+                document.getElementById('news-loading').style.display = 'none';
+                document.getElementById('scenes-loading').style.display = 'none';
+            }
+        }
+
+        // ニュース描画
+        function renderNews(items) {
+            const container = document.getElementById('news-list');
+            if(!container) return;
+            container.innerHTML = '';
+            items.forEach((item, index) => {
+                const colorClass = item.tagType === 'event' ? 'text-primary bg-primary/20' : 'text-secondary bg-secondary/20';
+                const borderClass = item.tagType === 'event' ? 'hover:border-primary' : 'hover:border-secondary';
+                const hiddenClass = index >= 2 ? 'hidden-item' : ''; 
+                const html = `
+                    <a href="${item.url}" class="news-item ${hiddenClass} group block glass-card p-6 rounded-xl hover:bg-white/5 transition border-l-4 border-transparent ${borderClass}">
+                        <div class="flex flex-col md:flex-row md:items-center gap-4">
+                            <span class="text-sm text-gray-400 font-mono">${item.date}</span>
+                            <span class="inline-block px-2 py-1 ${colorClass} text-xs font-bold rounded">${item.tag}</span>
+                            <h3 class="text-lg font-bold text-white group-hover:text-${item.tagType === 'event' ? 'primary' : 'secondary'} transition">${item.title}</h3>
+                        </div>
+                    </a>
+                `;
+                container.innerHTML += html;
+            });
+            setupToggle(document.querySelectorAll('.news-item'), 'view-all-news', 2);
+        }
+
+        // Scenes描画
+        function renderScenes(items) {
+            const container = document.getElementById('scenes-list');
+            if(!container) return;
+            container.innerHTML = '';
+            items.forEach((item, index) => {
+                const hiddenClass = index >= 4 ? 'hidden-item' : ''; 
+                const html = `
+                    <div class="scene-item ${hiddenClass} glass-card rounded-2xl overflow-hidden group">
+                        <div class="h-48 overflow-hidden relative">
+                            <img src="${item.image}" class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
+                        </div>
+                        <div class="p-5">
+                            <p class="text-xs text-primary font-bold mb-2">${item.date}</p>
+                            <h3 class="text-sm font-bold text-white mb-2">${item.title}</h3>
+                            <p class="text-xs text-gray-400 leading-relaxed">${item.desc}</p>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += html;
+            });
+            setupToggle(document.querySelectorAll('.scene-item'), 'view-all-scenes', 4);
+        }
+
+        // 共通トグル関数
+        function setupToggle(items, buttonId, threshold, hiddenClass = 'hidden-item') {
+            const btn = document.getElementById(buttonId);
+            if (!btn) return;
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+
+            newBtn.addEventListener('click', () => {
+                if (items.length <= threshold) return; 
+                const isHidden = items[threshold].classList.contains(hiddenClass);
+                items.forEach((item, index) => {
+                    if (index >= threshold) {
+                        if (isHidden) item.classList.remove(hiddenClass); 
+                        else item.classList.add(hiddenClass); 
+                    }
+                });
+                const span = newBtn.querySelector('.btn-text');
+                const icon = newBtn.querySelector('i');
+                if (isHidden) { 
+                    if(span) span.textContent = "Close";
+                    if(icon) icon.style.transform = "rotate(180deg)";
+                } else { 
+                    if(span) span.textContent = "View All";
+                    if(icon) icon.style.transform = "rotate(0deg)";
+                }
+            });
+        }
+        
+        // 翻訳データ (省略せず全て記載)
         const translations = {
             ja: {
                 logo_prefix: "学生団体",
@@ -698,11 +771,6 @@
                 hero_subtitle: "日本と世界の学生が友情で\"つながる\"きっかけを。<br>場所を超えて、心を通わせるバーチャル留学。",
                 hero_btn: "今すぐ申し込む",
                 news_viewall: "View All", tag_event: "イベント", tag_info: "お知らせ", tag_report: "活動報告",
-                news_2: "第1回イベント「Onigiri X change ~Philippines~」を開催しました！",
-                news_1: "公式Webサイトをリニューアルオープンしました。",
-                news_3: "第1回イベント「Onigiri X change ~Philippines~」の募集を開始しました！",
-                news_4: "学生団体OnigireeZを立ち上げました。",
-                news_5: "学生団体OnigireeZのno+eを開設しました！",
                 about_title_prefix: "学生団体", about_title_suffix: "とは？",
                 about_desc: "私たちは、愛媛県の高校生で結成された学生団体です。「学生が国境を越えて、視野を大きく広げられる世界」を目指して活動しています。",
                 vision_text: "世界の学生との出会いが、<br>未来の可能性を広げる社会", mission_text: "日本と世界の学生が友情で<br>\"つながる\"きっかけをつくる",
@@ -714,14 +782,9 @@
                 problem_title: "こんな「もったいない」を解決したい", problem_desc: "「海外の友達が欲しい」「異文化に触れたい」と思っても、特に地方ではその機会が少ないのが現状。私たちはその課題を、オンラインの力で解決します。",
                 problem_card1_title: "異文化交流", problem_card1_desc: "ゲームやトークを通して、お互いの国の文化や学校生活のリアルを知ることができます。",
                 problem_card2_title: "地域の格差解消", problem_card2_desc: "住んでいる場所に関わらず、誰でも気軽に世界とつながれる場をつくります。",
-                event_tag: "バーチャル交換留学", event_desc: "第一弾はフィリピンの高校生とつながるイベント！ゲームなどを通して、お互いの \"リアル\" を知り、友情を育みませんか？",
+                event_tag: "バーチャル交換留学", event_desc: "第一弾はフィリピンの高校生とつながるイベント！ゲームなどを通して、お互いの 'リアル' を知り、友情を育みませんか？",
                 label_date: "日程", event_date: "2025年9月14日(日)", label_time: "時間", event_time: "9:00 - 12:30 (日本時間)", label_target: "対象", event_target: "日本とフィリピンの中高生", label_place: "場所", event_place: "オンライン (Zoom等)",
                 scenes_title: "ACTIVITY SCENES", scenes_desc: "活動の様子",
-                scene_1_title: "企画ミーティング Part2", scene_1_desc: "次回イベントに向けて運営メンバーと第8回ミーティングを行いました。準備が進んでいます！次回イベントを楽しみにしていて下さい！",
-                scene_2_title: "企画ミーティング", scene_2_desc: "次回イベントに向けて運営メンバーとミーティングを行いました。",
-                scene_3_title: "第1回イベント開催", scene_3_desc: "第1回イベント「Onigiri X change~Philippines~」を開催しました。フィリピンの人たちとオンラインで繋ぎ、交流をしました。",
-                scene_4_title: "イベント全体会議", scene_4_desc: "来期の活動方針について話し合いました。",
-                scene_5_title: "OnigireeZ設立", scene_5_desc: "記念すべき第一歩。これから頑張ります！",
                 activity_title: "ACTIVITY REPORT", activity_desc: "活動報告書・資料アーカイブ",
                 latest_event_pdf: "最新イベント報告書", latest_activity_pdf: "最新活動報告書", btn_download: "ダウンロード",
                 act_archive_title: "過去の資料アーカイブ",
@@ -750,11 +813,6 @@
                 hero_subtitle: "Connecting Japanese and Global Students through Friendship.<br>Virtual exchange beyond borders.",
                 hero_btn: "Apply Now",
                 news_viewall: "View All", tag_event: "Event", tag_info: "Info", tag_report: "Report",
-                news_1: "We have renewed our official website.",
-                news_2: "The 1st event 'Onigiri X change ~Philippines~' was held!",
-                news_3: "Applications for the 1st event 'Onigiri X change ~Philippines~' are now open!",
-                news_4: "Established Student Organization OnigireeZ.",
-                news_5: "We have opened our official Note account!",
                 about_title_prefix: "What is", about_title_suffix: "?",
                 about_desc: "We are a student organization based in Ehime, Japan. We aim to create a world where students can cross borders and broaden their horizons.",
                 vision_text: "A society where meeting global students<br>expands future possibilities.", mission_text: "Creating opportunities for students<br>to connect through friendship.",
@@ -769,11 +827,6 @@
                 event_tag: "Virtual Exchange Program", event_desc: "Our first event connects with high school students in the Philippines! Let's get to know each other's \"real\" lives and build friendships through games.",
                 label_date: "Date", event_date: "Sep 14, 2025 (Sun)", label_time: "Time", event_time: "9:00 - 12:30 (JST)", label_target: "Target", event_target: "Students in Japan & Philippines", label_place: "Place", event_place: "Online (Zoom, etc.)",
                 scenes_title: "ACTIVITY SCENES", scenes_desc: "Snapshots of our activities",
-                scene_1_title: "Planning Meeting Part 2", scene_1_desc: "We held the 8th meeting with members for the next event. Preparation is underway! Please look forward to it!",
-                scene_2_title: "Planning Meeting", scene_2_desc: "We held a meeting with management members for the next event.",
-                scene_3_title: "1st Event Held", scene_3_desc: "We held the 1st event 'Onigiri X change ~Philippines~'. We connected online with people in the Philippines and interacted.",
-                scene_4_title: "General Meeting", scene_4_desc: "We discussed the activity policy for the next term.",
-                scene_5_title: "Established OnigireeZ", scene_5_desc: "A memorable first step. We will do our best!",
                 activity_title: "ACTIVITY REPORT", activity_desc: "Activity reports and document archives.",
                 latest_event_pdf: "Latest Event Report", latest_activity_pdf: "Latest Activity Report", btn_download: "Download",
                 act_archive_title: "Activity Archives",
@@ -797,7 +850,10 @@
             }
         };
 
+        // 初期化実行
         lucide.createIcons();
+        fetchData(); 
+
         const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
         const observer = new IntersectionObserver((entries, observer) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('active'); } }); }, observerOptions);
         document.querySelectorAll('.reveal').forEach(el => { observer.observe(el); });
@@ -829,58 +885,8 @@
             });
         });
 
-        // 共通トグル関数
-        function setupToggle(items, buttonId, threshold, hiddenClass = 'hidden-item') {
-            const btn = document.getElementById(buttonId);
-            if (!btn) return;
-
-            // 初期化: 閾値以降のアイテムを隠す
-            items.forEach((item, index) => {
-                if (index >= threshold) item.classList.add(hiddenClass);
-                else item.classList.remove(hiddenClass); // Reset if needed
-            });
-
-            // クリックイベント
-            btn.addEventListener('click', () => {
-                // 閾値の次のアイテム（インデックス=threshold）が隠れているかどうかで判定
-                if (items.length <= threshold) return; 
-                
-                const isHidden = items[threshold].classList.contains(hiddenClass);
-                
-                items.forEach((item, index) => {
-                    if (index >= threshold) {
-                        if (isHidden) item.classList.remove(hiddenClass); // Show
-                        else item.classList.add(hiddenClass); // Hide
-                    }
-                });
-
-                // ボタンのテキストとアイコン更新
-                const span = btn.querySelector('.btn-text');
-                const icon = btn.querySelector('i');
-                
-                // Note: Logic inverted because we just toggled the state
-                if (isHidden) { // Now visible
-                    if(span) span.textContent = "Close";
-                    if(icon) icon.style.transform = "rotate(180deg)";
-                } else { // Now hidden
-                    if(span) span.textContent = "View All";
-                    if(icon) icon.style.transform = "rotate(0deg)";
-                }
-            });
-        }
-
-        // NEWS: 2つ表示、3つ目以降隠す
-        const newsItems = document.querySelectorAll('.news-item');
-        setupToggle(newsItems, 'view-all-news', 2);
-
-        // SCENES: 4つ表示、5つ目以降隠す
-        const sceneItems = document.querySelectorAll('.scene-item');
-        setupToggle(sceneItems, 'view-all-scenes', 4);
-
-        // Archive PDFs: 2つ表示、3つ目以降隠す
         const pdfItems = document.querySelectorAll('.pdf-item');
         setupToggle(pdfItems, 'view-all-pdfs', 2);
-
     </script>
 </body>
 </html>
