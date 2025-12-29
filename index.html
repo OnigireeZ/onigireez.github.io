@@ -670,7 +670,7 @@
                 pdf_intro_name: "Organization Guide.pdf",
                 team_title: "Our Team",
                 member1_name: "Miri Tsuchiyama", member1_role: "Representative", member1_desc: "Background: Representative of Student Org Tongari-z, 7th GTE Student Council President, BEAU LABO 19th batch, participated in ZERO2MAKER, volunteer study abroad in the Philippines, volunteer in Egypt. Bio: I'm Miri Tsuchiyama, a 2nd year high school student living in Ehime. I'm interested in international relations and startups! Hobbies: K-POP, K-Dramas, Musicals!",
-                member2_name: "Keinosuke Isasa", member2_role: "PR Manager", member2_desc: "Hello! I'm Keinosuke Isasa. I'm in charge of accounting at OnigireeZ. I'm interested in studying abroad, and I joined this organization because I was impressed by the unique idea of 'making international friends within Ehime'. I graduated from Futagamijuku Kindergarten, Yuzuki Elementary School, and now attend Saibi Heisei Secondary School. My hobbies are surfing and skateboarding, and I love spending time in nature.",
+                member2_name: "Keinosuke Isasa", member2_role: "PR Manager", member2_desc: "Hello! I'm Keinosuke Isasa. I'm in charge of accounting at OnigireeZ. I'm interested in studying abroad, and I joined this organization because I was impressed by the unique idea of 'making international friends within Ehime'. I graduated from Futagamijuku Kindergarten, Yuzuki Elementary School, and now attend Saibi Heisei Secondary Education School. My hobbies are surfing and skateboarding, and I love spending time in nature.",
                 member3_name: "Anika Miyamoto", member3_role: "Designer", member3_desc: "I'm in charge of media design! My hobbies are listening to music and watching movies, especially 'Stranger Things'. I participated in the Gaku-Challe program and want to apply what I learned to this activity. I want to grow OnigireeZ further with my friends. I'm still learning, but I'll do my best!",
                 member4_name: "Masaomi Kutsuna", member4_role: "IT Manager", member4_desc: "Hello, I'm Masaomi Kutsuna. I have enjoyed working on inquiry-based activities and robot making. I joined this group because I was interested in solving regional issues. At Saibi Heisei, I conducted inquiry activities from various perspectives as a member of the Natural Science Club. I will support smooth communication with my IT skills! Thank you.",
                 faq_subtitle: "Frequently Asked Questions",
@@ -948,8 +948,8 @@
             const mobileMenu = document.getElementById('mobile-menu');
             if(mobileMenuButton) mobileMenuButton.addEventListener('click', () => { mobileMenu.classList.toggle('hidden'); });
 
-            // スクロール
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            // スクロール（★ここを修正済み：申し込みボタンを除外）
+            document.querySelectorAll('a[href^="#"]:not(.apply-link)').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     e.preventDefault();
                     const targetId = this.getAttribute('href');
