@@ -599,6 +599,94 @@
         //  設定エリア
         // ==========================================
         
+        // 翻訳データ (すべてのdata-i18nに対応)
+        const translations = {
+            ja: {
+                logo_prefix: "学生団体",
+                nav_about: "OnigireeZとは", nav_scenes: "活動の様子", nav_activities: "資料", nav_event: "イベント情報", nav_team: "メンバー", nav_sponsors: "協賛", nav_apply: "申し込む",
+                hero_title_1: "世界と", hero_title_2: "つながる", hero_title_3: "新しい体験を。",
+                hero_subtitle: "日本と世界の学生が友情で\"つながる\"きっかけを。<br>場所を超えて、心を通わせるバーチャル留学。",
+                hero_btn: "今すぐ申し込む",
+                news_viewall: "View All", 
+                about_title_prefix: "学生団体", about_title_suffix: "とは？",
+                about_desc: "私たちは、愛媛県の高校生で結成された学生団体です。「学生が国境を越えて、視野を大きく広げられる世界」を目指して活動しています。",
+                vision_text: "世界の学生との出会いが、<br>未来の可能性を広げる社会", mission_text: "日本と世界の学生が友情で<br>\"つながる\"きっかけをつくる",
+                rep_role_label: "REPRESENTATIVE",
+                rep_message_title: "\"世界への扉は、すぐそこにあります。\"",
+                rep_message_1: "こんにちは、OnigireeZ代表の土山みりです。私は高校生の時にフィリピンやエジプトでのボランティアを経験し、「言葉が違っても、心は通じ合える」という感動を味わいました。",
+                rep_message_2: "しかし、地方に住んでいると、海外の人と出会うチャンスはまだまだ少ないのが現状です。「もっと気軽に、世界中の同世代と話せたらいいのに」そんな想いから、この団体を立ち上げました。",
+                rep_message_3: "オンラインなら、距離は関係ありません。私たちと一緒に、新しい世界への一歩を踏み出してみませんか？",
+                problem_title: "こんな「もったいない」を解決したい", problem_desc: "「海外の友達が欲しい」「異文化に触れたい」と思っても、特に地方ではその機会が少ないのが現状。私たちはその課題を、オンラインの力で解決します。",
+                problem_card1_title: "異文化交流", problem_card1_desc: "ゲームやトークを通して、お互いの国の文化や学校生活のリアルを知ることができます。",
+                problem_card2_title: "地域の格差解消", problem_card2_desc: "住んでいる場所に関わらず、誰でも気軽に世界とつながれる場をつくります。",
+                event_tag: "バーチャル交換留学", event_desc: "第一弾はフィリピンの高校生とつながるイベント！ゲームなどを通して、お互いの \"リアル\" を知り、友情を育みませんか？",
+                label_date: "日程", event_date: "2025年9月14日(日)", label_time: "時間", event_time: "9:00 - 12:30 (日本時間)", label_target: "対象", event_target: "日本とフィリピンの中高生", label_place: "場所", event_place: "オンライン (Zoom等)",
+                scenes_title: "ACTIVITY SCENES", scenes_desc: "活動の様子",
+                activity_title: "ACTIVITY REPORT", activity_desc: "活動報告書・資料アーカイブ",
+                latest_event_pdf: "最新イベント報告書", latest_activity_pdf: "最新活動報告書", btn_download: "ダウンロード",
+                act_archive_title: "過去の資料アーカイブ",
+                pdf_intro_name: "団体説明資料.pdf",
+                team_title: "運営メンバー",
+                member1_name: "土山 みり", member1_role: "代表", member1_desc: "フィリピンやエジプトでのボランティア経験を活かし、世界と繋がる楽しさを伝えます！",
+                member2_name: "井笹 慶之介", member2_role: "発信・会計担当", member2_desc: "持ち前の明るさで、この活動の魅力をSNSなどを通してどんどん発信していきます！",
+                member3_name: "宮本 杏朱", member3_role: "デザイン担当", member3_desc: "美術やデジタル分野が得意。みんながワクワクするようなデザインを目指します！",
+                member4_name: "忽那 将臣", member4_role: "IT担当", member4_desc: "テクノロジーの力でスムーズな交流をサポートします！",
+                faq_subtitle: "よくあるご質問",
+                faq_q1: "英語が苦手でも参加できますか？", faq_a1: "はい、大歓迎です！イベントでは、日本語が話せるメンバーや翻訳ツールも活用しながらサポートします。言語力よりも「伝えようとする気持ち」が大切です。",
+                faq_q2: "参加費はかかりますか？", faq_a2: "基本的には500円です。オンラインイベントの場合、Zoom等の通信費もご負担をお願いしております。Wi-Fi完備施設での実施がほとんどです。",
+                faq_q3: "スマホからでも参加できますか？", faq_a3: "はい、スマートフォンやタブレットからでもご参加いただけます。ただし、画面共有などを行う場合があるため、パソコンでの参加を推奨しています。",
+                sponsor_title: "協賛・スポンサー", sponsor_desc: "私たちの活動を支援してくださる企業様・団体様を募集しております。",
+                plan_gold_1: "ロゴ大サイズ掲載", plan_gold_2: "活動報告書の送付", plan_gold_3: "SNSでの単独紹介",
+                plan_silver_1: "ロゴ中サイズ掲載", plan_silver_2: "活動報告書の送付", plan_silver_3: "SNSでの一括紹介",
+                plan_bronze_1: "社名(テキスト)掲載", plan_bronze_2: "活動報告書の送付",
+                sponsor_list_title: "Special Thanks", sponsor_contact_text: "協賛に関するお問い合わせはこちらから", sponsor_download: "協賛資料をダウンロード",
+                sponsor_note: "※こちらは全て企業様向けのご案内です。個人様向けの案内は資料をダウンロードしてご確認をお願いします。",
+                cta_title: "世界とつながる準備はできましたか？", cta_desc: "申し込みは簡単です。以下のボタンからGoogleフォームへ進み、必要事項を入力してください。", cta_btn: "Googleフォームで申し込む"
+            },
+            en: {
+                logo_prefix: "Student Org",
+                nav_about: "About Us", nav_scenes: "Scenes", nav_activities: "Archives", nav_event: "Events", nav_team: "Team", nav_sponsors: "Sponsorship", nav_apply: "Apply",
+                hero_title_1: "Connect with", hero_title_2: "the World", hero_title_3: "New Experience.",
+                hero_subtitle: "Connecting Japanese and Global Students through Friendship.<br>Virtual exchange beyond borders.",
+                hero_btn: "Apply Now",
+                news_viewall: "View All", 
+                about_title_prefix: "What is", about_title_suffix: "?",
+                about_desc: "We are a student organization based in Ehime, Japan. We aim to create a world where students can cross borders and broaden their horizons.",
+                vision_text: "A society where meeting global students<br>expands future possibilities.", mission_text: "Creating opportunities for students<br>to connect through friendship.",
+                rep_role_label: "REPRESENTATIVE",
+                rep_message_title: "\"The door to the world is right there.\"",
+                rep_message_1: "Hello, I'm Miri Tsuchiyama, representative of OnigireeZ. Through my volunteer experience in the Philippines and Egypt, I experienced many moments where my world expanded significantly by interacting with people of the same generation from different environments.",
+                rep_message_2: "In that process, I strongly felt that 'there is international exchange that can only be created now as students', so I established this student organization.",
+                rep_message_3: "We will continue to work on planning and operation to create a place where high school students in Japan and overseas can learn from each other and broaden their horizons. We will continue to take on new challenges step by step, so we would appreciate your support.",
+                problem_title: "Solving the \"Missed Opportunities\"", problem_desc: "Even if you want to make international friends, opportunities are limited, especially in rural areas. We solve this problem through online power.",
+                problem_card1_title: "Cultural Exchange", problem_card1_desc: "Through games and talks, you can learn about the real culture and school life of each other's countries.",
+                problem_card2_title: "Bridging Regional Gaps", problem_card2_desc: "We create a place where anyone can easily connect with the world, regardless of where they live.",
+                event_tag: "Virtual Exchange Program", event_desc: "Our first event connects with high school students in the Philippines! Let's get to know each other's \"real\" lives and build friendships through games.",
+                label_date: "Date", event_date: "Sep 14, 2025 (Sun)", label_time: "Time", event_time: "9:00 - 12:30 (JST)", label_target: "Target", event_target: "Students in Japan & Philippines", label_place: "Place", event_place: "Online (Zoom, etc.)",
+                scenes_title: "ACTIVITY SCENES", scenes_desc: "Snapshots of our activities",
+                activity_title: "ACTIVITY REPORT", activity_desc: "Activity reports and document archives.",
+                latest_event_pdf: "Latest Event Report", latest_activity_pdf: "Latest Activity Report", btn_download: "Download",
+                act_archive_title: "Activity Archives",
+                pdf_intro_name: "Organization Guide.pdf",
+                team_title: "Our Team",
+                member1_name: "Miri Tsuchiyama", member1_role: "Representative", member1_desc: "Background: Representative of Student Org Tongari-z, 7th GTE Student Council President, BEAU LABO 19th batch, participated in ZERO2MAKER, volunteer study abroad in the Philippines, volunteer in Egypt.",
+                member2_name: "Keinosuke Isasa", member2_role: "PR Manager", member2_desc: "I'm in charge of accounting at OnigireeZ. I'm interested in studying abroad, and I joined this organization because I was impressed by the unique idea of 'making international friends within Ehime'.",
+                member3_name: "Anika Miyamoto", member3_role: "Designer", member3_desc: "I'm in charge of media design! My hobbies are listening to music and watching movies, especially 'Stranger Things'. I participated in the Gaku-Challe program and want to apply what I learned to this activity.",
+                member4_name: "Masaomi Kutsuna", member4_role: "IT Manager", member4_desc: "Hello, I'm Masaomi Kutsuna. I joined this group because I was interested in solving regional issues. I will support smooth communication with my IT skills!",
+                faq_subtitle: "Frequently Asked Questions",
+                faq_q1: "Can I join even if I'm not good at English?", faq_a1: "Yes, you are very welcome! Members who speak Japanese and translation tools will support you. The \"desire to communicate\" is more important than language skills.",
+                faq_q2: "Is there a participation fee?", faq_a2: "Basically 500 yen. For online events, please bear the communication costs for Zoom, etc. Most events are held in facilities with Wi-Fi.",
+                faq_q3: "Can I join from a smartphone?", faq_a3: "Yes, you can join from a smartphone or tablet. However, since we may share screens, we recommend joining from a computer or tablet.",
+                sponsor_title: "Sponsorship", sponsor_desc: "We are looking for companies and organizations to support our activities.",
+                plan_gold_1: "Large Logo Display", plan_gold_2: "Activity Report Sent", plan_gold_3: "Dedicated SNS Post",
+                plan_silver_1: "Medium Logo Display", plan_silver_2: "Activity Report Sent", plan_silver_3: "Group SNS Post",
+                plan_bronze_1: "Company Name Listing", plan_bronze_2: "Activity Report Sent",
+                sponsor_list_title: "Special Thanks", sponsor_contact_text: "Contact us for sponsorship details", sponsor_download: "Download Sponsorship Guide",
+                sponsor_note: "Note: These plans are for corporate sponsors. For individuals, please download the guide for details.",
+                cta_title: "Ready to connect with the world?", cta_desc: "Applying is easy. Click the button below to proceed to the Google Form and fill in the details.", cta_btn: "Apply via Google Form"
+            }
+        };
+
         // シートID 
         const SHEET_ID = "1zmYgwi1uOFB9WJLyNDwf47aKUeWDIw3rcNYBop4kdzQ"; 
         
@@ -656,7 +744,7 @@
             return url;
         }
 
-        // スプレッドシートからデータを取得（安全対策版）
+        // スプレッドシートからデータを取得
         async function fetchData() {
             try {
                 // News取得
@@ -665,7 +753,6 @@
                 const newsText = await newsRes.text();
                 const newsRows = parseCSV(newsText).slice(1);
                 
-                // 列が存在しなくてもエラー回避 (|| "")
                 globalNewsData = newsRows.map(r => ({ 
                     date: r[0] || "", 
                     tag_ja: r[1] || "", 
@@ -699,7 +786,6 @@
 
             } catch (e) {
                 console.error("Error:", e);
-                // エラー時もローディングだけは消す
                 document.getElementById('news-loading').style.display = 'none';
                 document.getElementById('scenes-loading').style.display = 'none';
             }
@@ -720,7 +806,7 @@
                 const tag = (lang === 'en' && item.tag_en) ? item.tag_en : item.tag_ja;
                 const title = (lang === 'en' && item.title_en) ? item.title_en : item.title_ja;
 
-                // TagTypeに合わせて色を変えるロジック
+                // TagTypeに合わせて色を変える
                 let tagColors = {
                     text: 'text-secondary', 
                     bg: 'bg-secondary/20', 
@@ -734,8 +820,6 @@
                     tagColors = { text: 'text-primary', bg: 'bg-primary/20', border: 'hover:border-primary', hoverText: 'group-hover:text-primary' };
                 } else if (type === 'report' || type === 'activity') {
                     tagColors = { text: 'text-green-400', bg: 'bg-green-500/20', border: 'hover:border-green-500', hoverText: 'group-hover:text-green-400' };
-                } else if (type === 'notice' || type === 'important') {
-                    tagColors = { text: 'text-red-400', bg: 'bg-red-500/20', border: 'hover:border-red-500', hoverText: 'group-hover:text-red-400' };
                 }
 
                 const hiddenClass = index >= 2 ? 'hidden-item' : ''; 
@@ -796,9 +880,11 @@
 
             const span = newBtn.querySelector('.btn-text');
             const icon = newBtn.querySelector('i');
-            // 初期状態
-            if(span) span.textContent = "View All";
-            if(icon) icon.style.transform = "rotate(0deg)";
+            
+            const updateText = () => {
+                if(span) span.textContent = currentLang === 'en' ? "View All" : "View All";
+            };
+            updateText();
 
             newBtn.addEventListener('click', () => {
                 if (items.length <= threshold) return; 
@@ -820,98 +906,75 @@
                 }
             });
         }
-        
-        // 翻訳データ
-        const translations = {
-            ja: {
-                logo_prefix: "学生団体",
-                nav_about: "OnigireeZとは", nav_scenes: "活動の様子", nav_activities: "資料", nav_event: "イベント情報", nav_team: "メンバー", nav_sponsors: "協賛", nav_apply: "申し込む",
-                hero_title_1: "世界と", hero_title_2: "つながる", hero_title_3: "新しい体験を。",
-                hero_subtitle: "日本と世界の学生が友情で\"つながる\"きっかけを。<br>場所を超えて、心を通わせるバーチャル留学。",
-                hero_btn: "今すぐ申し込む",
-                news_viewall: "View All", 
-                about_title_prefix: "学生団体", about_title_suffix: "とは？",
-                about_desc: "私たちは、愛媛県の高校生で結成された学生団体です。「学生が国境を越えて、視野を大きく広げられる世界」を目指して活動しています。",
-                vision_text: "世界の学生との出会いが、<br>未来の可能性を広げる社会", mission_text: "日本と世界の学生が友情で<br>\"つながる\"きっかけをつくる",
-                rep_role_label: "REPRESENTATIVE",
-                rep_message_title: "\"世界への扉は、<br>すぐそこにあります。\"",
-                rep_message_1: "こんにちは、OnigireeZ代表の土山みりです。私はフィリピンやエジプトでのボランティア活動を通して、環境の異なる同世代と関わることで、自分の世界が大きく広がる瞬間を多く経験しました。",
-                rep_message_2: "その中で、「学生の今だからこそ生み出せる国際交流がある」と強く感じ、この学生団体を立ち上げました。",
-                rep_message_3: "これからも、日本と海外の高校生が互いに学び合い、視野を広げられる場をつくるために、企画・運営に取り組んでいきます。一歩ずつではありますが、新しい挑戦を続けていきますので、応援していただけると嬉しいです。",
-                problem_title: "こんな「もったいない」を解決したい", problem_desc: "「海外の友達が欲しい」「異文化に触れたい」と思っても、特に地方ではその機会が少ないのが現状。私たちはその課題を、オンラインの力で解決します。",
-                problem_card1_title: "異文化交流", problem_card1_desc: "ゲームやトークを通して、お互いの国の文化や学校生活のリアルを知ることができます。",
-                problem_card2_title: "地域の格差解消", problem_card2_desc: "住んでいる場所に関わらず、誰でも気軽に世界とつながれる場をつくります。",
-                event_tag: "バーチャル交換留学", event_desc: "第一弾はフィリピンの高校生とつながるイベント！ゲームなどを通して、お互いの 'リアル' を知り、友情を育みませんか？",
-                label_date: "日程", event_date: "2025年9月14日(日)", label_time: "時間", event_time: "9:00 - 12:30 (日本時間)", label_target: "対象", event_target: "日本とフィリピンの中高生", label_place: "場所", event_place: "オンライン (Zoom等)",
-                scenes_title: "ACTIVITY SCENES", scenes_desc: "活動の様子",
-                activity_title: "ACTIVITY REPORT", activity_desc: "活動報告書・資料アーカイブ",
-                latest_event_pdf: "最新イベント報告書", latest_activity_pdf: "最新活動報告書", btn_download: "ダウンロード",
-                act_archive_title: "過去の資料アーカイブ",
-                pdf_intro_name: "団体説明資料.pdf",
-                team_title: "運営メンバー",
-                member1_name: "土山 みり", member1_role: "代表", member1_desc: "経歴：学生団体トンガリーズ代表・第7期GTE生徒会長・BEAU LABO 19期生・ZERO2MAKERに参加・フィリピンへのボランティア留学・エジプトでボランティア　　自己紹介：愛媛県在住高校2年生の土山みりです。学生団体OnigireeZの代表を務めています。国際系やスタートアップに興味があります！趣味はKPOP、韓ドラ、ミュージカル鑑賞です！",
-                member2_name: "井笹 慶之介", member2_role: "発信担当", member2_desc: "おはようございます。こんにちは。こんばんは。私の名前は井笹慶之介です。現在、OnigireeZで会計係を担当しています。海外留学に興味があり、また「愛媛県内で海外の友達をつくる」というユニークな発想に感銘を受け、この団体に所属しました。簡単に経歴をご紹介します。二神塾幼稚舎を卒業後、湯築小学校に進学し、卒業。その後、済美平成中等教育学校へ進学し、現在に至ります。趣味はサーフィンとスケートボードで、自然の中で過ごす時間が大好きです。",
-                member3_name: "宮本 杏朱", member3_role: "デザイン担当", member3_desc: "学生団体ではメディアデザインを担当しています！趣味は音楽と映画鑑賞で、特に好きなドラマは『Stranger Things』です。これまでに学チャレプログラムに参加し、その学びをこの活動にも活かしていきたいと思っています。これからは仲間と協力しながら、OnigireeZという団体をさらに成長させていきたいです。まだ未熟な部分もありますが、一生懸命取り組むのでよろしくお願いします！",
-                member4_name: "忽那 将臣", member4_role: "IT担当", member4_desc: "こんにちは、忽那将臣です。これまで課題探究の活動やロボットづくりなど、興味を持ったことに楽しく全力で取り組んできました。地域課題を解決したいというこの団体に関心を持って参加しました。これまで、済美平成で自然科学部として探究活動をさまざまな観点から行いました。交流のサポートをしっかり行い、スムーズな交流が行えるようサポートしていきます！よろしくお願いします。",
-                faq_subtitle: "よくあるご質問",
-                faq_q1: "英語が苦手でも参加できますか？", faq_a1: "はい、大歓迎です！イベントでは、日本語が話せるメンバーや翻訳ツールも活用しながらサポートします。言語力よりも「伝えようとする気持ち」が大切です。",
-                faq_q2: "参加費はかかりますか？", faq_a2: "基本的には500円です。オンラインイベントの場合、Zoom等の通信費もご負担をお願いしております。Wi-Fi完備施設での実施がほとんどです。",
-                faq_q3: "スマホからでも参加できますか？", faq_a3: "はい、スマートフォンやタブレットからでもご参加いただけます。ただし、画面共有などを行う場合があるため、パソコンでの参加を推奨しています。",
-                sponsor_title: "協賛・スポンサー", sponsor_desc: "私たちの活動を支援してくださる企業様・団体様を募集しております。",
-                plan_gold_1: "Large Logo Display", plan_gold_2: "Activity Report Sent", plan_gold_3: "Dedicated SNS Post",
-                plan_silver_1: "Medium Logo Display", plan_silver_2: "Activity Report Sent", plan_silver_3: "Group SNS Post",
-                plan_bronze_1: "Company Name Listing", plan_bronze_2: "Activity Report Sent",
-                sponsor_list_title: "Special Thanks", sponsor_contact_text: "Contact us for sponsorship details", sponsor_download: "Download Sponsorship Guide",
-                sponsor_note: "Note: These plans are for corporate sponsors. For individuals, please download the guide for details.",
-                cta_title: "Ready to connect with the world?", cta_desc: "Applying is easy. Click the button below to proceed to the Google Form and fill in the details.", cta_btn: "Apply via Google Form"
-            }
-        };
 
-        // 初期化
-        lucide.createIcons();
-        fetchData(); 
-
-        const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
-        const observer = new IntersectionObserver((entries, observer) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('active'); } }); }, observerOptions);
-        document.querySelectorAll('.reveal').forEach(el => { observer.observe(el); });
-
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        mobileMenuButton.addEventListener('click', () => { mobileMenu.classList.toggle('hidden'); });
-
-        const langSwitchers = [document.getElementById('lang-switcher-pc'), document.getElementById('lang-switcher-mobile')];
-        
+        // 言語切り替えメイン関数
         function setLanguage(lang) {
             currentLang = lang; 
+            
+            // 1. 静的テキストの更新
             document.querySelectorAll('[data-i18n]').forEach(element => {
                 const key = element.getAttribute('data-i18n');
-                if (translations[lang] && translations[lang][key]) { element.innerHTML = translations[lang][key]; }
+                if (translations[lang] && translations[lang][key]) { 
+                    element.innerHTML = translations[lang][key]; 
+                }
             });
 
+            // 2. リンクの更新
             const applyLinks = document.querySelectorAll('.apply-link');
             applyLinks.forEach(link => { link.href = FORM_URLS[lang]; });
 
+            // 3. セレクトボックスの同期
+            const langSwitchers = [document.getElementById('lang-switcher-pc'), document.getElementById('lang-switcher-mobile')];
             langSwitchers.forEach(switcher => { if(switcher) switcher.value = lang; });
 
+            // 4. 動的コンテンツの更新
             renderNews(lang);
             renderScenes(lang);
         }
 
-        langSwitchers.forEach(switcher => { if(switcher) { switcher.addEventListener('change', (e) => { setLanguage(e.target.value); }); } });
-        setLanguage('ja');
-        
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                if (mobileMenu && !mobileMenu.classList.contains('hidden')) { mobileMenu.classList.add('hidden'); }
-                const targetElement = document.querySelector(targetId);
-                if(targetElement) { targetElement.scrollIntoView({ behavior: 'smooth' }); }
+        // 初期化処理
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            
+            // イベントリスナー設定
+            const langSwitchers = [document.getElementById('lang-switcher-pc'), document.getElementById('lang-switcher-mobile')];
+            langSwitchers.forEach(switcher => { 
+                if(switcher) { 
+                    switcher.addEventListener('change', (e) => { setLanguage(e.target.value); }); 
+                } 
             });
-        });
 
-        const pdfItems = document.querySelectorAll('.pdf-item');
-        setupToggle(pdfItems, 'view-all-pdfs', 2);
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if(mobileMenuButton) mobileMenuButton.addEventListener('click', () => { mobileMenu.classList.toggle('hidden'); });
+
+            // スクロール
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if (mobileMenu && !mobileMenu.classList.contains('hidden')) { mobileMenu.classList.add('hidden'); }
+                    const targetElement = document.querySelector(targetId);
+                    if(targetElement) { targetElement.scrollIntoView({ behavior: 'smooth' }); }
+                });
+            });
+
+            // Intersection Observer
+            const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
+            const observer = new IntersectionObserver((entries, observer) => { 
+                entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('active'); } }); 
+            }, observerOptions);
+            document.querySelectorAll('.reveal').forEach(el => { observer.observe(el); });
+
+            const pdfItems = document.querySelectorAll('.pdf-item');
+            setupToggle(pdfItems, 'view-all-pdfs', 2);
+
+            // データ取得開始
+            fetchData(); 
+            
+            // 初期言語設定
+            setLanguage('ja');
+        });
     </script>
 </body>
 </html>
