@@ -18,7 +18,7 @@
                         primary: '#3B82F6',   // ブルー
                         secondary: '#10B981', // グリーン
                         accent: '#F59E0B',    // イエロー/オレンジ
-                        darkbg: '#3B82F6'
+                        darkbg: '#1e293b'
                     }
                 }
             }
@@ -99,7 +99,7 @@
                     <option value="en">🇺🇸 EN</option>
                 </select>
 
-                <a href="https://forms.gle/fXoRouDuiLp1R3uN8" target="_blank" class="bg-accent hover:bg-yellow-500 text-white font-bold py-2 px-6 rounded-full transition shadow-md hover:shadow-lg transform hover:-translate-y-0.5" data-i18n="nav_apply">
+                <a href="https://forms.gle/fXoRouDuiLp1R3uN8" target="_blank" class="apply-link bg-accent hover:bg-yellow-500 text-white font-bold py-2 px-6 rounded-full transition shadow-md hover:shadow-lg transform hover:-translate-y-0.5" data-i18n="nav_apply">
                     申し込む
                 </a>
             </div>
@@ -134,7 +134,7 @@
                     </div>
 
                     <div class="flex flex-col sm:flex-row justify-center gap-4">
-                        <a href="https://forms.gle/fXoRouDuiLp1R3uN8" target="_blank" class="bg-accent hover:bg-yellow-500 text-white text-lg font-black py-4 px-10 rounded-full transition shadow-lg hover:shadow-xl transform hover:-translate-y-1 flex items-center justify-center group">
+                        <a href="https://forms.gle/fXoRouDuiLp1R3uN8" target="_blank" class="apply-link bg-accent hover:bg-yellow-500 text-white text-lg font-black py-4 px-10 rounded-full transition shadow-lg hover:shadow-xl transform hover:-translate-y-1 flex items-center justify-center group">
                             <span data-i18n="btn_apply_now">今すぐ申し込む</span> <i data-lucide="arrow-right" class="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1"></i>
                         </a>
                         <a href="https://youtube.com/channel/UCOCuJb7c7wSUVkpvhgFVU-Q?si=nV4gu8ciZqVFztqu" target="_blank" class="bg-red-600 hover:bg-red-700 text-white text-lg font-bold py-4 px-8 rounded-full transition shadow-lg hover:shadow-xl transform hover:-translate-y-1 flex items-center justify-center gap-2">
@@ -290,9 +290,9 @@
                             <img src="https://placehold.co/200x200/e2e8f0/94a3b8?text=Judge" alt="審査員" class="w-full h-full object-cover">
                         </div>
                         <div>
-                            <p class="text-xs font-bold text-primary mb-1" data-i18n="judge1_role">　</p>
-                            <h3 class="text-xl font-black text-slate-800 mb-2" data-i18n="judge1_name">まもなく公開します</h3>
-                            <p class="text-sm text-gray-600 font-bold" data-i18n="judge1_desc">　</p>
+                            <p class="text-xs font-bold text-primary mb-1" data-i18n="judge1_role">〇〇株式会社 代表取締役</p>
+                            <h3 class="text-xl font-black text-slate-800 mb-2" data-i18n="judge1_name">愛媛 太郎 氏</h3>
+                            <p class="text-sm text-gray-600 font-bold" data-i18n="judge1_desc">地域課題解決に向けたスタートアップ支援を行う。今回の審査では「実現可能性」と「熱意」を重視します。</p>
                         </div>
                     </div>
                     <div class="pop-card p-6 flex items-center gap-6">
@@ -300,9 +300,9 @@
                             <img src="https://placehold.co/200x200/e2e8f0/94a3b8?text=Judge" alt="審査員" class="w-full h-full object-cover">
                         </div>
                         <div>
-                            <p class="text-xs font-bold text-primary mb-1" data-i18n="judge2_role">　</p>
-                            <h3 class="text-xl font-black text-slate-800 mb-2" data-i18n="judge2_name">まもなく公開します</h3>
-                            <p class="text-sm text-gray-600 font-bold" data-i18n="judge2_desc">　</p>
+                            <p class="text-xs font-bold text-primary mb-1" data-i18n="judge2_role">グローバル教育機関 専門委員</p>
+                            <h3 class="text-xl font-black text-slate-800 mb-2" data-i18n="judge2_name">松山 花子 氏</h3>
+                            <p class="text-sm text-gray-600 font-bold" data-i18n="judge2_desc">長年フィリピンとの教育交流に携わる。「多文化理解に基づくユニークなアイデアを楽しみにしています！」</p>
                         </div>
                     </div>
                 </div>
@@ -310,7 +310,7 @@
                 <h2 class="section-title reveal" data-i18n="people_member_title">運営メンバー</h2>
                 <div class="grid md:grid-cols-2 gap-6 reveal">
                     <div class="pop-card p-6 flex flex-col sm:flex-row items-center sm:items-start gap-6">
-                        <img src="images/miri.jpg" alt="土山みり" class="w-24 h-24 rounded-full object-cover border-4 border-blue-100 flex-shrink-0">
+                        <img src="../images/miri.jpg" alt="土山みり" class="w-24 h-24 rounded-full object-cover border-4 border-blue-100 flex-shrink-0">
                         <div class="text-center sm:text-left">
                             <span class="bg-blue-100 text-primary text-xs font-bold px-2 py-1 rounded-full mb-2 inline-block" data-i18n="member1_role">代表</span>
                             <h3 class="text-lg font-black text-slate-800 mb-2" data-i18n="member1_name">土山 みり</h3>
@@ -318,7 +318,7 @@
                         </div>
                     </div>
                     <div class="pop-card p-6 flex flex-col sm:flex-row items-center sm:items-start gap-6">
-                        <img src="images/keinosuke.JPG" alt="井笹慶之介" class="w-24 h-24 rounded-full object-cover border-4 border-green-100 flex-shrink-0">
+                        <img src="../images/keinosuke.JPG" alt="井笹慶之介" class="w-24 h-24 rounded-full object-cover border-4 border-green-100 flex-shrink-0">
                         <div class="text-center sm:text-left">
                             <span class="bg-green-100 text-secondary text-xs font-bold px-2 py-1 rounded-full mb-2 inline-block" data-i18n="member2_role">発信・会計</span>
                             <h3 class="text-lg font-black text-slate-800 mb-2" data-i18n="member2_name">井笹 慶之介</h3>
@@ -326,7 +326,7 @@
                         </div>
                     </div>
                     <div class="pop-card p-6 flex flex-col sm:flex-row items-center sm:items-start gap-6">
-                        <img src="images/anika.JPG" alt="宮本杏朱" class="w-24 h-24 rounded-full object-cover border-4 border-purple-100 flex-shrink-0">
+                        <img src="../images/anika.JPG" alt="宮本杏朱" class="w-24 h-24 rounded-full object-cover border-4 border-purple-100 flex-shrink-0">
                         <div class="text-center sm:text-left">
                             <span class="bg-purple-100 text-purple-600 text-xs font-bold px-2 py-1 rounded-full mb-2 inline-block" data-i18n="member3_role">デザイン</span>
                             <h3 class="text-lg font-black text-slate-800 mb-2" data-i18n="member3_name">宮本 杏朱</h3>
@@ -334,11 +334,11 @@
                         </div>
                     </div>
                     <div class="pop-card p-6 flex flex-col sm:flex-row items-center sm:items-start gap-6">
-                        <img src="images/masaomi.jpg" alt="忽那将臣" class="w-24 h-24 rounded-full object-cover border-4 border-yellow-100 flex-shrink-0">
+                        <img src="../images/masaomi.jpg" alt="忽那将臣" class="w-24 h-24 rounded-full object-cover border-4 border-yellow-100 flex-shrink-0">
                         <div class="text-center sm:text-left">
                             <span class="bg-yellow-100 text-yellow-600 text-xs font-bold px-2 py-1 rounded-full mb-2 inline-block" data-i18n="member4_role">ITサポート</span>
                             <h3 class="text-lg font-black text-slate-800 mb-2" data-i18n="member4_name">忽那 将臣</h3>
-                            <p class="text-sm text-gray-600 font-bold" data-i18n="member4_desc">スムーズな交流をサポートします！</p>
+                            <p class="text-sm text-gray-600 font-bold" data-i18n="member4_desc">テクノロジーの力でスムーズな交流をサポートします！当日のオンライン環境はお任せください。</p>
                         </div>
                     </div>
                 </div>
@@ -388,10 +388,10 @@
                     <p class="text-xs text-yellow-500 font-black mb-6 tracking-widest shadow-yellow-500/50">GOLD SPONSORS</p>
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-6 items-center">
                         <a href="https://www.o-t-s.co.jp/" class="aspect-[3/2] bg-white rounded-xl flex items-center justify-center p-4 transition hover:-translate-y-1 shadow-sm border border-gray-100 hover:shadow-md">
-                            <img src="images/otani_icon.png" class="max-w-full max-h-full mix-blend-multiply">
+                            <img src="../images/otani_icon.png" class="max-w-full max-h-full mix-blend-multiply">
                         </a>
                         <a href="https://craftsmanship-2022.jp" class="aspect-[3/2] bg-white rounded-xl flex items-center justify-center p-4 transition hover:-translate-y-1 shadow-sm border border-gray-100 hover:shadow-md">
-                            <img src="images/craft_icon.jpg" class="max-w-full max-h-full mix-blend-multiply">
+                            <img src="../images/craft_icon.jpg" class="max-w-full max-h-full mix-blend-multiply">
                         </a>
                         <a href="#" class="aspect-[3/2] bg-white rounded-xl flex items-center justify-center p-4 transition hover:-translate-y-1 shadow-sm border border-gray-100 hover:shadow-md">
                             <img src="https://placehold.co/200x100/e2e8f0/94a3b8?text=LOGO" class="max-w-full max-h-full mix-blend-multiply">
@@ -405,8 +405,8 @@
                 <div class="mb-16">
                     <p class="text-xs text-gray-400 font-black mb-6 tracking-widest">SILVER SPONSORS</p>
                     <div class="grid grid-cols-4 md:grid-cols-8 gap-4 items-center">
-                        <a href="https://www.instagram.com/furumi2minami" class="aspect-square bg-white rounded-lg flex items-center justify-center p-2 transition hover:-translate-y-1 shadow-sm border border-gray-100 hover:shadow-md"><img src="images/mikoshi_icon.jpg" class="max-w-full max-h-full mix-blend-multiply"></a>
-                        <a href="https://pspo.jp/" class="aspect-square bg-white rounded-lg flex items-center justify-center p-2 transition hover:-translate-y-1 shadow-sm border border-gray-100 hover:shadow-md"><img src="images/p_spo_icon.jpg" class="max-w-full max-h-full mix-blend-multiply"></a>
+                        <a href="https://www.instagram.com/furumi2minami" class="aspect-square bg-white rounded-lg flex items-center justify-center p-2 transition hover:-translate-y-1 shadow-sm border border-gray-100 hover:shadow-md"><img src="../images/mikoshi_icon.jpg" class="max-w-full max-h-full mix-blend-multiply"></a>
+                        <a href="https://pspo.jp/" class="aspect-square bg-white rounded-lg flex items-center justify-center p-2 transition hover:-translate-y-1 shadow-sm border border-gray-100 hover:shadow-md"><img src="../images/p_spo_icon.jpg" class="max-w-full max-h-full mix-blend-multiply"></a>
                         <a href="#" class="aspect-square bg-white rounded-lg flex items-center justify-center p-2 transition hover:-translate-y-1 shadow-sm border border-gray-100 hover:shadow-md"><img src="https://placehold.co/100x50/e2e8f0/94a3b8?text=G" class="max-w-full max-h-full mix-blend-multiply"></a>
                         <a href="#" class="aspect-square bg-white rounded-lg flex items-center justify-center p-2 transition hover:-translate-y-1 shadow-sm border border-gray-100 hover:shadow-md"><img src="https://placehold.co/100x50/e2e8f0/94a3b8?text=O" class="max-w-full max-h-full mix-blend-multiply"></a>
                         <a href="#" class="aspect-square bg-white rounded-lg flex items-center justify-center p-2 transition hover:-translate-y-1 shadow-sm border border-gray-100 hover:shadow-md"><img src="https://placehold.co/100x50/e2e8f0/94a3b8?text=H" class="max-w-full max-h-full mix-blend-multiply"></a>
@@ -435,14 +435,14 @@
             <div class="container mx-auto px-6 text-center relative z-10 reveal">
                 <h2 class="text-3xl md:text-5xl font-black mb-6 drop-shadow-md" data-i18n="cta_title">君のアイデアが、世界を変える。</h2>
                 <p class="text-lg text-blue-100 mb-10 max-w-2xl mx-auto font-bold" data-i18n="cta_desc">先着順での受付となります。お申し込みはお早めに！</p>
-                <a href="https://forms.gle/fXoRouDuiLp1R3uN8" target="_blank" class="inline-block bg-accent hover:bg-yellow-400 text-white text-2xl font-black py-5 px-12 rounded-full shadow-xl hover:shadow-2xl hover:-translate-y-1 transition duration-300 transform" data-i18n="cta_btn">
+                <a href="https://forms.gle/fXoRouDuiLp1R3uN8" target="_blank" class="apply-link inline-block bg-accent hover:bg-yellow-400 text-white text-2xl font-black py-5 px-12 rounded-full shadow-xl hover:shadow-2xl hover:-translate-y-1 transition duration-300 transform" data-i18n="cta_btn">
                     大臣になってみる（参加申込）
                 </a>
             </div>
         </section>
     </main>
 
-    <footer class="bg-slate-800 text-slate-300 py-12">
+    <footer class="bg-blue-900 text-blue-100 py-12">
         <div class="container mx-auto px-6 text-center">
             <h3 class="text-2xl font-black mb-6 text-white tracking-tight">OnigireeZ</h3>
             
@@ -456,22 +456,28 @@
                 </a>
 
                 <a href="https://note.com/dear_hyena7759/portal" target="_blank" class="w-12 h-12 rounded-full flex items-center justify-center bg-white transition duration-300 hover:scale-110 p-2">
-                    <img src="images/note_logo.png" alt="Note" class="w-full h-full object-contain">
+                    <img src="../images/note_logo.png" alt="Note" class="w-full h-full object-contain">
                 </a>
                 <a href="https://youtube.com/channel/UCOCuJb7c7wSUVkpvhgFVU-Q?si=nV4gu8ciZqVFztqu" target="_blank" class="w-12 h-12 rounded-full flex items-center justify-center bg-white transition duration-300 hover:scale-110 p-2">
-                    <img src="images/youtube.jpg" alt="YouTube" class="w-full h-full object-contain">
+                    <img src="../images/youtube.jpg" alt="YouTube" class="w-full h-full object-contain">
                 </a>
 
-                <a href="mailto:onigireez.25@gmail.com" class="w-12 h-12 flex items-center justify-center transition duration-300 hover:scale-110 hover:text-blue-400 text-white">
+                <a href="mailto:onigireez.25@gmail.com" class="w-12 h-12 flex items-center justify-center transition duration-300 hover:scale-110 hover:text-white text-blue-200">
                     <i data-lucide="mail" class="w-8 h-8"></i>
                 </a>
             </div>
 
-            <p class="text-slate-500 text-sm font-bold" id="copyright"></p>
+            <p class="text-blue-300 text-sm font-bold" id="copyright"></p>
         </div>
     </footer>
 
     <script>
+        // 日本語・英語のフォームリンクを定義
+        const FORM_URLS = { 
+            ja: "https://forms.gle/fXoRouDuiLp1R3uN8", 
+            en: "https://forms.gle/LQ3CncSbL6iCktJR7" 
+        };
+
         // 翻訳データ (辞書)
         const translations = {
             ja: {
@@ -492,8 +498,8 @@
                 value3_title: "3. リアルな交流を通じた自己成長", value3_desc: "話し合いを重ね、最後は審査員に向けて提案を発表。実践的な課題解決力を養います。",
                 info_title: "開催情報", info_datetime: "日時", info_place: "場所", info_place_detail: "サイボウズ株式会社 松山オフィス", info_target_fee: "対象・参加費", info_target: "中学1年生 〜 高校3年生", info_fee: "500円", info_items: "必要なもの", info_items_1: "Google Meetが使える端末、ヘッドホンやイヤホン", info_items_2: "（タブレット貸し出し可能です。ご相談ください）",
                 people_judge_title: "審査員紹介",
-                judge1_role: "　", judge1_name: "まもなく公開します", judge1_desc: "　",
-                judge2_role: "　", judge2_name: "まもなく公開します", judge2_desc: "　",
+                judge1_role: "〇〇株式会社 代表取締役", judge1_name: "愛媛 太郎 氏", judge1_desc: "地域課題解決に向けたスタートアップ支援を行う。今回の審査では「実現可能性」と「熱意」を重視します。",
+                judge2_role: "グローバル教育機関 専門委員", judge2_name: "松山 花子 氏", judge2_desc: "長年フィリピンとの教育交流に携わる。「多文化理解に基づくユニークなアイデアを楽しみにしています！」",
                 people_member_title: "運営メンバー",
                 member1_role: "代表", member1_name: "土山 みり", member1_desc: "フィリピンやエジプトでのボランティア経験を活かし、世界と繋がる楽しさを伝えます！",
                 member2_role: "発信・会計", member2_name: "井笹 慶之介", member2_desc: "持ち前の明るさで、この活動の魅力をSNSなどを通してどんどん発信していきます！",
@@ -525,8 +531,8 @@
                 value3_title: "3. Growth through Real Exchange", value3_desc: "Develop practical problem-solving skills by repeating discussions and presenting to judges.",
                 info_title: "Event Details", info_datetime: "Date & Time", info_place: "Location", info_place_detail: "Cybozu Inc. Matsuyama Office", info_target_fee: "Target & Fee", info_target: "Junior High 1st yr - High School 3rd yr", info_fee: "500 JPY", info_items: "Requirements", info_items_1: "Device with Google Meet, Headphones/Earphones", info_items_2: "(Tablets available for rent. Please consult us in advance.)",
                 people_judge_title: "Judges",
-                judge1_role: "　", judge1_name: "Coming soon", judge1_desc: "　",
-                judge2_role: "　", judge2_name: "Coming soon", judge2_desc: "　",
+                judge1_role: "CEO, XX Inc.", judge1_name: "Taro Ehime", judge1_desc: "Supports startups aiming to solve regional issues. We look forward to 'feasibility' and 'passion'.",
+                judge2_role: "Global Education Expert", judge2_name: "Hanako Matsuyama", judge2_desc: "Long involved in educational exchange with the Philippines. 'Excited for unique ideas based on multicultural understanding!'",
                 people_member_title: "Organizing Team",
                 member1_role: "Representative", member1_name: "Miri Tsuchiyama", member1_desc: "Utilizing volunteer experiences in the Philippines and Egypt, I'll share the joy of connecting globally!",
                 member2_role: "PR & Accounting", member2_name: "Keinosuke Isasa", member2_desc: "With my cheerful personality, I'll spread the charm of this activity through our SNS!",
@@ -546,6 +552,8 @@
         const langSwitcher = document.getElementById('lang-switcher');
         langSwitcher.addEventListener('change', (e) => {
             const lang = e.target.value;
+            
+            // 1. テキストの切り替え
             document.querySelectorAll('[data-i18n]').forEach(element => {
                 const key = element.getAttribute('data-i18n');
                 if (translations[lang] && translations[lang][key]) {
@@ -553,6 +561,12 @@
                 }
             });
             document.documentElement.lang = lang;
+
+            // 2. 応募フォームリンクの切り替え
+            const applyLinks = document.querySelectorAll('.apply-link');
+            applyLinks.forEach(link => { 
+                link.href = FORM_URLS[lang]; 
+            });
         });
 
         // アイコンの初期化
