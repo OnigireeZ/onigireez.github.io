@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Onigiri Ideathon | 学生団体OnigireeZ</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['"Noto Sans JP"', '"Plus Jakarta Sans"', 'sans-serif'] },
+                    colors: { 
+                        primary: '#3B82F6',   // ブルー
+                        secondary: '#10B981', // グリーン
+                        accent: '#F59E0B',    // イエロー/オレンジ
+                        darkbg: '#3B82F6'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { font-family: 'Noto Sans JP', sans-serif; background-color: #f8fafc; color: #334155; }
+        
+        /* チラシ風の方眼紙背景 */
+        .bg-grid {
+            background-color: #ffffff;
+            background-image: linear-gradient(#e2e8f0 1px, transparent 1px), linear-gradient(90deg, #e2e8f0 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+
+        /* ポップなカードスタイル */
+        .pop-card {
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #e2e8f0;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+            transition: all 0.3s ease;
+        }
+        .pop-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(59, 130, 246, 0.1), 0 10px 10px -5px rgba(59, 130, 246, 0.04);
+            border-color: #bfdbfe;
+        }
+
+        /* アニメーション */
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; } 
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        
+        /* タイトル装飾 */
+        .section-title {
+            font-weight: 900;
+            font-size: 2.25rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #1e293b;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background-color: #3B82F6;
+            border-radius: 3px;
+            opacity: 0.3;
+        }
+
+        details > summary { list-style: none; } 
+        details > summary::-webkit-details-marker { display: none; }
+    </style>
+</head>
+<body class="antialiased selection:bg-primary selection:text-white bg-grid">
+
+    <header class="fixed w-full top-0 z-50 transition-all duration-300 bg-white/90 backdrop-blur-md border-b border-gray-200">
+        <nav class="container mx-auto px-6 h-16 flex justify-between items-center">
+            <a href="#" class="flex items-center gap-3">
+                <span class="text-xl font-black text-primary tracking-tight" data-i18n="logo_text">Onigiri Ideathon</span>
+            </a>
+            <div class="hidden lg:flex items-center space-x-6 text-sm font-bold text-gray-600">
+                <a href="#about" class="hover:text-primary transition" data-i18n="nav_about">イベント内容</a>
+                <a href="#info" class="hover:text-primary transition" data-i18n="nav_info">開催情報</a>
+                <a href="#people" class="hover:text-primary transition" data-i18n="nav_people">審査員・運営</a>
+                <a href="#faq" class="hover:text-primary transition" data-i18n="nav_faq">FAQ</a>
+                
+                <select id="lang-switcher" class="bg-slate-100 border border-slate-300 text-slate-700 text-xs font-bold rounded-full pl-3 pr-8 py-1.5 focus:outline-none focus:border-primary cursor-pointer hover:bg-slate-200 transition">
+                    <option value="ja">🇯🇵 JP</option>
+                    <option value="en">🇺🇸 EN</option>
+                </select>
+
+                <a href="https://forms.gle/fXoRouDuiLp1R3uN8" target="_blank" class="bg-accent hover:bg-yellow-500 text-white font-bold py-2 px-6 rounded-full transition shadow-md hover:shadow-lg transform hover:-translate-y-0.5" data-i18n="nav_apply">
+                    申し込む
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="pt-16">
+        <section class="relative pt-20 pb-24 overflow-hidden">
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="max-w-4xl mx-auto text-center reveal active">
+                    <span class="inline-block py-1.5 px-5 rounded-full bg-blue-100 text-primary font-black tracking-widest mb-6 border border-blue-200" data-i18n="hero_org">
+                        学生団体OnigireeZ 主催
+                    </span>
+                    <h1 class="text-5xl md:text-7xl font-black text-slate-800 mb-6 leading-tight tracking-tight">
+                        <span class="text-accent text-3xl md:text-4xl block mb-2 transform -rotate-2" data-i18n="hero_catch">今日からあなたが大臣だ！</span>
+                        Onigiri Ideathon
+                    </h1>
+                    <p class="text-xl md:text-2xl font-bold text-gray-600 mb-8 leading-relaxed" data-i18n="hero_desc">
+                        フィリピンの学生と協力して、<br class="md:hidden">自国の社会問題解決を目指せ！
+                    </p>
+                    
+                    <div class="flex justify-center gap-4 mb-10">
+                        <div class="bg-white px-6 py-3 rounded-xl border-2 border-primary shadow-sm">
+                            <p class="text-sm font-bold text-primary mb-1" data-i18n="date_round1">第1回</p>
+                            <p class="text-xl font-black">3.15 <span class="text-sm" data-i18n="date_sun">(日)</span></p>
+                        </div>
+                        <div class="bg-white px-6 py-3 rounded-xl border-2 border-accent shadow-sm relative">
+                            <span class="absolute -top-3 -right-3 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full transform rotate-12" data-i18n="date_req">参加必須</span>
+                            <p class="text-sm font-bold text-accent mb-1" data-i18n="date_round2">第2回</p>
+                            <p class="text-xl font-black">4.03 <span class="text-sm" data-i18n="date_fri">(金)</span></p>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row justify-center gap-4">
+                        <a href="https://forms.gle/fXoRouDuiLp1R3uN8" target="_blank" class="bg-accent hover:bg-yellow-500 text-white text-lg font-black py-4 px-10 rounded-full transition shadow-lg hover:shadow-xl transform hover:-translate-y-1 flex items-center justify-center group">
+                            <span data-i18n="btn_apply_now">今すぐ申し込む</span> <i data-lucide="arrow-right" class="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1"></i>
+                        </a>
+                        <a href="https://youtube.com/channel/UCOCuJb7c7wSUVkpvhgFVU-Q?si=nV4gu8ciZqVFztqu" target="_blank" class="bg-red-600 hover:bg-red-700 text-white text-lg font-bold py-4 px-8 rounded-full transition shadow-lg hover:shadow-xl transform hover:-translate-y-1 flex items-center justify-center gap-2">
+                            <i data-lucide="youtube" class="w-6 h-6"></i> <span data-i18n="btn_youtube">YouTubeで雰囲気を見る</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="news" class="py-12 bg-white/50 border-y border-gray-200">
+            <div class="container mx-auto px-6 max-w-4xl reveal">
+                <div class="flex items-center gap-4 mb-6">
+                    <i data-lucide="bell" class="text-accent w-6 h-6"></i>
+                    <h2 class="text-2xl font-black text-slate-800" data-i18n="news_title">お知らせ</h2>
+                </div>
+                <div class="space-y-3">
+                    <a href="#" class="block bg-white p-4 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition flex items-center justify-between group">
+                        <div class="flex items-center gap-4">
+                            <span class="text-sm text-gray-500 font-bold">2026.02.20</span>
+                            <span class="bg-blue-100 text-primary text-xs font-bold px-2 py-1 rounded" data-i18n="news_tag1">イベント</span>
+                            <h3 class="font-bold text-slate-700 group-hover:text-primary transition" data-i18n="news_text1">第1回アイデアソンの申し込み受付を開始しました！</h3>
+                        </div>
+                        <i data-lucide="chevron-right" class="text-gray-400 w-5 h-5 group-hover:translate-x-1 transition"></i>
+                    </a>
+                    <a href="#" class="block bg-white p-4 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition flex items-center justify-between group">
+                        <div class="flex items-center gap-4">
+                            <span class="text-sm text-gray-500 font-bold">2026.02.15</span>
+                            <span class="bg-green-100 text-secondary text-xs font-bold px-2 py-1 rounded" data-i18n="news_tag2">情報解禁</span>
+                            <h3 class="font-bold text-slate-700 group-hover:text-primary transition" data-i18n="news_text2">今回のテーマは「大臣になって国をアップデート」に決定！</h3>
+                        </div>
+                        <i data-lucide="chevron-right" class="text-gray-400 w-5 h-5 group-hover:translate-x-1 transition"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="py-24">
+            <div class="container mx-auto px-6 max-w-5xl">
+                <h2 class="section-title reveal" data-i18n="about_title">アイデアソンとは？</h2>
+                
+                <div class="bg-yellow-50 border-l-8 border-accent p-6 md:p-8 rounded-2xl mb-12 reveal shadow-md flex flex-col md:flex-row items-center md:items-start gap-6 transform hover:-translate-y-1 transition duration-300">
+                    <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center shrink-0 shadow-sm">
+                        <i data-lucide="smile" class="text-accent w-10 h-10"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl md:text-2xl font-black text-slate-800 mb-3" data-i18n="english_ok_title">英語が苦手でも大丈夫！大歓迎です！</h3>
+                        <p class="text-slate-700 font-bold leading-relaxed text-sm md:text-base" data-i18n="english_ok_desc">
+                            「海外の学生と話したいけど、英語力が不安…」そんな方もご安心ください！日本語が話せるサポートメンバーがしっかり間に入り、翻訳ツールのフル活用もOKです。<br>
+                            このイベントで一番大切なのは「完璧な英語を話すこと」ではなく、「伝えようとする気持ち」と「あなたの自由なアイデア」です！
+                        </p>
+                    </div>
+                </div>
+
+                <div class="pop-card p-8 md:p-12 mb-16 reveal">
+                    <p class="text-center text-lg md:text-xl font-bold text-slate-700 leading-relaxed mb-10" data-i18n="about_desc">
+                        特定のテーマについて多様なメンバーがチームを組み、<br class="hidden md:block">
+                        短時間で集中的に新しいアイデアや解決策を出し合うワークショップ型イベントです。
+                    </p>
+
+                    <div class="bg-white p-8 rounded-2xl border-2 border-blue-100 shadow-sm mb-12">
+                        <h3 class="text-xl font-black text-primary mb-6 text-center" data-i18n="flow_title">イベントの具体的な流れ</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-4 bg-slate-50 p-4 rounded-xl border border-slate-100">
+                                <span class="bg-blue-500 text-white font-black w-8 h-8 rounded-full flex items-center justify-center shrink-0">1</span>
+                                <p class="font-bold text-slate-700" data-i18n="flow_step1">まずはゲームや自己紹介でアイスブレイク！国境を越えてチームの仲を深めます。</p>
+                            </div>
+                            <div class="flex items-center gap-4 bg-slate-50 p-4 rounded-xl border border-slate-100">
+                                <span class="bg-blue-500 text-white font-black w-8 h-8 rounded-full flex items-center justify-center shrink-0">2</span>
+                                <p class="font-bold text-slate-700" data-i18n="flow_step2">「大臣」として、その国が抱える社会課題（教育・環境など）を分析します。</p>
+                            </div>
+                            <div class="flex items-center gap-4 bg-slate-50 p-4 rounded-xl border border-slate-100">
+                                <span class="bg-blue-500 text-white font-black w-8 h-8 rounded-full flex items-center justify-center shrink-0">3</span>
+                                <p class="font-bold text-slate-700" data-i18n="flow_step3">海外の学生と一緒に、自由な発想で解決策（アイデア）をディスカッション！</p>
+                            </div>
+                            <div class="flex items-center gap-4 bg-slate-50 p-4 rounded-xl border border-slate-100">
+                                <span class="bg-blue-500 text-white font-black w-8 h-8 rounded-full flex items-center justify-center shrink-0">4</span>
+                                <p class="font-bold text-slate-700" data-i18n="flow_step4">最後は審査員やみんなの前でプレゼンテーション！チームの成果を発表します。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 class="text-xl font-black text-center mb-8 text-slate-800" data-i18n="value_title">アイデアソンで得られる3つの価値</h3>
+                    <div class="grid md:grid-cols-3 gap-6 text-center">
+                        <div class="bg-blue-50 p-6 rounded-2xl">
+                            <div class="w-16 h-16 bg-blue-200 text-primary rounded-full flex items-center justify-center mx-auto mb-4"><i data-lucide="users" class="w-8 h-8"></i></div>
+                            <h4 class="font-black text-lg mb-2" data-i18n="value1_title">1. 多様な価値観との出会い</h4>
+                            <p class="text-sm text-gray-600 font-bold" data-i18n="value1_desc">フィリピンの学生とチームを組み、異なるバックグラウンドを持つ仲間と議論します。</p>
+                        </div>
+                        <div class="bg-green-50 p-6 rounded-2xl">
+                            <div class="w-16 h-16 bg-green-200 text-secondary rounded-full flex items-center justify-center mx-auto mb-4"><i data-lucide="globe" class="w-8 h-8"></i></div>
+                            <h4 class="font-black text-lg mb-2" data-i18n="value2_title">2. 国際的な視野</h4>
+                            <p class="text-sm text-gray-600 font-bold" data-i18n="value2_desc">与えられた架空の「国」の大臣として、グローバルな視点から課題を見つめ直します。</p>
+                        </div>
+                        <div class="bg-yellow-50 p-6 rounded-2xl">
+                            <div class="w-16 h-16 bg-yellow-200 text-accent rounded-full flex items-center justify-center mx-auto mb-4"><i data-lucide="trending-up" class="w-8 h-8"></i></div>
+                            <h4 class="font-black text-lg mb-2" data-i18n="value3_title">3. リアルな交流を通じた自己成長</h4>
+                            <p class="text-sm text-gray-600 font-bold" data-i18n="value3_desc">話し合いを重ね、最後は審査員に向けて提案を発表。実践的な課題解決力を養います。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="info" class="py-24 bg-white/60">
+            <div class="container mx-auto px-6 max-w-4xl">
+                <h2 class="section-title reveal" data-i18n="info_title">開催情報</h2>
+                <div class="pop-card overflow-hidden reveal">
+                    <div class="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-gray-200">
+                        <div class="p-8">
+                            <h3 class="flex items-center font-black text-lg mb-4 text-primary"><i data-lucide="calendar" class="w-5 h-5 mr-2"></i> <span data-i18n="info_datetime">日時</span></h3>
+                            <ul class="space-y-4">
+                                <li class="bg-slate-50 p-3 rounded-lg border border-slate-100">
+                                    <span class="block text-sm font-bold text-gray-500 mb-1" data-i18n="date_round1">第1回</span>
+                                    <span class="text-lg font-black text-slate-800">2026.3.15 <span data-i18n="date_sun">(日)</span> <span class="text-base font-bold">10:30〜13:30</span></span>
+                                </li>
+                                <li class="bg-slate-50 p-3 rounded-lg border border-slate-100 relative">
+                                    <span class="absolute top-3 right-3 text-xs font-bold text-red-500 bg-red-100 px-2 py-0.5 rounded" data-i18n="date_req">参加必須</span>
+                                    <span class="block text-sm font-bold text-gray-500 mb-1" data-i18n="date_round2">第2回</span>
+                                    <span class="text-lg font-black text-slate-800">2026.4.03 <span data-i18n="date_fri">(金)</span> <span class="text-base font-bold">10:30〜13:30</span></span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="p-8 space-y-6">
+                            <div>
+                                <h3 class="flex items-center font-black text-lg mb-2 text-primary"><i data-lucide="map-pin" class="w-5 h-5 mr-2"></i> <span data-i18n="info_place">場所</span></h3>
+                                <p class="text-slate-700 font-bold" data-i18n="info_place_detail">サイボウズ株式会社 松山オフィス</p>
+                            </div>
+                            <div>
+                                <h3 class="flex items-center font-black text-lg mb-2 text-primary"><i data-lucide="user-check" class="w-5 h-5 mr-2"></i> <span data-i18n="info_target_fee">対象・参加費</span></h3>
+                                <p class="text-slate-700 font-bold" data-i18n="info_target">中学1年生 〜 高校3年生</p>
+                                <p class="text-accent font-black text-xl mt-1" data-i18n="info_fee">500円</p>
+                            </div>
+                            <div>
+                                <h3 class="flex items-center font-black text-lg mb-2 text-primary"><i data-lucide="laptop" class="w-5 h-5 mr-2"></i> <span data-i18n="info_items">必要なもの</span></h3>
+                                <p class="text-slate-700 text-sm font-bold leading-relaxed">
+                                    <span data-i18n="info_items_1">Google Meetが使える端末、ヘッドホンやイヤホン</span><br>
+                                    <span class="text-gray-500 text-xs" data-i18n="info_items_2">（タブレット貸し出し可能です。ご相談ください）</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="people" class="py-24">
+            <div class="container mx-auto px-6 max-w-5xl">
+                <h2 class="section-title reveal" data-i18n="people_judge_title">審査員紹介</h2>
+                <div class="grid md:grid-cols-2 gap-6 mb-24 reveal">
+                    <div class="pop-card p-6 flex items-center gap-6">
+                        <div class="w-24 h-24 bg-gray-200 rounded-full flex-shrink-0 overflow-hidden border-4 border-blue-100">
+                            <img src="https://placehold.co/200x200/e2e8f0/94a3b8?text=Judge" alt="審査員" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <p class="text-xs font-bold text-primary mb-1" data-i18n="judge1_role">　</p>
+                            <h3 class="text-xl font-black text-slate-800 mb-2" data-i18n="judge1_name">まもなく公開します</h3>
+                            <p class="text-sm text-gray-600 font-bold" data-i18n="judge1_desc">　</p>
+                        </div>
+                    </div>
+                    <div class="pop-card p-6 flex items-center gap-6">
+                        <div class="w-24 h-24 bg-gray-200 rounded-full flex-shrink-0 overflow-hidden border-4 border-blue-100">
+                            <img src="https://placehold.co/200x200/e2e8f0/94a3b8?text=Judge" alt="審査員" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <p class="text-xs font-bold text-primary mb-1" data-i18n="judge2_role">　</p>
+                            <h3 class="text-xl font-black text-slate-800 mb-2" data-i18n="judge2_name">まもなく公開します</h3>
+                            <p class="text-sm text-gray-600 font-bold" data-i18n="judge2_desc">　</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h2 class="section-title reveal" data-i18n="people_member_title">運営メンバー</h2>
+                <div class="grid md:grid-cols-2 gap-6 reveal">
+                    <div class="pop-card p-6 flex flex-col sm:flex-row items-center sm:items-start gap-6">
+                        <img src="images/miri.jpg" alt="土山みり" class="w-24 h-24 rounded-full object-cover border-4 border-blue-100 flex-shrink-0">
+                        <div class="text-center sm:text-left">
+                            <span class="bg-blue-100 text-primary text-xs font-bold px-2 py-1 rounded-full mb-2 inline-block" data-i18n="member1_role">代表</span>
+                            <h3 class="text-lg font-black text-slate-800 mb-2" data-i18n="member1_name">土山 みり</h3>
+                            <p class="text-sm text-gray-600 font-bold" data-i18n="member1_desc">フィリピンやエジプトでのボランティア経験を活かし、世界と繋がる楽しさを伝えます！</p>
+                        </div>
+                    </div>
+                    <div class="pop-card p-6 flex flex-col sm:flex-row items-center sm:items-start gap-6">
+                        <img src="images/keinosuke.JPG" alt="井笹慶之介" class="w-24 h-24 rounded-full object-cover border-4 border-green-100 flex-shrink-0">
+                        <div class="text-center sm:text-left">
+                            <span class="bg-green-100 text-secondary text-xs font-bold px-2 py-1 rounded-full mb-2 inline-block" data-i18n="member2_role">発信・会計</span>
+                            <h3 class="text-lg font-black text-slate-800 mb-2" data-i18n="member2_name">井笹 慶之介</h3>
+                            <p class="text-sm text-gray-600 font-bold" data-i18n="member2_desc">持ち前の明るさで、この活動の魅力をSNSなどを通してどんどん発信していきます！</p>
+                        </div>
+                    </div>
+                    <div class="pop-card p-6 flex flex-col sm:flex-row items-center sm:items-start gap-6">
+                        <img src="images/anika.JPG" alt="宮本杏朱" class="w-24 h-24 rounded-full object-cover border-4 border-purple-100 flex-shrink-0">
+                        <div class="text-center sm:text-left">
+                            <span class="bg-purple-100 text-purple-600 text-xs font-bold px-2 py-1 rounded-full mb-2 inline-block" data-i18n="member3_role">デザイン</span>
+                            <h3 class="text-lg font-black text-slate-800 mb-2" data-i18n="member3_name">宮本 杏朱</h3>
+                            <p class="text-sm text-gray-600 font-bold" data-i18n="member3_desc">美術やデジタル分野が得意。みんながワクワクするようなデザインを目指します！</p>
+                        </div>
+                    </div>
+                    <div class="pop-card p-6 flex flex-col sm:flex-row items-center sm:items-start gap-6">
+                        <img src="images/masaomi.jpg" alt="忽那将臣" class="w-24 h-24 rounded-full object-cover border-4 border-yellow-100 flex-shrink-0">
+                        <div class="text-center sm:text-left">
+                            <span class="bg-yellow-100 text-yellow-600 text-xs font-bold px-2 py-1 rounded-full mb-2 inline-block" data-i18n="member4_role">ITサポート</span>
+                            <h3 class="text-lg font-black text-slate-800 mb-2" data-i18n="member4_name">忽那 将臣</h3>
+                            <p class="text-sm text-gray-600 font-bold" data-i18n="member4_desc">スムーズな交流をサポートします！</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="faq" class="py-24 bg-white/60 border-t border-gray-200">
+            <div class="container mx-auto px-6 max-w-3xl">
+                <h2 class="section-title reveal" data-i18n="faq_title">よくある質問</h2>
+                <div class="space-y-4 reveal">
+                    <details class="group pop-card p-1 cursor-pointer">
+                        <summary class="flex items-center justify-between p-5 font-bold text-slate-800">
+                            <span data-i18n="faq_q1">英語が苦手でも参加できますか？</span>
+                            <span class="bg-blue-50 p-2 rounded-full group-open:rotate-180 transition text-primary"><i data-lucide="chevron-down" class="w-5 h-5"></i></span>
+                        </summary>
+                        <div class="px-5 pb-5 text-gray-600 leading-relaxed text-sm font-bold border-t border-gray-100 pt-4 mt-2" data-i18n="faq_a1">
+                            はい、大歓迎です！日本語が話せるメンバーや翻訳ツールも活用しながらサポートします。言語力よりも「伝えようとする気持ち」や「アイデア」が大切です。
+                        </div>
+                    </details>
+                    <details class="group pop-card p-1 cursor-pointer">
+                        <summary class="flex items-center justify-between p-5 font-bold text-slate-800">
+                            <span data-i18n="faq_q2">パソコンを持っていませんが参加できますか？</span>
+                            <span class="bg-blue-50 p-2 rounded-full group-open:rotate-180 transition text-primary"><i data-lucide="chevron-down" class="w-5 h-5"></i></span>
+                        </summary>
+                        <div class="px-5 pb-5 text-gray-600 leading-relaxed text-sm font-bold border-t border-gray-100 pt-4 mt-2" data-i18n="faq_a2">
+                            タブレットの貸し出しが可能ですのでご安心ください。数に限りがあるため、申し込みフォームまたはお問い合わせ先（Instagram/Mail）より事前にお知らせください。
+                        </div>
+                    </details>
+                    <details class="group pop-card p-1 cursor-pointer">
+                        <summary class="flex items-center justify-between p-5 font-bold text-slate-800">
+                            <span data-i18n="faq_q3">第1回か第2回のどちらか片方だけの参加は可能ですか？</span>
+                            <span class="bg-blue-50 p-2 rounded-full group-open:rotate-180 transition text-primary"><i data-lucide="chevron-down" class="w-5 h-5"></i></span>
+                        </summary>
+                        <div class="px-5 pb-5 text-gray-600 leading-relaxed text-sm font-bold border-t border-gray-100 pt-4 mt-2" data-i18n="faq_a3">
+                            第2回は発表等があるため【参加必須】とさせていただいております。どうしても日程が合わないなどご相談がある場合は、遠慮なくお問い合わせください。
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+        <section id="sponsors" class="py-24">
+            <div class="text-center max-w-7xl mx-auto p-10 reveal">
+                <h3 class="text-sm font-black mb-12 text-gray-500 uppercase tracking-[0.2em]" data-i18n="sponsor_list_title">Special Thanks</h3>
+                    
+                <div class="mb-16">
+                    <p class="text-xs text-yellow-500 font-black mb-6 tracking-widest shadow-yellow-500/50">GOLD SPONSORS</p>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 items-center">
+                        <a href="https://www.o-t-s.co.jp/" class="aspect-[3/2] bg-white rounded-xl flex items-center justify-center p-4 transition hover:-translate-y-1 shadow-sm border border-gray-100 hover:shadow-md">
+                            <img src="images/otani_icon.png" class="max-w-full max-h-full mix-blend-multiply">
+                        </a>
+                        <a href="https://craftsmanship-2022.jp" class="aspect-[3/2] bg-white rounded-xl flex items-center justify-center p-4 transition hover:-translate-y-1 shadow-sm border border-gray-100 hover:shadow-md">
+                            <img src="images/craft_icon.jpg" class="max-w-full max-h-full mix-blend-multiply">
+                        </a>
+                        <a href="#" class="aspect-[3/2] bg-white rounded-xl flex items-center justify-center p-4 transition hover:-translate-y-1 shadow-sm border border-gray-100 hover:shadow-md">
+                            <img src="https://placehold.co/200x100/e2e8f0/94a3b8?text=LOGO" class="max-w-full max-h-full mix-blend-multiply">
+                        </a>
+                        <a href="#" class="aspect-[3/2] bg-white rounded-xl flex items-center justify-center p-4 transition hover:-translate-y-1 shadow-sm border border-gray-100 hover:shadow-md">
+                            <img src="https://placehold.co/200x100/e2e8f0/94a3b8?text=LOGO" class="max-w-full max-h-full mix-blend-multiply">
+                        </a>
+                    </div>
+                </div>
+
+                <div class="mb-16">
+                    <p class="text-xs text-gray-400 font-black mb-6 tracking-widest">SILVER SPONSORS</p>
+                    <div class="grid grid-cols-4 md:grid-cols-8 gap-4 items-center">
+                        <a href="https://www.instagram.com/furumi2minami" class="aspect-square bg-white rounded-lg flex items-center justify-center p-2 transition hover:-translate-y-1 shadow-sm border border-gray-100 hover:shadow-md"><img src="images/mikoshi_icon.jpg" class="max-w-full max-h-full mix-blend-multiply"></a>
+                        <a href="https://pspo.jp/" class="aspect-square bg-white rounded-lg flex items-center justify-center p-2 transition hover:-translate-y-1 shadow-sm border border-gray-100 hover:shadow-md"><img src="images/p_spo_icon.jpg" class="max-w-full max-h-full mix-blend-multiply"></a>
+                        <a href="#" class="aspect-square bg-white rounded-lg flex items-center justify-center p-2 transition hover:-translate-y-1 shadow-sm border border-gray-100 hover:shadow-md"><img src="https://placehold.co/100x50/e2e8f0/94a3b8?text=G" class="max-w-full max-h-full mix-blend-multiply"></a>
+                        <a href="#" class="aspect-square bg-white rounded-lg flex items-center justify-center p-2 transition hover:-translate-y-1 shadow-sm border border-gray-100 hover:shadow-md"><img src="https://placehold.co/100x50/e2e8f0/94a3b8?text=O" class="max-w-full max-h-full mix-blend-multiply"></a>
+                        <a href="#" class="aspect-square bg-white rounded-lg flex items-center justify-center p-2 transition hover:-translate-y-1 shadow-sm border border-gray-100 hover:shadow-md"><img src="https://placehold.co/100x50/e2e8f0/94a3b8?text=H" class="max-w-full max-h-full mix-blend-multiply"></a>
+                        <a href="#" class="aspect-square bg-white rounded-lg flex items-center justify-center p-2 transition hover:-translate-y-1 shadow-sm border border-gray-100 hover:shadow-md"><img src="https://placehold.co/100x50/e2e8f0/94a3b8?text=E" class="max-w-full max-h-full mix-blend-multiply"></a>
+                        <a href="#" class="aspect-square bg-white rounded-lg flex items-center justify-center p-2 transition hover:-translate-y-1 shadow-sm border border-gray-100 hover:shadow-md"><img src="https://placehold.co/100x50/e2e8f0/94a3b8?text=R" class="max-w-full max-h-full mix-blend-multiply"></a>
+                        <a href="#" class="aspect-square bg-white rounded-lg flex items-center justify-center p-2 transition hover:-translate-y-1 shadow-sm border border-gray-100 hover:shadow-md"><img src="https://placehold.co/100x50/e2e8f0/94a3b8?text=E" class="max-w-full max-h-full mix-blend-multiply"></a>
+                    </div>
+                </div>
+
+                <div>
+                    <p class="text-xs text-orange-600 font-black mb-6 tracking-widest">BRONZE SPONSORS</p>
+                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 text-center text-xs font-bold text-gray-800">
+                        <span class="bg-white py-2 rounded shadow-sm border border-gray-100">sample Inc.</span>
+                        <span class="bg-white py-2 rounded shadow-sm border border-gray-100">Sample Inc.</span>
+                        <span class="bg-white py-2 rounded shadow-sm border border-gray-100">Sample Inc.</span>
+                        <span class="bg-white py-2 rounded shadow-sm border border-gray-100">Sample Inc.</span>
+                        <span class="bg-white py-2 rounded shadow-sm border border-gray-100">Sample Inc.</span>
+                        <span class="bg-white py-2 rounded shadow-sm border border-gray-100">Sample Inc.</span>
+                    </div>
+                </div>
+            </div>  
+        </section>
+
+        <section class="py-24 bg-primary text-white relative overflow-hidden">
+            <div class="absolute inset-0 bg-white/10" style="background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.2) 1px, transparent 0); background-size: 24px 24px;"></div>
+            <div class="container mx-auto px-6 text-center relative z-10 reveal">
+                <h2 class="text-3xl md:text-5xl font-black mb-6 drop-shadow-md" data-i18n="cta_title">君のアイデアが、世界を変える。</h2>
+                <p class="text-lg text-blue-100 mb-10 max-w-2xl mx-auto font-bold" data-i18n="cta_desc">先着順での受付となります。お申し込みはお早めに！</p>
+                <a href="https://forms.gle/fXoRouDuiLp1R3uN8" target="_blank" class="inline-block bg-accent hover:bg-yellow-400 text-white text-2xl font-black py-5 px-12 rounded-full shadow-xl hover:shadow-2xl hover:-translate-y-1 transition duration-300 transform" data-i18n="cta_btn">
+                    大臣になってみる（参加申込）
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-slate-800 text-slate-300 py-12">
+        <div class="container mx-auto px-6 text-center">
+            <h3 class="text-2xl font-black mb-6 text-white tracking-tight">OnigireeZ</h3>
+            
+            <div class="flex justify-center space-x-6 mb-8">
+                <a href="https://www.instagram.com/onigireez_25/" target="_blank" class="w-12 h-12 flex items-center justify-center transition duration-300 hover:scale-110">
+                   <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg" alt="Instagram" class="w-full h-full">
+                </a>
+                
+                <a href="https://lin.ee/jqHKCtB" target="_blank" class="w-12 h-12 flex items-center justify-center transition duration-300 hover:scale-110">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/LINE_logo.svg" alt="LINE" class="w-full h-full">
+                </a>
+
+                <a href="https://note.com/dear_hyena7759/portal" target="_blank" class="w-12 h-12 rounded-full flex items-center justify-center bg-white transition duration-300 hover:scale-110 p-2">
+                    <img src="images/note_logo.png" alt="Note" class="w-full h-full object-contain">
+                </a>
+                <a href="https://youtube.com/channel/UCOCuJb7c7wSUVkpvhgFVU-Q?si=nV4gu8ciZqVFztqu" target="_blank" class="w-12 h-12 rounded-full flex items-center justify-center bg-white transition duration-300 hover:scale-110 p-2">
+                    <img src="images/youtube.jpg" alt="YouTube" class="w-full h-full object-contain">
+                </a>
+
+                <a href="mailto:onigireez.25@gmail.com" class="w-12 h-12 flex items-center justify-center transition duration-300 hover:scale-110 hover:text-blue-400 text-white">
+                    <i data-lucide="mail" class="w-8 h-8"></i>
+                </a>
+            </div>
+
+            <p class="text-slate-500 text-sm font-bold" id="copyright"></p>
+        </div>
+    </footer>
+
+    <script>
+        // 翻訳データ (辞書)
+        const translations = {
+            ja: {
+                nav_about: "イベント内容", nav_info: "開催情報", nav_people: "審査員・運営", nav_faq: "FAQ", nav_apply: "申し込む",
+                hero_org: "学生団体OnigireeZ 主催", hero_catch: "今日からあなたが大臣だ！", hero_desc: "フィリピンの学生と協力して、<br class='md:hidden'>自国の社会問題解決を目指せ！",
+                date_round1: "第1回", date_sun: "(日)", date_req: "参加必須", date_round2: "第2回", date_fri: "(金)",
+                btn_apply_now: "今すぐ申し込む", btn_youtube: "YouTubeで雰囲気を見る",
+                news_title: "お知らせ", news_tag1: "イベント", news_text1: "第1回アイデアソンの申し込み受付を開始しました！", news_tag2: "情報解禁", news_text2: "今回のテーマは「大臣になって国をアップデート」に決定！",
+                about_title: "アイデアソンとは？",
+                english_ok_title: "英語が苦手でも大丈夫！大歓迎です！",
+                english_ok_desc: "「海外の学生と話したいけど、英語力が不安…」そんな方もご安心ください！日本語が話せるサポートメンバーがしっかり間に入り、翻訳ツールのフル活用もOKです。<br>このイベントで一番大切なのは「完璧な英語を話すこと」ではなく、「伝えようとする気持ち」と「あなたの自由なアイデア」です！",
+                about_desc: "特定のテーマについて多様なメンバーがチームを組み、<br class='hidden md:block'>短時間で集中的に新しいアイデアや解決策を出し合うワークショップ型イベントです。",
+                flow_title: "イベントの具体的な流れ",
+                flow_step1: "まずはゲームや自己紹介でアイスブレイク！国境を越えてチームの仲を深めます。", flow_step2: "「大臣」として、その国が抱える社会課題（教育・環境など）を分析します。", flow_step3: "海外の学生と一緒に、自由な発想で解決策（アイデア）をディスカッション！", flow_step4: "最後は審査員やみんなの前でプレゼンテーション！チームの成果を発表します。",
+                value_title: "アイデアソンで得られる3つの価値",
+                value1_title: "1. 多様な価値観との出会い", value1_desc: "フィリピンの学生とチームを組み、異なるバックグラウンドを持つ仲間と議論します。",
+                value2_title: "2. 国際的な視野", value2_desc: "与えられた架空の「国」の大臣として、グローバルな視点から課題を見つめ直します。",
+                value3_title: "3. リアルな交流を通じた自己成長", value3_desc: "話し合いを重ね、最後は審査員に向けて提案を発表。実践的な課題解決力を養います。",
+                info_title: "開催情報", info_datetime: "日時", info_place: "場所", info_place_detail: "サイボウズ株式会社 松山オフィス", info_target_fee: "対象・参加費", info_target: "中学1年生 〜 高校3年生", info_fee: "500円", info_items: "必要なもの", info_items_1: "Google Meetが使える端末、ヘッドホンやイヤホン", info_items_2: "（タブレット貸し出し可能です。ご相談ください）",
+                people_judge_title: "審査員紹介",
+                judge1_role: "　", judge1_name: "まもなく公開します", judge1_desc: "　",
+                judge2_role: "　", judge2_name: "まもなく公開します", judge2_desc: "　",
+                people_member_title: "運営メンバー",
+                member1_role: "代表", member1_name: "土山 みり", member1_desc: "フィリピンやエジプトでのボランティア経験を活かし、世界と繋がる楽しさを伝えます！",
+                member2_role: "発信・会計", member2_name: "井笹 慶之介", member2_desc: "持ち前の明るさで、この活動の魅力をSNSなどを通してどんどん発信していきます！",
+                member3_role: "デザイン", member3_name: "宮本 杏朱", member3_desc: "美術やデジタル分野が得意。みんながワクワクするようなデザインを目指します！",
+                member4_role: "ITサポート", member4_name: "忽那 将臣", member4_desc: "テクノロジーの力でスムーズな交流をサポートします！当日のオンライン環境はお任せください。",
+                faq_title: "よくある質問",
+                faq_q1: "英語が苦手でも参加できますか？", faq_a1: "はい、大歓迎です！日本語が話せるメンバーや翻訳ツールも活用しながらサポートします。言語力よりも「伝えようとする気持ち」や「アイデア」が大切です。",
+                faq_q2: "パソコンを持っていませんが参加できますか？", faq_a2: "タブレットの貸し出しが可能ですのでご安心ください。数に限りがあるため、申し込みフォームまたはお問い合わせ先（Instagram/Mail）より事前にお知らせください。",
+                faq_q3: "第1回か第2回のどちらか片方だけの参加は可能ですか？", faq_a3: "第2回は発表等があるため【参加必須】とさせていただいております。どうしても日程が合わないなどご相談がある場合は、遠慮なくお問い合わせください。",
+                sponsor_list_title: "Special Thanks",
+                cta_title: "君のアイデアが、世界を変える。", cta_desc: "先着順での受付となります。お申し込みはお早めに！", cta_btn: "大臣になってみる（参加申込）",
+                logo_text: "Onigiri Ideathon"
+            },
+            en: {
+                nav_about: "About", nav_info: "Info", nav_people: "Team & Judges", nav_faq: "FAQ", nav_apply: "Apply Now",
+                hero_org: "Hosted by OnigireeZ", hero_catch: "You are the Minister from today!", hero_desc: "Collaborate with students in the Philippines<br class='md:hidden'> to solve social issues in your country!",
+                date_round1: "Day 1", date_sun: "(Sun)", date_req: "Required", date_round2: "Day 2", date_fri: "(Fri)",
+                btn_apply_now: "Apply Now", btn_youtube: "Watch Our YouTube",
+                news_title: "News & Updates", news_tag1: "Event", news_text1: "Registration for the 1st Ideathon is now open!", news_tag2: "Info", news_text2: "The theme is 'Update the Country as a Minister'!",
+                about_title: "What is an Ideathon?",
+                english_ok_title: "English Beginners are Very Welcome!",
+                english_ok_desc: "Don't worry if you are not confident in English! Our bilingual support team will be there to help, and you are totally free to use translation tools.<br>The most important thing is not 'perfect English', but 'the passion to communicate' and 'your unique ideas'!",
+                about_desc: "A workshop-style event where diverse members form teams<br class='hidden md:block'>to intensively brainstorm new ideas and solutions for a specific theme in a short period.",
+                flow_title: "Ideathon Workflow",
+                flow_step1: "First, break the ice with games and self-introductions! Build teamwork across borders.", flow_step2: "As a 'Minister', analyze the social issues (education, environment, etc.) facing your country.", flow_step3: "Discuss freely and brainstorm solutions with international students!", flow_step4: "Finally, present your team's innovative ideas to the judges and participants!",
+                value_title: "3 Values You'll Gain",
+                value1_title: "1. Encounter Diverse Values", value1_desc: "Team up with students in the Philippines and discuss with peers from different backgrounds.",
+                value2_title: "2. Global Perspective", value2_desc: "Act as a minister of a fictional country and re-examine issues from a global standpoint.",
+                value3_title: "3. Growth through Real Exchange", value3_desc: "Develop practical problem-solving skills by repeating discussions and presenting to judges.",
+                info_title: "Event Details", info_datetime: "Date & Time", info_place: "Location", info_place_detail: "Cybozu Inc. Matsuyama Office", info_target_fee: "Target & Fee", info_target: "Junior High 1st yr - High School 3rd yr", info_fee: "500 JPY", info_items: "Requirements", info_items_1: "Device with Google Meet, Headphones/Earphones", info_items_2: "(Tablets available for rent. Please consult us in advance.)",
+                people_judge_title: "Judges",
+                judge1_role: "　", judge1_name: "Coming soon", judge1_desc: "　",
+                judge2_role: "　", judge2_name: "Coming soon", judge2_desc: "　",
+                people_member_title: "Organizing Team",
+                member1_role: "Representative", member1_name: "Miri Tsuchiyama", member1_desc: "Utilizing volunteer experiences in the Philippines and Egypt, I'll share the joy of connecting globally!",
+                member2_role: "PR & Accounting", member2_name: "Keinosuke Isasa", member2_desc: "With my cheerful personality, I'll spread the charm of this activity through our SNS!",
+                member3_role: "Design", member3_name: "Anika Miyamoto", member3_desc: "Good at art and digital fields. Aiming for designs that make everyone excited!",
+                member4_role: "IT Support", member4_name: "Masaomi Kutsuna", member4_desc: "Supporting smooth communication with technology! Leave the online environment to me.",
+                faq_title: "FAQ",
+                faq_q1: "Can I join even if I'm not good at English?", faq_a1: "Yes, you are very welcome! We provide support members and allow translation tools. 'Desire to communicate' and 'ideas' matter more than language skills.",
+                faq_q2: "I don't have a PC. Can I still join?", faq_a2: "Yes, we can lend you a tablet. As numbers are limited, please let us know in advance via the application form or SNS.",
+                faq_q3: "Can I participate in only Day 1 or Day 2?", faq_a3: "Participation in Day 2 is required for presentations. If you have unavoidable schedule conflicts, please contact us.",
+                sponsor_list_title: "Special Thanks",
+                cta_title: "Your ideas can change the world.", cta_desc: "Applications are accepted on a first-come, first-served basis. Apply early!", cta_btn: "Become a Minister (Apply Now)",
+                logo_text: "Onigiri Ideathon"
+            }
+        };
+
+        // 言語切り替え処理
+        const langSwitcher = document.getElementById('lang-switcher');
+        langSwitcher.addEventListener('change', (e) => {
+            const lang = e.target.value;
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    element.innerHTML = translations[lang][key];
+                }
+            });
+            document.documentElement.lang = lang;
+        });
+
+        // アイコンの初期化
+        lucide.createIcons();
+
+        // コピーライトの自動更新
+        document.getElementById('copyright').innerHTML = `&copy; ${new Date().getFullYear()} 学生団体 OnigireeZ. All Rights Reserved.`;
+
+        // スクロール時のアニメーション設定
+        const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
+        const observer = new IntersectionObserver((entries, observer) => { 
+            entries.forEach(entry => { 
+                if (entry.isIntersecting) { 
+                    entry.target.classList.add('active'); 
+                } 
+            }); 
+        }, observerOptions);
+        document.querySelectorAll('.reveal').forEach(el => { observer.observe(el); });
+
+        // スムーススクロール
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) { targetElement.scrollIntoView({ behavior: 'smooth' }); }
+            });
+        });
+    </script>
+</body>
+</html>
